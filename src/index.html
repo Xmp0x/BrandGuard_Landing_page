@@ -2,7 +2,7 @@
 <html lang="en" data-theme="linear-dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>BrandGuard — Design Systems Built in Minutes</title>
   <meta name="description" content="Generate 380 native Figma variables — colors, typography, spacing, shadows — in three distinct workflows.">
   <meta name="theme-color" content="#0A0D14">
@@ -28,8 +28,8 @@
   <style>
     /* ─── Reset ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { min-height: 100vh; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { min-height: 100vh; overflow-x: hidden; }
     img, svg { display: block; }
     button { cursor: pointer; border: none; background: none; font: inherit; }
     a { text-decoration: none; color: inherit; }
@@ -818,12 +818,28 @@
   gap: 4rem;
 }
 @media (max-width: 768px) {
+  .main-wrapper {
+    margin-bottom: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  #master-footer {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    z-index: 10 !important;
+    padding: 5rem 0 2rem !important;
+  }
+  .footer-content {
+    gap: 3.5rem;
+  }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
   .footer-brand-col { grid-column: 1 / -1; }
   .footer-cta h2 { font-size: 2rem; }
 }
 @media (max-width: 480px) {
-  .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 .footer-brand-col p {
@@ -1472,6 +1488,7 @@
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  padding-top: env(safe-area-inset-top, 0);
 }
 
 .nav .container {
@@ -1594,7 +1611,14 @@
 }
 
 /* ─── THEMATIC CUSTOM CURSOR SYSTEM ───────────────────────── */
+.custom-cursor {
+  display: none !important;
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .custom-cursor {
+    display: block !important;
+  }
   *, *::before, *::after {
     cursor: none !important;
   }
@@ -3845,12 +3869,19 @@ setTimeout(startHeroAnimation, 500);
 const mainWrapper = document.getElementById('main-wrapper');
 const masterFooter = document.getElementById('master-footer');
 if (mainWrapper && masterFooter) {
-  const resizeObserver = new ResizeObserver(entries => {
-    for (let entry of entries) {
-      mainWrapper.style.marginBottom = entry.target.offsetHeight + 'px';
+  const updateFooterCurtain = () => {
+    if (window.innerWidth > 768) {
+      mainWrapper.style.marginBottom = masterFooter.offsetHeight + 'px';
+    } else {
+      mainWrapper.style.marginBottom = '0px';
     }
+  };
+  const resizeObserver = new ResizeObserver(() => {
+    updateFooterCurtain();
   });
   resizeObserver.observe(masterFooter);
+  window.addEventListener('resize', updateFooterCurtain, { passive: true });
+  updateFooterCurtain();
 }
 
 // 2. Decrypt Text Effect
