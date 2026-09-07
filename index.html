@@ -1593,9 +1593,259 @@
   .theme-pill { padding: 6px 8px; }
 }
 
+/* ─── THEMATIC CUSTOM CURSOR SYSTEM ───────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+  input, textarea, select, [contenteditable="true"] {
+    cursor: text !important;
+  }
+  
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 999999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    will-change: transform;
+  }
+  .custom-cursor.active {
+    opacity: 1;
+  }
+
+  .cursor-theme {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  /* 1. LINEAR CURSOR: Precision Dot & Trailing Target Ring */
+  [data-theme="linear-dark"] .cursor-linear,
+  [data-theme="dark"] .cursor-linear {
+    display: block;
+  }
+  .linear-dot {
+    width: 6px;
+    height: 6px;
+    background: #818CF8;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px #6366F1, 0 0 2px #FFFFFF;
+    transition: transform 0.15s ease, background-color 0.2s ease;
+  }
+  .linear-ring {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid rgba(99, 102, 241, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s cubic-bezier(0.16,1,0.3,1), height 0.2s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, background 0.2s ease;
+  }
+  .custom-cursor.is-hovering .cursor-linear .linear-ring {
+    width: 46px;
+    height: 46px;
+    border-color: #A5B4FC;
+    background: rgba(99, 102, 241, 0.14);
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.3);
+  }
+  .custom-cursor.is-clicking .cursor-linear .linear-ring {
+    width: 20px;
+    height: 20px;
+    border-color: #6366F1;
+    background: rgba(99, 102, 241, 0.35);
+  }
+
+  /* 2. FIGMA CURSOR: Multiplayer Pointer + "You" Badge */
+  [data-theme="figma-canvas"] .cursor-figma {
+    display: block;
+  }
+  .figma-pointer {
+    position: absolute;
+    top: -3px;
+    left: -4.5px;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.35));
+    transition: transform 0.15s cubic-bezier(0.16,1,0.3,1);
+    transform-origin: 4.5px 3px;
+  }
+  .figma-badge {
+    position: absolute;
+    top: 13px;
+    left: 11px;
+    background: #0D99FF;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font);
+    padding: 2px 7px;
+    border-radius: 4px 10px 10px 10px;
+    box-shadow: 0 2px 8px rgba(13, 153, 255, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    user-select: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .custom-cursor.is-hovering .cursor-figma .figma-pointer {
+    transform: scale(1.15) rotate(-6deg);
+  }
+  .custom-cursor.is-hovering .cursor-figma .figma-badge {
+    background: #A259FF;
+    transform: scale(1.08) translate(2px, 2px);
+  }
+  .custom-cursor.is-clicking .cursor-figma .figma-pointer {
+    transform: scale(0.9) translate(-1px, -1px);
+  }
+
+  /* 3. STRIPE CURSOR: Liquid Prismatic Orb */
+  [data-theme="stripe-prismatic"] .cursor-stripe,
+  [data-theme="light"] .cursor-stripe {
+    display: block;
+  }
+  .stripe-orb-outer {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(236,72,153,0.3) 0%, rgba(99,102,241,0.2) 60%, transparent 100%);
+    border: 1.5px solid rgba(236, 72, 153, 0.7);
+    backdrop-filter: blur(3px);
+    transition: width 0.22s cubic-bezier(0.16,1,0.3,1), height 0.22s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, background 0.2s ease;
+  }
+  .stripe-orb-inner {
+    width: 6px;
+    height: 6px;
+    background: #EC4899;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px #EC4899;
+    transition: transform 0.15s ease;
+  }
+  .custom-cursor.is-hovering .cursor-stripe .stripe-orb-outer {
+    width: 48px;
+    height: 48px;
+    border-color: #6366F1;
+    background: radial-gradient(circle, rgba(99,102,241,0.35) 0%, rgba(236,72,153,0.25) 70%, transparent 100%);
+    box-shadow: 0 0 16px rgba(236, 72, 153, 0.35);
+  }
+  .custom-cursor.is-clicking .cursor-stripe .stripe-orb-outer {
+    width: 22px;
+    height: 22px;
+    background: rgba(236,72,153,0.5);
+  }
+
+  /* 4. CYBERPUNK CURSOR: Sci-Fi HUD Reticle */
+  [data-theme="cyberpunk-neon"] .cursor-cyber {
+    display: block;
+  }
+  .cyber-reticle {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.8));
+  }
+  .cyber-bracket {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: #00E5FF;
+    border-style: solid;
+    transition: border-color 0.2s ease;
+  }
+  .cyber-bracket.tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+  .cyber-bracket.tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+  .cyber-bracket.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+  .cyber-bracket.br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+  .cyber-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FDE047;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    font-family: var(--mono);
+    text-shadow: 0 0 5px #FDE047;
+  }
+  .custom-cursor.is-hovering .cursor-cyber .cyber-reticle {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
+    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.9));
+  }
+  .custom-cursor.is-hovering .cursor-cyber .cyber-bracket {
+    border-color: #FF00FF;
+  }
+  .custom-cursor.is-hovering .cursor-cyber .cyber-cross {
+    color: #00E5FF;
+    text-shadow: 0 0 6px #00E5FF;
+  }
+  .custom-cursor.is-clicking .cursor-cyber .cyber-reticle {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
 </style>
 </head>
 <body>
+
+<!-- ─── THEMATIC CUSTOM CURSOR ─────────────────────────────── -->
+<div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+  <!-- 1. Linear: Precision Dot & Target Ring -->
+  <div class="cursor-theme cursor-linear">
+    <div class="linear-ring"></div>
+    <div class="linear-dot"></div>
+  </div>
+
+  <!-- 2. Figma: Multiplayer Pointer + "You" Badge -->
+  <div class="cursor-theme cursor-figma">
+    <svg class="figma-pointer" width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M5.5 3.5L18 13.5L12 15L9 20.5L5.5 3.5Z" fill="#0D99FF" stroke="#000000" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+    <div class="figma-badge">
+      <span class="figma-badge-name">You</span>
+    </div>
+  </div>
+
+  <!-- 3. Stripe: Liquid Prismatic Orb -->
+  <div class="cursor-theme cursor-stripe">
+    <div class="stripe-orb-outer"></div>
+    <div class="stripe-orb-inner"></div>
+  </div>
+
+  <!-- 4. Cyberpunk: Sci-Fi HUD Reticle -->
+  <div class="cursor-theme cursor-cyber">
+    <div class="cyber-reticle">
+      <span class="cyber-bracket tl"></span>
+      <span class="cyber-bracket tr"></span>
+      <span class="cyber-bracket bl"></span>
+      <span class="cyber-bracket br"></span>
+      <span class="cyber-cross">+</span>
+    </div>
+  </div>
+</div>
+
 <main class="main-wrapper" id="main-wrapper">
 
 <!-- ─── NAVIGATION ─────────────────────────────────────────── -->
@@ -3888,6 +4138,87 @@ function renderFooterCanvas() {
   requestAnimationFrame(renderFooterCanvas);
 }
 requestAnimationFrame(renderFooterCanvas);
+
+
+// ─── THEMATIC CUSTOM CURSOR CONTROLLER ──────────────────────
+(function initThematicCursor() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const cursor = document.getElementById('custom-cursor');
+  if (!cursor) return;
+
+  let mouseX = -100, mouseY = -100;
+  let cursorX = -100, cursorY = -100;
+  let isMoving = false;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!isMoving) {
+      isMoving = true;
+      cursorX = mouseX;
+      cursorY = mouseY;
+    }
+    if (!cursor.classList.contains('active')) {
+      cursor.classList.add('active');
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => {
+    cursor.classList.remove('active');
+  });
+
+  document.addEventListener('mouseenter', () => {
+    cursor.classList.add('active');
+  });
+
+  window.addEventListener('mousedown', () => {
+    cursor.classList.add('is-clicking');
+  });
+
+  window.addEventListener('mouseup', () => {
+    cursor.classList.remove('is-clicking');
+  });
+
+  const interactiveSelector = 'a, button, [role="button"], input, select, textarea, .theme-pill, .btn-primary, .btn-cta, .footer-cta-btn, .path-card, .tilt-card, .preset-dot, .color-role, .bento, .step-pill, .format-tab, .social-icon, .preset-card-item, .figma-selectable';
+
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target;
+    if (!target || !target.closest) return;
+
+    if (target.closest('input, textarea, select, [contenteditable="true"]')) {
+      cursor.style.opacity = '0';
+    } else {
+      cursor.style.opacity = '';
+    }
+
+    if (target.closest(interactiveSelector)) {
+      cursor.classList.add('is-hovering');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const target = e.target;
+    if (!target || !target.closest) return;
+
+    if (target.closest('input, textarea, select, [contenteditable="true"]')) {
+      cursor.style.opacity = '';
+    }
+
+    if (target.closest(interactiveSelector)) {
+      cursor.classList.remove('is-hovering');
+    }
+  });
+
+  function renderCursor() {
+    if (isMoving) {
+      cursorX += (mouseX - cursorX) * 0.85;
+      cursorY += (mouseY - cursorY) * 0.85;
+      cursor.style.transform = `translate3d(${cursorX.toFixed(1)}px, ${cursorY.toFixed(1)}px, 0)`;
+    }
+    requestAnimationFrame(renderCursor);
+  }
+  requestAnimationFrame(renderCursor);
+})();
 
 </script>
 </body>
