@@ -1,0 +1,362 @@
+/**
+ * BrandGuard Landing Page V2 - Design Tokens
+ * Source of truth: tailwind.config.js & plan/01-DESIGN-LANGUAGE.md
+ */
+
+:root {
+  /* ── 1. Color Palette: Primary (Indigo) 50-950 ───────── */
+  --color-primary-50:  #F5F5F9;
+  --color-primary-100: #E9E9F6;
+  --color-primary-200: #CACBF1;
+  --color-primary-300: #9A9CEE;
+  --color-primary-400: #5B5DF1;
+  --color-primary-500: #6366F1;
+  --color-primary-600: #4F46E5;
+  --color-primary-700: #4338CA;
+  --color-primary-800: #3730A3;
+  --color-primary-900: #312E81;
+  --color-primary-950: #1E1B4B;
+
+  /* Aliases */
+  --primary:         var(--color-primary-500);
+  --primary-light:   var(--color-primary-400);
+  --primary-dark:    var(--color-primary-600);
+  --primary-surface: rgba(99, 102, 241, 0.08);
+
+  /* ── 2. Color Palette: Secondary (Mint) 50-950 ───────── */
+  --color-mint-50:  #F5FAF7;
+  --color-mint-100: #E8F7F0;
+  --color-mint-200: #C8F4DF;
+  --color-mint-300: #94F4C8;
+  --color-mint-400: #50FBAB;
+  --color-mint-500: #0FFA8C;
+  --color-mint-600: #00D672;
+  --color-mint-700: #00AD5C;
+  --color-mint-800: #008044;
+  --color-mint-900: #04532E;
+  --color-mint-950: #022C19;
+
+  /* Aliases */
+  --mint:         var(--color-mint-500);
+  --mint-light:   var(--color-mint-400);
+  --mint-dark:    var(--color-mint-600);
+  --mint-surface: rgba(15, 250, 140, 0.08);
+
+  /* ── 3. Color Palette: Accent / Tertiary (Sky) 50-950 ─── */
+  --color-sky-50:  #F5F8FA;
+  --color-sky-100: #E9F1F7;
+  --color-sky-200: #C8E3F4;
+  --color-sky-300: #95CFF3;
+  --color-sky-400: #52B9FA;
+  --color-sky-500: #129FF8;
+  --color-sky-600: #0184D5;
+  --color-sky-700: #006BAD;
+  --color-sky-800: #014E7F;
+  --color-sky-900: #053452;
+  --color-sky-950: #021B2C;
+
+  /* Aliases */
+  --sky:         var(--color-sky-500);
+  --sky-light:   var(--color-sky-400);
+  --sky-dark:    var(--color-sky-600);
+  --sky-surface: rgba(18, 159, 248, 0.08);
+  --accent:      var(--color-sky-500);
+
+  /* ── 4. Color Palette: Neutral Grays 50-950 ──────────── */
+  --color-neutral-50:  #FAFAFA;
+  --color-neutral-100: #F4F4F6;
+  --color-neutral-200: #E5E5EB;
+  --color-neutral-300: #D4D4DE;
+  --color-neutral-400: #A1A1B2;
+  --color-neutral-500: #717182;
+  --color-neutral-600: #525263;
+  --color-neutral-700: #3F3F4E;
+  --color-neutral-800: #272732;
+  --color-neutral-900: #181820;
+  --color-neutral-950: #0F0F15;
+
+  /* ── 5. Color Palette: Semantic 50-950 Scales ────────── */
+  /* Success */
+  --color-success-50:  #F0FDF4;
+  --color-success-100: #DCFCE7;
+  --color-success-200: #BBF7D0;
+  --color-success-300: #86EFAC;
+  --color-success-400: #4ADE80;
+  --color-success-500: #22C55E;
+  --color-success-600: #16A34A;
+  --color-success-700: #15803D;
+  --color-success-800: #166534;
+  --color-success-900: #14532D;
+  --color-success-950: #052E16;
+
+  /* Error */
+  --color-error-50:  #FEF2F2;
+  --color-error-100: #FEE2E2;
+  --color-error-200: #FECACA;
+  --color-error-300: #FCA5A5;
+  --color-error-400: #F87171;
+  --color-error-500: #EF4444;
+  --color-error-600: #DC2626;
+  --color-error-700: #B91C1C;
+  --color-error-800: #991B1B;
+  --color-error-900: #7F1D1D;
+  --color-error-950: #450A0A;
+
+  /* Warning */
+  --color-warning-50:  #FFFBEB;
+  --color-warning-100: #FEF3C7;
+  --color-warning-200: #FDE68A;
+  --color-warning-300: #FCD34D;
+  --color-warning-400: #FBBF24;
+  --color-warning-500: #F59E0B;
+  --color-warning-600: #D97706;
+  --color-warning-700: #B45309;
+  --color-warning-800: #92400E;
+  --color-warning-900: #78350F;
+  --color-warning-950: #451A03;
+
+  /* Info */
+  --color-info-50:  #EFF6FF;
+  --color-info-100: #DBEAFE;
+  --color-info-200: #BFDBFE;
+  --color-info-300: #93C5FD;
+  --color-info-400: #60A5FA;
+  --color-info-500: #3B82F6;
+  --color-info-600: #2563EB;
+  --color-info-700: #1D4ED8;
+  --color-info-800: #1E40AF;
+  --color-info-900: #1E3A8A;
+  --color-info-950: #172554;
+
+  /* ── 6. Surface System (Default: Dark) ───────────────── */
+  --bg-page:             var(--color-neutral-950);   /* #0F0F15 */
+  --bg-surface:          var(--color-neutral-950);   /* #0F0F15 */
+  --bg-surface-elevated: var(--color-neutral-900);   /* #181820 */
+  --bg-surface-subtle:   #1E1E2A;
+  --bg-card:             #181820;
+  --bg-card-hover:       #20202A;
+  --bg-card-inner:       #20202A;
+
+  --text:                var(--color-neutral-50);    /* #FAFAFA */
+  --text-main:           var(--color-neutral-50);    /* #FAFAFA */
+  --text-secondary:      var(--color-neutral-300);   /* #D4D4DE */
+  --text-muted:          var(--color-neutral-400);   /* #A1A1B2 */
+  --text-dim:            var(--color-neutral-500);   /* #717182 */
+
+  --border:              rgba(255, 255, 255, 0.07);
+  --border-subtle:       rgba(255, 255, 255, 0.07);
+  --border-medium:       rgba(255, 255, 255, 0.12);
+  --border-strong:       rgba(255, 255, 255, 0.20);
+  --border-primary:      rgba(99, 102, 241, 0.50);
+  --border-specular:     rgba(255, 255, 255, 0.15);
+
+  --dot-grid-color:      rgba(255, 255, 255, 0.05);
+  --ambient-glow:        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15), transparent 50%);
+
+  /* ── 7. Bento Surfaces System ────────────────────────── */
+  --bento-bg:            var(--bg-card);
+  --bento-border:        var(--border-subtle);
+  --bento-inner-bg:      var(--bg-card-inner);
+
+  /* ── 8. Typography Scale ─────────────────────────────── */
+  --font-display: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body:    'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Cascadia Code', 'Fira Code', Menlo, Consolas, monospace;
+
+  /* Font Sizes */
+  --text-2xs:  0.625rem;  /* 10px */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-md:   1.0625rem; /* 17px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+  --text-6xl:  3.75rem;   /* 60px */
+  --text-7xl:  4.5rem;    /* 72px */
+
+  /* Line Heights */
+  --leading-none:    1;
+  --leading-tight:   1.15;
+  --leading-snug:    1.35;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.035em;
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
+
+  /* Font Weights */
+  --font-regular:   400;
+  --font-medium:    500;
+  --font-semibold:  600;
+  --font-bold:      700;
+  --font-extrabold: 800;
+
+  /* ── 9. Spacing Scale ────────────────────────────────── */
+  --space-1:  0.25rem; /* 4px */
+  --space-2:  0.5rem;  /* 8px */
+  --space-3:  0.75rem; /* 12px */
+  --space-4:  1rem;    /* 16px */
+  --space-5:  1.25rem; /* 20px */
+  --space-6:  1.5rem;  /* 24px */
+  --space-8:  2rem;    /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  --space-32: 8rem;    /* 128px */
+
+  /* Spacing Aliases */
+  --space-2xs: var(--space-1);
+  --space-xs:  var(--space-2);
+  --space-sm:  var(--space-3);
+  --space-md:  var(--space-4);
+  --space-lg:  var(--space-6);
+  --space-xl:  var(--space-8);
+  --space-2xl: var(--space-12);
+  --space-3xl: var(--space-16);
+
+  /* ── 10. Border Radius Scale ─────────────────────────── */
+  --radius-xs:       2px;
+  --radius-sm:       4px;
+  --radius-md:       8px;
+  --radius-lg:       12px;
+  --radius-xl:       16px;
+  --radius-2xl:      20px;
+  --radius-3xl:      24px;
+  --radius-4xl:      28px;
+  --radius-squircle: 28px;
+  --radius-full:     9999px;
+
+  /* ── 11. Shadows & Glows ─────────────────────────────── */
+  --shadow-xs:       0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm:       0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md:       0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg:       0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl:       0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl:      0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  --shadow-inner:          inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-inner-specular: inset 0 1px 0 0 var(--border-specular);
+
+  --shadow-glow-primary:        0 0 24px -3px rgba(99, 102, 241, 0.35), 0 0 10px -2px rgba(99, 102, 241, 0.2);
+  --shadow-glow-primary-strong: 0 0 40px -2px rgba(99, 102, 241, 0.55), 0 0 16px -1px rgba(99, 102, 241, 0.35);
+  --shadow-glow-mint:           0 0 24px -3px rgba(15, 250, 140, 0.35), 0 0 10px -2px rgba(15, 250, 140, 0.2);
+  --shadow-glow-sky:            0 0 24px -3px rgba(18, 159, 248, 0.35), 0 0 10px -2px rgba(18, 159, 248, 0.2);
+
+  --shadow-bento-card:       0 4px 16px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-subtle);
+  --shadow-bento-card-hover: 0 8px 30px -4px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-medium);
+
+  --shadow-plugin-window:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 32px 80px rgba(0, 0, 0, 0.35),
+    0 0 80px rgba(99, 102, 241, 0.15);
+
+  /* ── 12. Motion System ───────────────────────────────── */
+  --duration-instant:    0ms;
+  --duration-fast:       150ms;
+  --duration-normal:     300ms;
+  --duration-slow:       500ms;
+  --duration-deliberate: 800ms;
+
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-emit:   cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* ── 13. Z-Index Layer Scale ─────────────────────────── */
+  --z-below:      -1;
+  --z-base:       1;
+  --z-elevated:   10;
+  --z-sticky:     100;
+  --z-nav:        500;
+  --z-sticky-nav: 1000;
+  --z-dropdown:   1000;
+  --z-overlay:    2000;
+  --z-modal:      5000;
+  --z-popover:    6000;
+  --z-toast:      9000;
+
+  /* ── 14. Responsive Breakpoints ──────────────────────── */
+  --bp-mobile:  320px;
+  --bp-tablet:  768px;
+  --bp-desktop: 1024px;
+  --bp-wide:    1440px;
+
+  /* ── 15. Plugin Mockup (pm-) Namespace Tokens ─────────── */
+  --pm-bg:             #0F0F15;
+  --pm-raised:         #151D2A;
+  --pm-card:           #1A2434;
+  --pm-border:         rgba(255, 255, 255, 0.07);
+  --pm-border-hl:      rgba(99, 102, 241, 0.5);
+
+  --pm-text-primary:   #FFFFFF;
+  --pm-text-secondary: rgba(255, 255, 255, 0.6);
+  --pm-text-muted:     rgba(255, 255, 255, 0.35);
+
+  --pm-primary:        #6366F1;
+  --pm-primary-dim:    rgba(99, 102, 241, 0.15);
+
+  --pm-mint:           #0FFA8C;
+  --pm-mint-dim:       rgba(15, 250, 140, 0.1);
+
+  --pm-amber:          #F59E0B;
+  --pm-amber-dim:      rgba(245, 158, 11, 0.1);
+
+  --pm-r-sm:           6px;
+  --pm-r-md:           10px;
+  --pm-r-lg:           14px;
+  --pm-r-xl:           18px;
+
+  --pm-text-xs:        10px;
+  --pm-text-sm:        11px;
+  --pm-text-base:      12px;
+  --pm-text-md:        13px;
+  --pm-text-lg:        14px;
+}
+
+/* ── Light Mode Override ───────────────────────────────── */
+[data-theme="light"] {
+  --bg-page:             var(--color-neutral-50);    /* #FAFAFA */
+  --bg-surface:          var(--color-neutral-50);    /* #FAFAFA */
+  --bg-surface-elevated: #FFFFFF;
+  --bg-surface-subtle:   var(--color-neutral-100);   /* #F4F4F6 */
+  --bg-card:             #FFFFFF;
+  --bg-card-hover:       #F9FAFB;
+  --bg-card-inner:       rgba(0, 0, 0, 0.02);
+
+  --text:                var(--color-neutral-900);   /* #181820 */
+  --text-main:           var(--color-neutral-900);   /* #181820 */
+  --text-secondary:      var(--color-neutral-700);   /* #3F3F4E */
+  --text-muted:          var(--color-neutral-500);   /* #717182 */
+  --text-dim:            var(--color-neutral-400);   /* #A1A1B2 */
+
+  --border:              rgba(0, 0, 0, 0.06);
+  --border-subtle:       rgba(0, 0, 0, 0.06);
+  --border-medium:       rgba(0, 0, 0, 0.10);
+  --border-strong:       rgba(0, 0, 0, 0.18);
+  --border-primary:      rgba(99, 102, 241, 0.50);
+  --border-specular:     rgba(255, 255, 255, 0.80);
+
+  --dot-grid-color:      rgba(0, 0, 0, 0.05);
+  --ambient-glow:        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.08), transparent 45%);
+
+  --shadow-bento-card:       0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--border-subtle);
+  --shadow-bento-card-hover: 0 6px 16px -2px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--border-medium);
+
+  --shadow-plugin-window:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    0 32px 80px rgba(0, 0, 0, 0.12),
+    0 0 60px rgba(99, 102, 241, 0.12);
+}

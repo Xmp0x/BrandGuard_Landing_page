@@ -1,0 +1,17 @@
+{
+  "name": "brandguard-landing-v2",
+  "version": "2.0.0",
+  "description": "BrandGuard Landing Page V2 — Interactive Product Showcase & Plugin Recreation",
+  "private": true,
+  "scripts": {
+    "test": "node tests/runner.js",
+    "test:tier1": "node tests/runner.js --tier=1",
+    "test:tier2": "node tests/runner.js --tier=2",
+    "test:tier3": "node tests/runner.js --tier=3",
+    "test:tier4": "node tests/runner.js --tier=4",
+    "test:m1": "node tests/runner.js --milestone=M1",
+    "test:m2": "node tests/runner.js --milestone=M2",
+    "test:m3": "node tests/runner.js --milestone=M3",
+    "test:m4": "node tests/runner.js --milestone=M4"
+  }
+}
