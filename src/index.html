@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="linear-dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,9 +16,9 @@
   <script>
     try {
       var t = localStorage.getItem('bg-theme');
-      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      if (!t) t = 'linear-dark';
       document.documentElement.setAttribute('data-theme', t);
-    } catch(e) { document.documentElement.setAttribute('data-theme','dark'); }
+    } catch(e) { document.documentElement.setAttribute('data-theme','linear-dark'); }
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1179,12 +1179,12 @@
 [data-theme="figma-canvas"] .btn-primary:hover + .btn-fx .fx-ill-5, [data-theme="figma-canvas"] .btn-cta:hover + .btn-fx .fx-ill-5, [data-theme="figma-canvas"] .footer-cta-btn:hover + .btn-fx .fx-ill-5 { opacity: 1; transform: translate(0px, -70px) scale(0.9) rotate(45deg); transition-delay: 0.03s; }
 
 /* 2. Linear Mode (Sleek Geometry) */
-[data-theme="linear-dark"] .fx-linear { display: block; color: #E2E8F0; filter: drop-shadow(0 0 10px rgba(255,255,255,0.4)); }
-[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-1, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-1, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-1 { opacity: 1; transform: translate(-70px, -25px) scale(1) rotate(45deg); transition-delay: 0.04s; }
-[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-2, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-2, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-2 { opacity: 1; transform: translate(50px, -45px) scale(0.8); transition-delay: 0.01s; }
-[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-3, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-3, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-3 { opacity: 1; transform: translate(40px, 35px) scale(1.1) rotate(15deg); transition-delay: 0.05s; }
-[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-4, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-4, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-4 { opacity: 1; transform: translate(-40px, 45px) scale(1.5); transition-delay: 0.02s; }
-[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-5, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-5, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-5 { opacity: 1; transform: translate(0px, -65px) scale(0.9) rotate(45deg); transition-delay: 0.06s; }
+[data-theme="linear-dark"] .fx-linear, [data-theme="dark"] .fx-linear { display: block; color: #E2E8F0; filter: drop-shadow(0 0 10px rgba(255,255,255,0.4)); }
+[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-1, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-1, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-1, [data-theme="dark"] .btn-primary:hover + .btn-fx .fx-ill-1, [data-theme="dark"] .btn-cta:hover + .btn-fx .fx-ill-1, [data-theme="dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-1 { opacity: 1; transform: translate(-70px, -25px) scale(1) rotate(45deg); transition-delay: 0.04s; }
+[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-2, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-2, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-2, [data-theme="dark"] .btn-primary:hover + .btn-fx .fx-ill-2, [data-theme="dark"] .btn-cta:hover + .btn-fx .fx-ill-2, [data-theme="dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-2 { opacity: 1; transform: translate(50px, -45px) scale(0.8); transition-delay: 0.01s; }
+[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-3, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-3, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-3, [data-theme="dark"] .btn-primary:hover + .btn-fx .fx-ill-3, [data-theme="dark"] .btn-cta:hover + .btn-fx .fx-ill-3, [data-theme="dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-3 { opacity: 1; transform: translate(40px, 35px) scale(1.1) rotate(15deg); transition-delay: 0.05s; }
+[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-4, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-4, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-4, [data-theme="dark"] .btn-primary:hover + .btn-fx .fx-ill-4, [data-theme="dark"] .btn-cta:hover + .btn-fx .fx-ill-4, [data-theme="dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-4 { opacity: 1; transform: translate(-40px, 45px) scale(1.5); transition-delay: 0.02s; }
+[data-theme="linear-dark"] .btn-primary:hover + .btn-fx .fx-ill-5, [data-theme="linear-dark"] .btn-cta:hover + .btn-fx .fx-ill-5, [data-theme="linear-dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-5, [data-theme="dark"] .btn-primary:hover + .btn-fx .fx-ill-5, [data-theme="dark"] .btn-cta:hover + .btn-fx .fx-ill-5, [data-theme="dark"] .footer-cta-btn:hover + .btn-fx .fx-ill-5 { opacity: 1; transform: translate(0px, -65px) scale(0.9) rotate(45deg); transition-delay: 0.06s; }
 
 /* 3. Stripe Mode (Soft 3D Prismatic) */
 [data-theme="stripe-prismatic"] .fx-stripe, [data-theme="light"] .fx-stripe { display: block; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1)); }
@@ -3689,9 +3689,11 @@ themePills.forEach(pill => {
 
 // Restore saved theme on load
 try {
-  const savedTheme = localStorage.getItem('bg-theme');
-  if (savedTheme) setThemeEngine(savedTheme);
-} catch(e){}
+  const savedTheme = localStorage.getItem('bg-theme') || 'linear-dark';
+  setThemeEngine(savedTheme);
+} catch(e){
+  setThemeEngine('linear-dark');
+}
 
 // 2. Dynamic Figma Canvas Coordinates
 const coordsEl = document.getElementById('canvas-coords');
