@@ -1594,12 +1594,12 @@
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-/* ─── 4. CYBERPUNK NEON: 3D SYNTHWAVE HORIZON WIREFRAME ─────── */
+/* ─── 4. CYBERPUNK NEON: MATRIX TOKEN RAIN (GHOST IN THE SHELL) ─── */
 [data-theme="cyberpunk-neon"] .fantasy-cyber {
   display: block;
 }
 
-#cyber-synthwave-layer {
+#cyber-matrix-layer {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -1608,10 +1608,9 @@
   pointer-events: none !important;
   overflow: hidden;
   mix-blend-mode: screen;
-  opacity: 0.52;
 }
 
-.cyber-synthwave-canvas {
+.cyber-matrix-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1620,55 +1619,26 @@
   pointer-events: none;
 }
 
-.cyber-horizon-sun {
+.cyber-flank-vignette {
   position: absolute;
-  top: 44%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 520px;
-  height: 190px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 0, 127, 0.42) 0%, rgba(0, 240, 255, 0.16) 45%, transparent 75%);
-  filter: blur(36px);
+  top: 0;
+  bottom: 0;
+  width: 260px;
   pointer-events: none;
 }
-
-.cyber-hud-status {
-  position: absolute;
-  bottom: 24px;
-  right: 28px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  background: rgba(9, 8, 20, 0.88);
-  border: 1px solid rgba(0, 240, 255, 0.35);
-  border-radius: 2px;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #00F0FF;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
-  pointer-events: none;
+.left-vignette {
+  left: 0;
+  background: linear-gradient(90deg, rgba(9, 8, 20, 0.4) 0%, transparent 100%);
 }
-
-.chs-blink {
-  color: #FF007F;
-  animation: cyberBlink 1s infinite steps(1);
-}
-
-@keyframes cyberBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+.right-vignette {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(9, 8, 20, 0.4) 0%, transparent 100%);
 }
 
 @media (max-width: 768px) {
   .linear-token-chip:nth-child(n+5) { display: none; }
   .figma-canvas-drone { display: none; }
-  #cyber-synthwave-layer { opacity: 0.38; }
-  .cyber-horizon-sun { width: 300px; height: 110px; }
-  .cyber-hud-status { display: none; }
+  .cyber-flank-vignette { display: none; }
 }
 
 
@@ -2889,14 +2859,11 @@
   <div class="aurora-blob aurora-blob-3"></div>
 </div>
 
-<!-- 4. CYBERPUNK NEON: 3D Synthwave Horizon Wireframe -->
-<div id="cyber-synthwave-layer" class="fantasy-overlay fantasy-cyber" aria-hidden="true">
-  <canvas id="cyber-synthwave-canvas" class="cyber-synthwave-canvas"></canvas>
-  <div class="cyber-horizon-sun"></div>
-  <div class="cyber-hud-status">
-    <span class="chs-blink">●</span>
-    <span>SYNTH_HIGHWAY // GRID_ACTIVE • 120Hz</span>
-  </div>
+<!-- 4. CYBERPUNK NEON: Matrix Token Rain (Ghost in the Shell) -->
+<div id="cyber-matrix-layer" class="fantasy-overlay fantasy-cyber" aria-hidden="true">
+  <canvas id="cyber-matrix-canvas" class="cyber-matrix-canvas"></canvas>
+  <div class="cyber-flank-vignette left-vignette"></div>
+  <div class="cyber-flank-vignette right-vignette"></div>
 </div>
 
 <!-- ❖ HERO ❖ -->
@@ -4887,18 +4854,49 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   const droneSarah = document.getElementById('drone-sarah');
   const droneAlex = document.getElementById('drone-alex');
   const auroraBlobs = document.querySelectorAll('.aurora-blob');
-  const cyberCanvas = document.getElementById('cyber-synthwave-canvas');
+  const cyberCanvas = document.getElementById('cyber-matrix-canvas');
   const cyberCtx = cyberCanvas ? cyberCanvas.getContext('2d', { alpha: true }) : null;
   let cW = 0, cH = 0;
-  let synthGridZ = 0;
+  let matrixColumns = [];
 
-  function resizeCyberCanvas() {
+  const matrixTokens = [
+    '0xFF007F', 'token.core', '0x8A', 'sys.compiled', '#00F0FF',
+    'var(--primary)', '0x7F', 'color.brand', '0x2B', 'RAM_SYNC',
+    '#FDE047', '0x9C40', 'matrix.hex', '0x00E5', 'NODE_9',
+    '0x1A', 'token.glow', '0xEE', 'COMPILE', '0x04', 'BYTE_OK'
+  ];
+  const matrixGlyphs = '0123456789ABCDEF<>/{}$#@!%&*+=';
+
+  function initMatrixColumns() {
     if (!cyberCanvas) return;
     cW = cyberCanvas.width = window.innerWidth;
     cH = cyberCanvas.height = window.innerHeight;
+
+    const colWidth = 24;
+    const totalCols = Math.floor(cW / colWidth);
+    matrixColumns = [];
+
+    for (let i = 0; i < totalCols; i++) {
+      const colX = i * colWidth + 12;
+      const isLeftFlank = colX < cW * 0.23;
+      const isRightFlank = colX > cW * 0.77;
+      const isFlank = isLeftFlank || isRightFlank;
+
+      if (!isFlank && Math.random() > 0.1) continue;
+
+      matrixColumns.push({
+        x: colX,
+        y: Math.random() * -cH * 1.5,
+        baseSpeed: 1.2 + Math.random() * 2.2,
+        length: 10 + Math.floor(Math.random() * 15),
+        isFlank: isFlank,
+        colorTheme: Math.random() > 0.35 ? 'cyan' : 'pink',
+        tokenTag: matrixTokens[Math.floor(Math.random() * matrixTokens.length)]
+      });
+    }
   }
-  window.addEventListener('resize', resizeCyberCanvas, { passive: true });
-  resizeCyberCanvas();
+  window.addEventListener('resize', initMatrixColumns, { passive: true });
+  initMatrixColumns();
 
   let activeTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
   let targetScrollY = window.pageYOffset || 0;
@@ -5016,61 +5014,62 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       }
     }
 
-    // 4. CYBERPUNK NEON SYSTEM: 3D Synthwave Outrun Horizon Grid
+    // 4. CYBERPUNK NEON: Matrix Token Rain (Ghost in the Shell)
     else if (activeTheme === 'cyberpunk-neon') {
-      if (cyberCtx && cW > 0 && cH > 0) {
-        cyberCtx.clearRect(0, 0, cW, cH);
+      if (cyberCtx && cW > 0 && cH > 0 && matrixColumns.length > 0) {
+        cyberCtx.fillStyle = 'rgba(9, 8, 20, 0.22)';
+        cyberCtx.fillRect(0, 0, cW, cH);
 
-        // Speed increases dynamically with scroll velocity and active scroll delta
-        const cruiseSpeed = 0.9;
-        const velocityBoost = Math.abs(smoothVelocity) * 0.4;
-        synthGridZ = (synthGridZ + cruiseSpeed + velocityBoost) % 50;
+        // Scroll velocity powers direct waterfall acceleration
+        const scrollBoost = Math.abs(smoothVelocity) * 0.28;
 
-        const horizonY = cH * 0.44;
-        const vpX = cW / 2;
-        const groundHeight = cH - horizonY;
-        const fov = 260;
+        cyberCtx.font = '11px "JetBrains Mono", monospace';
+        cyberCtx.textAlign = 'center';
 
-        // 1. Draw Longitudinal Perspective Lines (fanning out to bottom)
-        cyberCtx.lineWidth = 1.2;
-        const numVLines = Math.ceil(cW / 65) + 8;
-        const spread = cW * 1.8;
+        matrixColumns.forEach(col => {
+          col.y += (col.baseSpeed + scrollBoost);
 
-        for (let i = -numVLines; i <= numVLines; i++) {
-          const bottomX = vpX + (i * (spread / numVLines));
-
-          const grad = cyberCtx.createLinearGradient(vpX, horizonY, bottomX, cH);
-          grad.addColorStop(0, 'rgba(0, 240, 255, 0)');
-          grad.addColorStop(0.25, 'rgba(0, 240, 255, 0.22)');
-          grad.addColorStop(1, 'rgba(255, 0, 127, 0.7)');
-
-          cyberCtx.strokeStyle = grad;
-          cyberCtx.beginPath();
-          cyberCtx.moveTo(vpX, horizonY);
-          cyberCtx.lineTo(bottomX, cH);
-          cyberCtx.stroke();
-        }
-
-        // 2. Draw Transverse Horizontal Lines moving forward in 3D perspective
-        const totalHLines = 20;
-        for (let j = 1; j <= totalHLines; j++) {
-          const rawZ = (j * 40 - synthGridZ);
-          if (rawZ <= 4) continue;
-
-          const factor = fov / (fov + rawZ);
-          const y = horizonY + groundHeight * (1 - factor);
-
-          if (y > horizonY && y <= cH) {
-            const alpha = Math.min(0.85, ((y - horizonY) / groundHeight) * 1.2);
-            cyberCtx.strokeStyle = `rgba(0, 240, 255, ${alpha.toFixed(3)})`;
-            cyberCtx.lineWidth = Math.max(1, 2.2 * (y / cH));
-
-            cyberCtx.beginPath();
-            cyberCtx.moveTo(0, y);
-            cyberCtx.lineTo(cW, y);
-            cyberCtx.stroke();
+          if (col.y - (col.length * 16) > cH) {
+            col.y = Math.random() * -200;
+            col.baseSpeed = 1.2 + Math.random() * 2.2;
+            col.tokenTag = matrixTokens[Math.floor(Math.random() * matrixTokens.length)];
           }
-        }
+
+          const headChar = matrixGlyphs[Math.floor(Math.random() * matrixGlyphs.length)];
+          const flankAlpha = col.isFlank ? 0.85 : 0.2;
+
+          for (let k = 0; k < col.length; k++) {
+            const charY = col.y - (k * 15);
+            if (charY < -10 || charY > cH + 10) continue;
+
+            const trailRatio = 1 - (k / col.length);
+
+            if (k === 0) {
+              cyberCtx.fillStyle = '#FFFFFF';
+              cyberCtx.shadowColor = col.colorTheme === 'cyan' ? '#00F0FF' : '#FF007F';
+              cyberCtx.shadowBlur = 8;
+              cyberCtx.fillText(headChar, col.x, charY);
+              cyberCtx.shadowBlur = 0;
+            } else if (k === 3 && col.isFlank && charY > 40 && charY < cH - 40) {
+              cyberCtx.save();
+              cyberCtx.fillStyle = col.colorTheme === 'cyan' ? 'rgba(0, 240, 255, 0.9)' : 'rgba(255, 0, 127, 0.9)';
+              cyberCtx.font = '9px "JetBrains Mono", monospace';
+              cyberCtx.fillText(col.tokenTag, col.x, charY);
+              cyberCtx.restore();
+            } else {
+              const alpha = (trailRatio * flankAlpha).toFixed(2);
+              cyberCtx.fillStyle = col.colorTheme === 'cyan' 
+                ? `rgba(0, 240, 255, ${alpha})` 
+                : `rgba(255, 0, 127, ${alpha})`;
+
+              const char = (Math.random() > 0.92) 
+                ? matrixGlyphs[Math.floor(Math.random() * matrixGlyphs.length)]
+                : matrixGlyphs[(k * 3) % matrixGlyphs.length];
+
+              cyberCtx.fillText(char, col.x, charY);
+            }
+          }
+        });
       }
     }
 
