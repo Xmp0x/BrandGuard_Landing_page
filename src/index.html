@@ -1604,10 +1604,11 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none !important;
   overflow: hidden;
   mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
 }
 
 .cyber-matrix-canvas {
@@ -1633,6 +1634,63 @@
 .right-vignette {
   right: 0;
   background: linear-gradient(-90deg, rgba(9, 8, 20, 0.4) 0%, transparent 100%);
+}
+
+/* Ensure content cards and sections are layered strictly ABOVE background overlays */
+.hero,
+.paths,
+.color-engine,
+.wizard-section,
+.tokens-section,
+.presets-section,
+.import-section,
+.container,
+.path-card,
+.wizard-card,
+.preview-card,
+.ce-widget,
+.token-card,
+.preset-card-item {
+  position: relative;
+  z-index: 2;
+}
+
+/* Footer visibility and styling guarantees */
+.gsap-footer-col,
+.footer-col,
+.footer-brand-col {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+[data-theme="cyberpunk-neon"] #master-footer {
+  background: #090814 !important;
+  color: #FFFFFF !important;
+  border-top: 2px solid rgba(0, 240, 255, 0.45) !important;
+  z-index: 2 !important;
+}
+[data-theme="cyberpunk-neon"] #master-footer .footer-cta h2,
+[data-theme="cyberpunk-neon"] #master-footer .decrypt-text {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 0 16px rgba(0, 240, 255, 0.4) !important;
+}
+[data-theme="cyberpunk-neon"] .footer-col h4 {
+  color: #00F0FF !important;
+  font-family: var(--mono) !important;
+}
+[data-theme="cyberpunk-neon"] .footer-col-links a {
+  color: #CBD5E1 !important;
+}
+[data-theme="cyberpunk-neon"] .footer-col-links a:hover {
+  color: #FF007F !important;
+  text-shadow: 0 0 8px #FF007F !important;
+}
+[data-theme="cyberpunk-neon"] .footer-brand-col p {
+  color: #94A3B8 !important;
+}
+[data-theme="cyberpunk-neon"] .footer-bottom {
+  color: #64748B !important;
 }
 
 @media (max-width: 768px) {
@@ -4824,20 +4882,11 @@ magneticIcons.forEach(icon => {
   });
 });
 
-// 4. GSAP Staggered Cascade
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-  gsap.from('.gsap-footer-col', {
-    scrollTrigger: {
-      trigger: '#master-footer',
-      start: 'top 80%',
-    },
-    y: 40,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: 'power3.out'
-  });
-}
+// 4. Guaranteed Visible Footer Columns
+document.querySelectorAll('.gsap-footer-col').forEach(col => {
+  col.style.opacity = '1';
+  col.style.visibility = 'visible';
+});
 
 
 // ═══════════════════════════════════════════════════════════════
@@ -4878,18 +4927,17 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
     for (let i = 0; i < totalCols; i++) {
       const colX = i * colWidth + 12;
-      const isLeftFlank = colX < cW * 0.23;
-      const isRightFlank = colX > cW * 0.77;
-      const isFlank = isLeftFlank || isRightFlank;
-
-      if (!isFlank && Math.random() > 0.1) continue;
+      // STRICTLY FLANKS ONLY! Confined strictly to outer margins, zero in center content
+      const isLeftFlank = colX < Math.min(220, cW * 0.16);
+      const isRightFlank = colX > Math.max(cW - 220, cW * 0.84);
+      if (!isLeftFlank && !isRightFlank) continue;
 
       matrixColumns.push({
         x: colX,
         y: Math.random() * -cH * 1.5,
         baseSpeed: 1.2 + Math.random() * 2.2,
         length: 10 + Math.floor(Math.random() * 15),
-        isFlank: isFlank,
+        isFlank: true,
         colorTheme: Math.random() > 0.35 ? 'cyan' : 'pink',
         tokenTag: matrixTokens[Math.floor(Math.random() * matrixTokens.length)]
       });
@@ -5017,8 +5065,19 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     // 4. CYBERPUNK NEON: Matrix Token Rain (Ghost in the Shell)
     else if (activeTheme === 'cyberpunk-neon') {
       if (cyberCtx && cW > 0 && cH > 0 && matrixColumns.length > 0) {
-        cyberCtx.fillStyle = 'rgba(9, 8, 20, 0.22)';
-        cyberCtx.fillRect(0, 0, cW, cH);
+        // Clear canvas completely so it NEVER obscures any text, cards, or footer
+        cyberCtx.clearRect(0, 0, cW, cH);
+
+        // Fade out matrix rain completely when scrolling near the revealed footer
+        const scrollMax = (document.documentElement.scrollHeight - window.innerHeight);
+        const footerH = (masterFooter ? masterFooter.offsetHeight : 450);
+        const distToBottom = scrollMax - currentScrollY;
+        if (distToBottom < footerH + 120) {
+          const fade = Math.max(0, (distToBottom - 60) / (footerH + 60));
+          cyberCanvas.style.opacity = fade.toFixed(2);
+        } else {
+          cyberCanvas.style.opacity = '1';
+        }
 
         // Scroll velocity powers direct waterfall acceleration
         const scrollBoost = Math.abs(smoothVelocity) * 0.28;
@@ -5036,7 +5095,6 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           }
 
           const headChar = matrixGlyphs[Math.floor(Math.random() * matrixGlyphs.length)];
-          const flankAlpha = col.isFlank ? 0.85 : 0.2;
 
           for (let k = 0; k < col.length; k++) {
             const charY = col.y - (k * 15);
@@ -5050,19 +5108,19 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
               cyberCtx.shadowBlur = 8;
               cyberCtx.fillText(headChar, col.x, charY);
               cyberCtx.shadowBlur = 0;
-            } else if (k === 3 && col.isFlank && charY > 40 && charY < cH - 40) {
+            } else if (k === 3 && charY > 40 && charY < cH - 40) {
               cyberCtx.save();
-              cyberCtx.fillStyle = col.colorTheme === 'cyan' ? 'rgba(0, 240, 255, 0.9)' : 'rgba(255, 0, 127, 0.9)';
+              cyberCtx.fillStyle = col.colorTheme === 'cyan' ? 'rgba(0, 240, 255, 0.85)' : 'rgba(255, 0, 127, 0.85)';
               cyberCtx.font = '9px "JetBrains Mono", monospace';
               cyberCtx.fillText(col.tokenTag, col.x, charY);
               cyberCtx.restore();
             } else {
-              const alpha = (trailRatio * flankAlpha).toFixed(2);
+              const alpha = (trailRatio * 0.75).toFixed(2);
               cyberCtx.fillStyle = col.colorTheme === 'cyan' 
                 ? `rgba(0, 240, 255, ${alpha})` 
                 : `rgba(255, 0, 127, ${alpha})`;
 
-              const char = (Math.random() > 0.92) 
+              const char = (Math.random() > 0.94) 
                 ? matrixGlyphs[Math.floor(Math.random() * matrixGlyphs.length)]
                 : matrixGlyphs[(k * 3) % matrixGlyphs.length];
 
