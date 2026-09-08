@@ -1406,24 +1406,30 @@
 /* Cursor drift animations - calm, smooth, organic drift */
 @keyframes cursorDrift1 {
   0%   { transform: translate3d(0px, 0px, 0); }
-  35%  { transform: translate3d(16px, -12px, 0); }
-  70%  { transform: translate3d(8px, 14px, 0); }
+  35%  { transform: translate3d(12px, -8px, 0); }
+  70%  { transform: translate3d(6px, 10px, 0); }
   100% { transform: translate3d(0px, 0px, 0); }
 }
 @keyframes cursorDrift2 {
   0%   { transform: translate3d(0px, 0px, 0); }
-  40%  { transform: translate3d(-14px, 14px, 0); }
-  80%  { transform: translate3d(12px, -8px, 0); }
+  40%  { transform: translate3d(-10px, 8px, 0); }
+  80%  { transform: translate3d(8px, -6px, 0); }
   100% { transform: translate3d(0px, 0px, 0); }
 }
 @keyframes cursorDrift3 {
   0%   { transform: translate3d(0px, 0px, 0); }
-  50%  { transform: translate3d(12px, -14px, 0); }
+  50%  { transform: translate3d(8px, -10px, 0); }
   100% { transform: translate3d(0px, 0px, 0); }
 }
-.cursor-sarah { top: 20px; right: -10px; animation: cursorDrift1 20s ease-in-out infinite; }
-.cursor-alex  { top: 260px; left: -30px; animation: cursorDrift2 24s ease-in-out infinite; }
-.cursor-ken   { bottom: 20px; right: 180px; animation: cursorDrift3 18s ease-in-out infinite; }
+.cursor-sarah { top: -20px; right: 40px; animation: cursorDrift1 20s ease-in-out infinite; }
+.cursor-alex  { top: -20px; left: 15px; animation: cursorDrift2 24s ease-in-out infinite; }
+.cursor-ken   { bottom: -36px; right: 80px; animation: cursorDrift3 18s ease-in-out infinite; }
+
+@media (max-width: 768px) {
+  .figma-cursor {
+    display: none !important;
+  }
+}
 
 .tag-label-cyber {
   display: none;
