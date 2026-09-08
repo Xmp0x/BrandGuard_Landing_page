@@ -1450,6 +1450,226 @@
   .figma-canvas-badge { display: none; }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ❖ THE 4 FANTASY SCROLL WORLDS (ZERO-LAYOUT-TOUCH OVERLAYS) ❖
+   ═══════════════════════════════════════════════════════════════ */
+
+.fantasy-overlay {
+  pointer-events: none !important;
+  user-select: none;
+  display: none;
+}
+
+/* ─── 1. LINEAR OBSIDIAN: SPATIAL TOKEN SWARM ───────────────── */
+[data-theme="dark"] .fantasy-linear,
+[data-theme="linear-dark"] .fantasy-linear {
+  display: block;
+}
+
+#linear-spatial-swarm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.linear-token-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  font-family: var(--mono);
+  font-size: 11px;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.ltc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ltc-key {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ltc-val {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+}
+
+/* ─── 2. FIGMA CANVAS: LASER CALIPERS & MULTIPLAYER FLIGHT ──── */
+[data-theme="figma-canvas"] .fantasy-figma {
+  display: block;
+}
+
+#figma-spatial-guides {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 42;
+  overflow: hidden;
+}
+
+.figma-canvas-drone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  will-change: transform;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.28));
+}
+
+/* ─── 3. STRIPE PRISMATIC: LIQUID AURORA OCEAN & FLUID TILT ─── */
+[data-theme="light"] .fantasy-stripe,
+[data-theme="stripe-prismatic"] .fantasy-stripe {
+  display: block;
+}
+
+#stripe-aurora-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.55;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.aurora-blob-1 {
+  width: 600px;
+  height: 600px;
+  top: -150px;
+  left: -100px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, rgba(139, 92, 246, 0.18) 50%, transparent 70%);
+}
+
+.aurora-blob-2 {
+  width: 700px;
+  height: 700px;
+  top: 35%;
+  right: -200px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(20, 184, 166, 0.18) 50%, transparent 70%);
+}
+
+.aurora-blob-3 {
+  width: 650px;
+  height: 650px;
+  bottom: -150px;
+  left: 20%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(236, 72, 153, 0.18) 50%, transparent 70%);
+}
+
+/* Safe velocity tilt on Stripe cards */
+[data-theme="stripe-prismatic"] .path-card,
+[data-theme="stripe-prismatic"] .preset-card-item {
+  transform: translateY(var(--stripe-lift, 0px)) perspective(1000px) rotateX(var(--stripe-pitch, 0deg));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+/* ─── 4. CYBERPUNK NEON: SCANNER PLANE & TACTICAL HUD ────────── */
+[data-theme="cyberpunk-neon"] .fantasy-cyber {
+  display: block;
+}
+
+#cyber-scanner-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 45;
+  overflow: hidden;
+}
+
+.cyber-laser-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #00F0FF 20%, #FF007F 50%, #00F0FF 80%, transparent 100%);
+  box-shadow: 0 0 12px #00F0FF, 0 0 25px rgba(255, 0, 127, 0.6);
+  will-change: transform;
+  pointer-events: none;
+}
+
+.cyber-laser-glow {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(180deg, transparent, rgba(0, 240, 255, 0.08) 50%, transparent);
+  pointer-events: none;
+}
+
+.cyber-laser-reticle {
+  position: absolute;
+  right: 28px;
+  top: -20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #00F0FF;
+  text-shadow: 0 0 8px #00F0FF;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(9, 8, 20, 0.88);
+  padding: 3px 9px;
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.cyber-tactical-bracket {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(0, 240, 255, 0.35);
+  border-style: solid;
+  pointer-events: none;
+}
+.ctb-tl { top: 24px; left: 24px; border-width: 2px 0 0 2px; }
+.ctb-tr { top: 24px; right: 24px; border-width: 2px 2px 0 0; }
+.ctb-bl { bottom: 24px; left: 24px; border-width: 0 0 2px 2px; }
+.ctb-br { bottom: 24px; right: 24px; border-width: 0 2px 2px 0; }
+
+@media (max-width: 768px) {
+  .linear-token-chip:nth-child(n+5) { display: none; }
+  .figma-canvas-drone { display: none; }
+  .cyber-laser-reticle { font-size: 8px; right: 12px; }
+  .cyber-tactical-bracket { display: none; }
+}
+
 
 /* ─── FIXED NAVBAR & THEME ALIGNMENT ────────────────────────── */
 
@@ -2593,6 +2813,95 @@
   <span>100%</span>
   <span style="opacity: 0.3;">•</span>
   <span id="canvas-coords">X: 1420 Y: 890</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     ❖ THE 4 FANTASY SCROLL WORLDS (ZERO-LAYOUT-TOUCH OVERLAYS) ❖
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- 1. LINEAR OBSIDIAN: Spatial Token Swarm -->
+<div id="linear-spatial-swarm" class="fantasy-overlay fantasy-linear" aria-hidden="true">
+  <div class="linear-token-chip" style="top: 850px; left: 6%;" data-depth="0.35" data-rotate="-4">
+    <span class="ltc-dot" style="background:#6366F1; box-shadow: 0 0 8px #6366F1;"></span>
+    <span class="ltc-key">color.brand.500</span>
+    <span class="ltc-val">#6366F1</span>
+  </div>
+  <div class="linear-token-chip" style="top: 1350px; right: 7%;" data-depth="0.65" data-rotate="5">
+    <span class="ltc-dot" style="background:#10B981; box-shadow: 0 0 8px #10B981;"></span>
+    <span class="ltc-key">spacing.16</span>
+    <span class="ltc-val">64px</span>
+  </div>
+  <div class="linear-token-chip" style="top: 1950px; left: 5%;" data-depth="0.25" data-rotate="-6">
+    <span class="ltc-dot" style="background:#818CF8; box-shadow: 0 0 8px #818CF8;"></span>
+    <span class="ltc-key">radius.full</span>
+    <span class="ltc-val">9999px</span>
+  </div>
+  <div class="linear-token-chip" style="top: 2600px; right: 6%;" data-depth="0.75" data-rotate="4">
+    <span class="ltc-dot" style="background:#F59E0B; box-shadow: 0 0 8px #F59E0B;"></span>
+    <span class="ltc-key">font.display</span>
+    <span class="ltc-val">Inter 64px</span>
+  </div>
+  <div class="linear-token-chip" style="top: 3350px; left: 7%;" data-depth="0.4" data-rotate="-3">
+    <span class="ltc-dot" style="background:#EC4899; box-shadow: 0 0 8px #EC4899;"></span>
+    <span class="ltc-key">shadow.glow</span>
+    <span class="ltc-val">0 0 40px</span>
+  </div>
+  <div class="linear-token-chip" style="top: 4100px; right: 5%;" data-depth="0.7" data-rotate="6">
+    <span class="ltc-dot" style="background:#38BDF8; box-shadow: 0 0 8px #38BDF8;"></span>
+    <span class="ltc-key">elevation.4</span>
+    <span class="ltc-val">z-index: 40</span>
+  </div>
+  <div class="linear-token-chip" style="top: 4800px; left: 6%;" data-depth="0.3" data-rotate="-5">
+    <span class="ltc-dot" style="background:#A855F7; box-shadow: 0 0 8px #A855F7;"></span>
+    <span class="ltc-key">transition.spring</span>
+    <span class="ltc-val">300ms cubic</span>
+  </div>
+</div>
+
+<!-- 2. FIGMA CANVAS: Laser Alignment Calipers & Multiplayer Flight -->
+<div id="figma-spatial-guides" class="fantasy-overlay fantasy-figma" aria-hidden="true">
+  <svg id="figma-caliper-svg" width="100%" height="100%" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;">
+    <!-- Caliper measurement guide -->
+    <line id="f-caliper-line" x1="75" y1="120" x2="75" y2="280" stroke="#F24E1E" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <line id="f-caliper-cap-t" x1="67" y1="120" x2="83" y2="120" stroke="#F24E1E" stroke-width="1.5"/>
+    <line id="f-caliper-cap-b" x1="67" y1="280" x2="83" y2="280" stroke="#F24E1E" stroke-width="1.5"/>
+    <g id="f-caliper-badge-g" transform="translate(87, 195)">
+      <rect x="0" y="-11" width="56" height="22" rx="4" fill="#F24E1E"/>
+      <text id="f-caliper-text" x="28" y="4" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">160px</text>
+    </g>
+  </svg>
+  <!-- Multiplayer roaming drones -->
+  <div class="figma-canvas-drone drone-sarah" id="drone-sarah">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65 12.37H5.46L5.32 12.5L0.5 16.88V1.2L11.78 12.37H5.65Z" fill="#E056FD" stroke="white" stroke-width="1.5"/></svg>
+    <div class="figma-cursor-tag" style="background:#E056FD;">Sarah • Inspecting</div>
+  </div>
+  <div class="figma-canvas-drone drone-alex" id="drone-alex">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65 12.37H5.46L5.32 12.5L0.5 16.88V1.2L11.78 12.37H5.65Z" fill="#0D99FF" stroke="white" stroke-width="1.5"/></svg>
+    <div class="figma-cursor-tag" style="background:#0D99FF;">Alex • Reviewing</div>
+  </div>
+</div>
+
+<!-- 3. STRIPE PRISMATIC: Liquid Aurora Ocean -->
+<div id="stripe-aurora-layer" class="fantasy-overlay fantasy-stripe" aria-hidden="true">
+  <div class="aurora-blob aurora-blob-1"></div>
+  <div class="aurora-blob aurora-blob-2"></div>
+  <div class="aurora-blob aurora-blob-3"></div>
+</div>
+
+<!-- 4. CYBERPUNK NEON: Tactical Laser Scanner Plane -->
+<div id="cyber-scanner-overlay" class="fantasy-overlay fantasy-cyber" aria-hidden="true">
+  <div class="cyber-laser-beam" id="cyber-laser-beam">
+    <div class="cyber-laser-glow"></div>
+    <div class="cyber-laser-reticle">
+      <span>[</span>
+      <span id="cyber-scan-coord">SCAN // SYS_ACTIVE • Y: 0000</span>
+      <span>]</span>
+    </div>
+  </div>
+  <div class="cyber-tactical-bracket ctb-tl"></div>
+  <div class="cyber-tactical-bracket ctb-tr"></div>
+  <div class="cyber-tactical-bracket ctb-bl"></div>
+  <div class="cyber-tactical-bracket ctb-br"></div>
 </div>
 
 <!-- ❖ HERO ❖ -->
@@ -4569,6 +4878,156 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 }
 
 
+// ═══════════════════════════════════════════════════════════════
+// ❖ THE 4 FANTASY SCROLL WORLDS ANIMATION ENGINE ❖
+// ═══════════════════════════════════════════════════════════════
+(function initFantasyScrollWorlds() {
+  const swarm = document.getElementById('linear-spatial-swarm');
+  const tokens = swarm ? Array.from(swarm.querySelectorAll('.linear-token-chip')) : [];
+  const caliperLine = document.getElementById('f-caliper-line');
+  const caliperCapT = document.getElementById('f-caliper-cap-t');
+  const caliperCapB = document.getElementById('f-caliper-cap-b');
+  const caliperBadge = document.getElementById('f-caliper-badge-g');
+  const caliperText = document.getElementById('f-caliper-text');
+  const droneSarah = document.getElementById('drone-sarah');
+  const droneAlex = document.getElementById('drone-alex');
+  const auroraBlobs = document.querySelectorAll('.aurora-blob');
+  const cyberBeam = document.getElementById('cyber-laser-beam');
+  const cyberCoord = document.getElementById('cyber-scan-coord');
+
+  let activeTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+  let targetScrollY = window.pageYOffset || 0;
+  let currentScrollY = targetScrollY;
+  let lastScrollY = targetScrollY;
+  let scrollVelocity = 0;
+  let smoothVelocity = 0;
+
+  // Cache token depths, base rotation and base top
+  const tokenData = tokens.map(el => ({
+    el,
+    depth: parseFloat(el.getAttribute('data-depth') || '0.5'),
+    rot: parseFloat(el.getAttribute('data-rotate') || '0'),
+    baseY: el.offsetTop || 0
+  }));
+
+  // Hook into global theme changes
+  window.addEventListener('themeChanged', (e) => {
+    activeTheme = e.detail || document.documentElement.getAttribute('data-theme') || 'linear-dark';
+  });
+
+  function onScroll() {
+    targetScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  let frame = 0;
+  function loopWorlds() {
+    frame += 1;
+    activeTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+
+    // Fluid interpolation for ultra-smooth 60/120fps motion
+    currentScrollY += (targetScrollY - currentScrollY) * 0.14;
+    scrollVelocity = targetScrollY - lastScrollY;
+    smoothVelocity += (scrollVelocity - smoothVelocity) * 0.12;
+    lastScrollY = targetScrollY;
+
+    // 1. LINEAR OBSIDIAN SYSTEM: 3D Spatial Token Swarm
+    if (activeTheme === 'dark' || activeTheme === 'linear-dark') {
+      const vh = window.innerHeight;
+      tokenData.forEach(item => {
+        const screenDist = item.baseY - currentScrollY;
+        if (screenDist > -500 && screenDist < vh + 500) {
+          const driftY = -(currentScrollY * item.depth * 0.22);
+          const swayX = Math.sin(frame * 0.02 + item.depth * 8) * 8;
+          const tiltZ = item.rot + Math.cos(frame * 0.015 + item.depth * 4) * 3;
+          item.el.style.transform = `translate3d(${swayX.toFixed(1)}px, ${driftY.toFixed(1)}px, 0) rotate(${tiltZ.toFixed(1)}deg)`;
+        }
+      });
+    }
+
+    // 2. FIGMA CANVAS SYSTEM: Calipers & Multiplayer Flight
+    else if (activeTheme === 'figma-canvas') {
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+
+      // Roaming Multiplayer Cursors
+      if (droneSarah) {
+        const sx = 100 + Math.sin(currentScrollY * 0.003 + frame * 0.02) * 70;
+        const sy = 160 + ((currentScrollY * 0.14 + Math.cos(frame * 0.02) * 45) % Math.max(200, vh - 220));
+        droneSarah.style.transform = `translate3d(${sx.toFixed(1)}px, ${sy.toFixed(1)}px, 0)`;
+      }
+      if (droneAlex) {
+        const ax = Math.max(80, vw - 220 + Math.cos(currentScrollY * 0.0025 + frame * 0.018) * 65);
+        const ay = 250 + ((currentScrollY * 0.2 + Math.sin(frame * 0.022) * 50) % Math.max(200, vh - 220));
+        droneAlex.style.transform = `translate3d(${ax.toFixed(1)}px, ${ay.toFixed(1)}px, 0)`;
+      }
+
+      // Dynamic Precision Laser Calipers
+      if (caliperLine && caliperBadge && caliperText) {
+        const caliperY1 = Math.max(90, 110 + Math.sin(frame * 0.03) * 15);
+        const caliperGap = 120 + Math.abs(Math.sin(currentScrollY * 0.004) * 140);
+        const caliperY2 = caliperY1 + caliperGap;
+        const caliperX = Math.min(vw - 110, Math.max(65, 75 + Math.sin(currentScrollY * 0.002) * 15));
+
+        caliperLine.setAttribute('x1', caliperX);
+        caliperLine.setAttribute('y1', caliperY1);
+        caliperLine.setAttribute('x2', caliperX);
+        caliperLine.setAttribute('y2', caliperY2);
+
+        if (caliperCapT) {
+          caliperCapT.setAttribute('x1', caliperX - 8);
+          caliperCapT.setAttribute('y1', caliperY1);
+          caliperCapT.setAttribute('x2', caliperX + 8);
+          caliperCapT.setAttribute('y2', caliperY1);
+        }
+        if (caliperCapB) {
+          caliperCapB.setAttribute('x1', caliperX - 8);
+          caliperCapB.setAttribute('y1', caliperY2);
+          caliperCapB.setAttribute('x2', caliperX + 8);
+          caliperCapB.setAttribute('y2', caliperY2);
+        }
+
+        caliperBadge.setAttribute('transform', `translate(${caliperX + 12}, ${(caliperY1 + caliperY2)/2})`);
+        caliperText.textContent = `${Math.round(caliperGap)}px`;
+      }
+    }
+
+    // 3. STRIPE PRISMATIC SYSTEM: Liquid Aurora Ocean & Velocity Tilt
+    else if (activeTheme === 'light' || activeTheme === 'stripe-prismatic') {
+      // Dynamic velocity tilt physics
+      const clampedPitch = Math.max(-2.2, Math.min(2.2, smoothVelocity * 0.07));
+      const clampedLift = Math.max(-3.5, Math.min(3.5, smoothVelocity * 0.1));
+      document.documentElement.style.setProperty('--stripe-pitch', `${clampedPitch.toFixed(2)}deg`);
+      document.documentElement.style.setProperty('--stripe-lift', `${clampedLift.toFixed(1)}px`);
+
+      // Fluid undulation of aurora blobs
+      if (auroraBlobs.length >= 3) {
+        const b1Y = Math.sin(currentScrollY * 0.002 + frame * 0.012) * 45;
+        const b2Y = Math.cos(currentScrollY * 0.0025 + frame * 0.015) * 55;
+        const b3Y = Math.sin(currentScrollY * 0.0018 + frame * 0.01) * 40;
+        auroraBlobs[0].style.transform = `translate3d(0, ${b1Y.toFixed(1)}px, 0)`;
+        auroraBlobs[1].style.transform = `translate3d(0, ${b2Y.toFixed(1)}px, 0)`;
+        auroraBlobs[2].style.transform = `translate3d(0, ${b3Y.toFixed(1)}px, 0)`;
+      }
+    }
+
+    // 4. CYBERPUNK NEON SYSTEM: Tactical Laser Scanner Plane
+    else if (activeTheme === 'cyberpunk-neon') {
+      if (cyberBeam && cyberCoord) {
+        const vh = window.innerHeight;
+        const scanPos = ((currentScrollY * 0.65 + frame * 1.8) % Math.max(200, vh - 70)) + 35;
+        cyberBeam.style.transform = `translate3d(0, ${scanPos.toFixed(1)}px, 0)`;
+        cyberCoord.textContent = `SCAN // SYS_ACTIVE • Y: ${String(Math.floor(currentScrollY)).padStart(4, '0')} • SEC_${(Math.floor(currentScrollY / 450) % 8) + 1}`;
+      }
+    }
+
+    requestAnimationFrame(loopWorlds);
+  }
+
+  requestAnimationFrame(loopWorlds);
+})();
+
+
 // ─── THE INTERACTIVE DESIGN-ENGINE JS ─────────────────────────
 
 // 1. Multi-Theme Switcher (DaisyUI / Figma Style)
@@ -4577,6 +5036,7 @@ function setThemeEngine(themeVal) {
   document.documentElement.setAttribute('data-theme', themeVal);
   try { localStorage.setItem('bg-theme', themeVal); } catch(e){}
   themePills.forEach(p => p.classList.toggle('active', p.getAttribute('data-theme-val') === themeVal));
+  window.dispatchEvent(new CustomEvent('themeChanged', { detail: themeVal }));
 }
 
 themePills.forEach(pill => {
