@@ -603,14 +603,13 @@
     .presets-scroll { 
       display: flex; gap: 1.5rem; overflow-x: auto; 
       padding: 1rem max(2rem, calc((100vw - 1136px) / 2)) 3rem; 
-      scroll-snap-type: x proximity; 
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
     .presets-scroll::-webkit-scrollbar { display: none; }
     .preset-card-item {
       flex: 0 0 320px; background: var(--bg-card); border: var(--border-width, 1px) solid var(--border);
-      border-radius: var(--radius-xl); padding: 16px; scroll-snap-align: start;
+      border-radius: var(--radius-xl); padding: 16px;
       transition: all 0.4s cubic-bezier(0.16,1,0.3,1); cursor: pointer;
       display: flex; flex-direction: column; gap: 16px;
     }
@@ -4868,35 +4867,68 @@ spacer.style.cssText = 'width:2rem; flex-shrink:0;';
 scroll.appendChild(spacer);
 
 // ── Presets Wheel Horizontal Scroll & Nav Controls ───────────
+const presetsSection = document.getElementById('presets');
+const presetsScroll = document.getElementById('presets-scroll');
 const presetsPrevBtn = document.getElementById('presets-prev-btn');
 const presetsNextBtn = document.getElementById('presets-next-btn');
 
-if (scroll) {
-  // Translate vertical mouse wheel into horizontal scroll with smart boundary pass-through
-  scroll.addEventListener('wheel', (e) => {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-      const maxScroll = scroll.scrollWidth - scroll.clientWidth;
-      const isAtStart = scroll.scrollLeft <= 4;
-      const isAtEnd = scroll.scrollLeft >= maxScroll - 4;
+if (presetsScroll) {
+  let targetScroll = presetsScroll.scrollLeft;
+  let isWheelAnimating = false;
 
-      if (e.deltaY > 0 && !isAtEnd) {
+  function smoothScrollTick() {
+    if (!presetsScroll) return;
+    const maxScroll = Math.ceil(presetsScroll.scrollWidth - presetsScroll.clientWidth);
+    targetScroll = Math.max(0, Math.min(maxScroll, targetScroll));
+    const diff = targetScroll - presetsScroll.scrollLeft;
+
+    if (Math.abs(diff) > 0.75) {
+      presetsScroll.scrollLeft += diff * 0.25;
+      requestAnimationFrame(smoothScrollTick);
+    } else {
+      presetsScroll.scrollLeft = targetScroll;
+      isWheelAnimating = false;
+      updatePresetsNav();
+    }
+  }
+
+  const handleWheel = (e) => {
+    let delta = e.deltaY;
+    if (e.deltaMode === 1) delta *= 33;
+    else if (e.deltaMode === 2) delta *= 800;
+
+    // Only intercept vertical wheel scroll (let horizontal trackpad gestures work natively)
+    if (Math.abs(delta) > Math.abs(e.deltaX)) {
+      const maxScroll = Math.ceil(presetsScroll.scrollWidth - presetsScroll.clientWidth);
+      if (!isWheelAnimating) {
+        targetScroll = presetsScroll.scrollLeft;
+      }
+
+      const canScrollRight = delta > 0 && presetsScroll.scrollLeft < maxScroll - 2;
+      const canScrollLeft = delta < 0 && presetsScroll.scrollLeft > 2;
+
+      if (canScrollRight || canScrollLeft) {
         e.preventDefault();
-        scroll.scrollLeft += e.deltaY * 1.2;
-      } else if (e.deltaY < 0 && !isAtStart) {
-        e.preventDefault();
-        scroll.scrollLeft += e.deltaY * 1.2;
+        targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + delta * 1.15));
+        if (!isWheelAnimating) {
+          isWheelAnimating = true;
+          requestAnimationFrame(smoothScrollTick);
+        }
       }
     }
-  }, { passive: false });
+  };
+
+  const wheelTarget = presetsSection || presetsScroll;
+  wheelTarget.addEventListener('wheel', handleWheel, { passive: false });
 
   // Update navigation button disabled states
   const updatePresetsNav = () => {
-    const maxScroll = scroll.scrollWidth - scroll.clientWidth;
-    if (presetsPrevBtn) presetsPrevBtn.disabled = scroll.scrollLeft <= 6;
-    if (presetsNextBtn) presetsNextBtn.disabled = scroll.scrollLeft >= maxScroll - 6;
+    const maxScroll = Math.ceil(presetsScroll.scrollWidth - presetsScroll.clientWidth);
+    if (presetsPrevBtn) presetsPrevBtn.disabled = presetsScroll.scrollLeft <= 4;
+    if (presetsNextBtn) presetsNextBtn.disabled = presetsScroll.scrollLeft >= maxScroll - 4;
   };
 
-  scroll.addEventListener('scroll', updatePresetsNav, { passive: true });
+  presetsScroll.addEventListener('scroll', updatePresetsNav, { passive: true });
   updatePresetsNav();
   setTimeout(updatePresetsNav, 200);
 
@@ -4904,12 +4936,14 @@ if (scroll) {
   const CARD_STEP = 344;
   if (presetsPrevBtn) {
     presetsPrevBtn.addEventListener('click', () => {
-      scroll.scrollBy({ left: -CARD_STEP, behavior: 'smooth' });
+      isWheelAnimating = false;
+      presetsScroll.scrollBy({ left: -CARD_STEP, behavior: 'smooth' });
     });
   }
   if (presetsNextBtn) {
     presetsNextBtn.addEventListener('click', () => {
-      scroll.scrollBy({ left: CARD_STEP, behavior: 'smooth' });
+      isWheelAnimating = false;
+      presetsScroll.scrollBy({ left: CARD_STEP, behavior: 'smooth' });
     });
   }
 }
