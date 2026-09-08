@@ -88,26 +88,26 @@
     }
 
     [data-theme="light"], [data-theme="stripe-prismatic"] {
-      --bg:         #F8FAFC;
+      --bg:         #F5F6FC;
       --bg-raised:  #FFFFFF;
-      --bg-card:    #FFFFFF;
-      --bg-card-2:  #F1F5F9;
-      --border:     rgba(0,0,0,0.08);
-      --border-md:  rgba(0,0,0,0.14);
-      --border-hl:  rgba(99,102,241,0.5);
+      --bg-card:    rgba(255, 255, 255, 0.76);
+      --bg-card-2:  rgba(245, 246, 252, 0.85);
+      --border:     rgba(192, 132, 252, 0.2);
+      --border-md:  rgba(192, 132, 252, 0.32);
+      --border-hl:  rgba(168, 85, 247, 0.65);
       --text:       #0F172A;
       --text-2:     #334155;
       --text-3:     #64748B;
-      --text-mono:  #4338CA;
-      --primary-bg: rgba(99,102,241,0.08);
-      --primary-bg-h: rgba(99,102,241,0.14);
-      --mint-bg:    rgba(16,185,129,0.08);
-      --amber-bg:   rgba(245,158,11,0.08);
-      --sky-bg:     rgba(56,189,248,0.08);
-      --error-bg:   rgba(248,113,113,0.08);
-      --success-bg: rgba(52,211,153,0.08);
-      --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
-      --shadow-float: 0 4px 24px rgba(0,0,0,0.1), 0 16px 48px rgba(0,0,0,0.08);
+      --text-mono:  #7C3AED;
+      --primary-bg: rgba(124, 58, 237, 0.08);
+      --primary-bg-h: rgba(124, 58, 237, 0.15);
+      --mint-bg:    rgba(16, 185, 129, 0.08);
+      --amber-bg:   rgba(245, 158, 11, 0.08);
+      --sky-bg:     rgba(56, 189, 248, 0.08);
+      --error-bg:   rgba(248, 113, 113, 0.08);
+      --success-bg: rgba(52, 211, 153, 0.08);
+      --shadow-card: 0 12px 32px rgba(124, 58, 237, 0.07), 0 2px 6px rgba(0,0,0,0.03);
+      --shadow-float: 0 24px 64px rgba(124, 58, 237, 0.12), 0 8px 24px rgba(0,0,0,0.05);
     }
 
     /* ─── Base ───────────────────────────────────────────────── */
@@ -1013,27 +1013,27 @@
   --shadow-float: 0 8px 24px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* 3. Stripe Prismatic (Light) */
+/* 3. Stripe Prismatic: Holographic Opal (Light) */
 [data-theme="light"], [data-theme="stripe-prismatic"] {
-  --canvas-dots: rgba(0, 0, 0, 0.06);
-  --bg: #F8FAFC;
+  --canvas-dots: rgba(124, 58, 237, 0.07);
+  --bg: #F5F6FC;
   --bg-raised: #FFFFFF;
-  --bg-card: #FFFFFF;
-  --bg-card-2: #F1F5F9;
-  --border: rgba(0, 0, 0, 0.08);
-  --border-md: rgba(0, 0, 0, 0.14);
-  --border-hl: rgba(99, 102, 241, 0.4);
+  --bg-card: rgba(255, 255, 255, 0.76);
+  --bg-card-2: rgba(245, 246, 252, 0.85);
+  --border: rgba(192, 132, 252, 0.2);
+  --border-md: rgba(192, 132, 252, 0.32);
+  --border-hl: rgba(168, 85, 247, 0.65);
   --text: #0F172A;
-  --text-2: #475569;
-  --text-3: #94A3B8;
-  --text-mono: #6366F1;
-  --primary: #6366F1;
-  --primary-h: #4F46E5;
-  --primary-d: #4338CA;
-  --primary-bg: rgba(99, 102, 241, 0.08);
+  --text-2: #334155;
+  --text-3: #64748B;
+  --text-mono: #7C3AED;
+  --primary: #7C3AED;
+  --primary-h: #6D28D9;
+  --primary-d: #5B21B6;
+  --primary-bg: rgba(124, 58, 237, 0.08);
   --accent: #EC4899;
-  --accent-glow: rgba(236, 72, 153, 0.25);
-  --selection-box: #0D99FF;
+  --accent-glow: rgba(236, 72, 153, 0.28);
+  --selection-box: #7C3AED;
   --hud-bg: rgba(255, 255, 255, 0.92);
   
   /* Stripe Anatomy */
@@ -1044,8 +1044,8 @@
   --radius-xl:  32px;
   --radius-pill: 999px;
   --border-width: 1px;
-  --shadow-card: 0 12px 32px rgba(99, 102, 241, 0.08), 0 2px 6px rgba(0,0,0,0.04);
-  --shadow-float: 0 24px 64px rgba(99, 102, 241, 0.12), 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-card: 0 12px 32px rgba(124, 58, 237, 0.07), 0 2px 6px rgba(0,0,0,0.03);
+  --shadow-float: 0 24px 64px rgba(124, 58, 237, 0.12), 0 8px 24px rgba(0,0,0,0.05);
 }
 
 /* 4. Cyberpunk Neon */
@@ -1143,35 +1143,86 @@
   position: relative;
 }
 
-/* --- 3. STRIPE PRISMATIC (Luminous Glass) --- */
-/* 45-degree slanted gradient mesh behind everything */
+/* --- 3. STRIPE PRISMATIC (Holographic Opal & Luminous Prism Glass) --- */
 [data-theme="light"] .main-wrapper,
 [data-theme="stripe-prismatic"] .main-wrapper {
-  background-color: #F8FAFC !important; /* Must be solid to hide fixed footer */
+  background-color: #F5F6FC !important; /* Solid light opal to mask reveal footer */
 }
 [data-theme="light"] .main-wrapper::before,
 [data-theme="stripe-prismatic"] .main-wrapper::before {
   content: ''; position: absolute; top: -10%; left: -10%; right: -10%; bottom: -10%;
   z-index: -1;
-  background: repeating-linear-gradient(45deg, #FFEDD5 0%, #FBCFE8 15%, #E0E7FF 30%, #DBEAFE 45%, #FFEDD5 60%);
-  filter: blur(80px) opacity(0.8); pointer-events: none;
-  animation: stripePan 30s linear infinite;
+  background: linear-gradient(
+    130deg,
+    rgba(233, 213, 255, 0.50) 0%,   /* Soft Holo Lilac */
+    rgba(252, 231, 243, 0.55) 22%,  /* Cotton Candy Rose */
+    rgba(224, 242, 254, 0.55) 48%,  /* Aqua Mist */
+    rgba(254, 249, 195, 0.42) 72%,  /* Lemon Cream */
+    rgba(237, 233, 254, 0.50) 88%,  /* Opal Pearl */
+    rgba(252, 231, 243, 0.45) 100%
+  );
+  filter: blur(75px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: stripePan 32s ease-in-out infinite alternate;
 }
 @keyframes stripePan {
-  0% { transform: translateY(0) scale(1.2); }
-  100% { transform: translateY(-15%) scale(1.2); } 
+  0%   { transform: translate3d(0, 0, 0) scale(1.15); }
+  50%  { transform: translate3d(2%, -4%, 0) scale(1.22); }
+  100% { transform: translate3d(-2%, -8%, 0) scale(1.15); }
 }
-/* Frosted glass cards */
+/* Frosted Holographic Glass Cards */
 [data-theme="light"] .path-card, [data-theme="stripe-prismatic"] .path-card,
 [data-theme="light"] .ce-widget, [data-theme="stripe-prismatic"] .ce-widget,
 [data-theme="light"] .step-info, [data-theme="stripe-prismatic"] .step-info,
 [data-theme="light"] .token-stat, [data-theme="stripe-prismatic"] .token-stat,
 [data-theme="light"] .preset-card-item, [data-theme="stripe-prismatic"] .preset-card-item {
-  background: rgba(255, 255, 255, 0.65) !important;
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 1) !important;
-  box-shadow: 0 20px 40px rgba(50,50,93,0.08), 0 4px 12px rgba(0,0,0,0.03) !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 16px 36px -4px rgba(124, 58, 237, 0.07),
+              0 4px 12px rgba(0, 0, 0, 0.03),
+              inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+[data-theme="light"] .path-card:hover, [data-theme="stripe-prismatic"] .path-card:hover,
+[data-theme="light"] .preset-card-item:hover, [data-theme="stripe-prismatic"] .preset-card-item:hover {
+  border-color: rgba(192, 132, 252, 0.5) !important;
+  box-shadow: 0 24px 48px -8px rgba(124, 58, 237, 0.15),
+              0 0 0 1px rgba(192, 132, 252, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Luminous Buttons in Stripe Mode */
+[data-theme="stripe-prismatic"] .btn-primary,
+[data-theme="light"] .btn-primary,
+[data-theme="stripe-prismatic"] .btn-cta,
+[data-theme="light"] .btn-cta,
+[data-theme="stripe-prismatic"] .footer-cta-btn,
+[data-theme="light"] .footer-cta-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 50%, #EC4899 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.32), 0 2px 6px rgba(236, 72, 153, 0.2) !important;
+}
+[data-theme="stripe-prismatic"] .btn-primary:hover,
+[data-theme="light"] .btn-primary:hover,
+[data-theme="stripe-prismatic"] .btn-cta:hover,
+[data-theme="light"] .btn-cta:hover,
+[data-theme="stripe-prismatic"] .footer-cta-btn:hover,
+[data-theme="light"] .footer-cta-btn:hover {
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45), 0 4px 12px rgba(236, 72, 153, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+/* Hero Gradient Text in Stripe Mode */
+[data-theme="stripe-prismatic"] .hero-h1 .gradient,
+[data-theme="light"] .hero-h1 .gradient {
+  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #0284C7 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
 
 /* ─── BUTTON HOVER FX (THEME SPECIFIC) ────────────────────── */
@@ -1639,39 +1690,40 @@
   height: 100vh;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.55;
+  opacity: 0.70;
+  pointer-events: none;
 }
 
 .aurora-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(95px);
   will-change: transform;
   pointer-events: none;
 }
 
 .aurora-blob-1 {
-  width: 600px;
-  height: 600px;
-  top: -150px;
-  left: -100px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, rgba(139, 92, 246, 0.18) 50%, transparent 70%);
+  width: 680px;
+  height: 680px;
+  top: -120px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(192, 132, 252, 0.42) 0%, rgba(244, 114, 182, 0.22) 45%, transparent 70%);
 }
 
 .aurora-blob-2 {
-  width: 700px;
-  height: 700px;
-  top: 35%;
-  right: -200px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(20, 184, 166, 0.18) 50%, transparent 70%);
+  width: 780px;
+  height: 780px;
+  top: 30%;
+  right: -160px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.36) 0%, rgba(129, 140, 248, 0.22) 45%, transparent 70%);
 }
 
 .aurora-blob-3 {
-  width: 650px;
-  height: 650px;
-  bottom: -150px;
-  left: 20%;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(236, 72, 153, 0.18) 50%, transparent 70%);
+  width: 720px;
+  height: 720px;
+  bottom: -120px;
+  left: 18%;
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.30) 0%, rgba(244, 114, 182, 0.22) 45%, transparent 70%);
 }
 
 /* Safe velocity tilt on Stripe cards */
@@ -2357,27 +2409,32 @@
   background: #0D99FF;
 }
 
-/* 3. Stripe Prismatic Liquid Capsule (Floating) */
+/* 3. Stripe Prismatic Holographic Capsule (Floating) */
 [data-theme="stripe-prismatic"] .nav.is-floating .nav-inner,
 [data-theme="light"] .nav.is-floating .nav-inner {
-  background: rgba(255, 255, 255, 0.94);
-  border: 1.5px solid rgba(236, 72, 153, 0.35);
-  box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.2),
-              0 10px 25px -5px rgba(99, 102, 241, 0.15),
-              0 0 20px rgba(236, 72, 153, 0.15);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1.5px solid rgba(192, 132, 252, 0.45);
+  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.18),
+              0 10px 25px -5px rgba(56, 189, 248, 0.16),
+              inset 0 1px 0 rgba(255, 255, 255, 1);
   border-radius: 9999px;
 }
 [data-theme="stripe-prismatic"] .nav.is-floating .nav-link,
 [data-theme="light"] .nav.is-floating .nav-link {
   font-size: 12px;
   padding: 5px 9px;
-  color: #475569;
+  color: #334155;
 }
 [data-theme="stripe-prismatic"] .nav.is-floating .btn-cta,
 [data-theme="light"] .nav.is-floating .btn-cta {
   padding: 6px 14px;
   font-size: 12px;
   border-radius: 9999px;
+  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
 }
 
 /* 4. Cyberpunk Neon HUD Deck (Floating) */
@@ -2590,34 +2647,35 @@
     top: 0;
     left: 0;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(236,72,153,0.3) 0%, rgba(99,102,241,0.2) 60%, transparent 100%);
-    border: 1.5px solid rgba(236, 72, 153, 0.7);
-    backdrop-filter: blur(3px);
+    background: radial-gradient(circle, rgba(192, 132, 252, 0.35) 0%, rgba(56, 189, 248, 0.22) 50%, rgba(244, 114, 182, 0.15) 100%);
+    border: 1.5px solid rgba(168, 85, 247, 0.7);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 14px rgba(192, 132, 252, 0.35);
     transition: width 0.22s cubic-bezier(0.16,1,0.3,1), height 0.22s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, background 0.2s ease;
   }
   .stripe-orb-inner {
     width: 6px;
     height: 6px;
-    background: #EC4899;
+    background: #A855F7;
     border-radius: 50%;
     position: absolute;
     top: 0;
     left: 0;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 8px #EC4899;
+    box-shadow: 0 0 8px #A855F7, 0 0 3px #FFFFFF;
     transition: transform 0.15s ease;
   }
   .custom-cursor.is-hovering .cursor-stripe .stripe-orb-outer {
-    width: 48px;
-    height: 48px;
-    border-color: #6366F1;
-    background: radial-gradient(circle, rgba(99,102,241,0.35) 0%, rgba(236,72,153,0.25) 70%, transparent 100%);
-    box-shadow: 0 0 16px rgba(236, 72, 153, 0.35);
+    width: 50px;
+    height: 50px;
+    border-color: #EC4899;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.35) 0%, rgba(168, 85, 247, 0.28) 50%, rgba(56, 189, 248, 0.2) 100%);
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.4), 0 0 10px rgba(168, 85, 247, 0.3);
   }
   .custom-cursor.is-clicking .cursor-stripe .stripe-orb-outer {
     width: 22px;
     height: 22px;
-    background: rgba(236,72,153,0.5);
+    background: rgba(168, 85, 247, 0.45);
   }
 
   /* 4. CYBERPUNK CURSOR: Sci-Fi HUD Reticle */
