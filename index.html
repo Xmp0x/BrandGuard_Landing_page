@@ -125,14 +125,8 @@
     /* ─── NAV ────────────────────────────────────────────────── */
     .nav {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-      border-bottom: var(--border-width, 1px) solid var(--border);
-      background: rgba(10,13,20,0.85);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
     }
-    [data-theme="light"], [data-theme="stripe-prismatic"] .nav { background: rgba(248,250,252,0.9); }
-    .nav.scrolled:not(.is-floating) { box-shadow: 0 1px 24px rgba(0,0,0,0.3); }
 
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between;
@@ -1484,27 +1478,72 @@
   left: 0;
   z-index: 1000;
   width: 100%;
-  border-bottom: 1px solid var(--nav-border) !important;
-  background: var(--nav-bg) !important;
+  pointer-events: none;
+  padding-top: env(safe-area-inset-top, 0);
+  transition: padding-top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Full-width docked background bar */
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px);
-  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  padding-top: env(safe-area-inset-top, 0);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.nav.is-floating::before {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .nav .container {
-  max-width: 1400px;
+  width: 100%;
+  max-width: 100%;
   padding: 0 2rem;
-  transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: padding 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-inner {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
   height: 60px;
+  padding: 0;
   gap: 1.5rem;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0px;
+  transform: translateY(0);
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition: 
+    max-width 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+    padding 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    gap 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.38s ease,
+    border-color 0.38s ease,
+    box-shadow 0.48s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: max-width, height, transform, border-radius, box-shadow;
 }
 
 .nav-brand {
@@ -1900,50 +1939,28 @@
 
 /* ─── DYNAMIC FLOATING ISLAND (ON SCROLL) ──────────────────── */
 .nav.is-floating {
-  background: transparent !important;
-  border-bottom-color: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: none !important;
-  pointer-events: none;
-  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
 }
 
 .nav.is-floating .container {
-  max-width: 100%;
   padding: 0 1rem;
-  display: flex;
-  justify-content: center;
 }
 
 .nav.is-floating .nav-inner {
-  pointer-events: auto;
-  width: max-content;
-  max-width: calc(100vw - 32px);
-  height: 52px;
+  max-width: 880px;
+  height: 50px;
   padding: 0 10px 0 16px;
-  gap: 1.25rem;
+  gap: 1.15rem;
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px);
-  will-change: transform, box-shadow;
-  animation: navFloatIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes navFloatIn {
-  0% {
-    transform: translateY(-8px) scale(0.98);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
 }
 
 /* 1. Linear Obsidian Dock (Floating) */
 [data-theme="linear-dark"] .nav.is-floating .nav-inner,
 [data-theme="dark"] .nav.is-floating .nav-inner {
-  background: rgba(10, 13, 20, 0.85);
+  background: rgba(10, 13, 20, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: 1px solid rgba(129, 140, 248, 0.5);
+  border-top: 1px solid rgba(129, 140, 248, 0.55);
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.85),
               0 0 0 1px rgba(99, 102, 241, 0.25),
               0 0 24px rgba(99, 102, 241, 0.15);
@@ -1952,11 +1969,11 @@
 [data-theme="linear-dark"] .nav.is-floating .nav-link,
 [data-theme="dark"] .nav.is-floating .nav-link {
   font-size: 12px;
-  padding: 5px 10px;
+  padding: 5px 9px;
 }
 [data-theme="linear-dark"] .nav.is-floating .btn-cta,
 [data-theme="dark"] .nav.is-floating .btn-cta {
-  padding: 7px 15px;
+  padding: 6px 14px;
   font-size: 12px;
   border-radius: 9999px;
 }
@@ -1972,11 +1989,11 @@
 }
 [data-theme="figma-canvas"] .nav.is-floating .nav-link {
   font-size: 12px;
-  padding: 5px 10px;
+  padding: 5px 9px;
   border-radius: 6px;
 }
 [data-theme="figma-canvas"] .nav.is-floating .btn-cta {
-  padding: 7px 15px;
+  padding: 6px 14px;
   font-size: 12px;
   border-radius: 8px;
   background: #0D99FF;
@@ -1985,7 +2002,7 @@
 /* 3. Stripe Prismatic Liquid Capsule (Floating) */
 [data-theme="stripe-prismatic"] .nav.is-floating .nav-inner,
 [data-theme="light"] .nav.is-floating .nav-inner {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border: 1.5px solid rgba(236, 72, 153, 0.35);
   box-shadow: 0 20px 40px -10px rgba(236, 72, 153, 0.2),
               0 10px 25px -5px rgba(99, 102, 241, 0.15),
@@ -1995,12 +2012,12 @@
 [data-theme="stripe-prismatic"] .nav.is-floating .nav-link,
 [data-theme="light"] .nav.is-floating .nav-link {
   font-size: 12px;
-  padding: 5px 10px;
+  padding: 5px 9px;
   color: #475569;
 }
 [data-theme="stripe-prismatic"] .nav.is-floating .btn-cta,
 [data-theme="light"] .nav.is-floating .btn-cta {
-  padding: 7px 15px;
+  padding: 6px 14px;
   font-size: 12px;
   border-radius: 9999px;
 }
@@ -2016,12 +2033,12 @@
 }
 [data-theme="cyberpunk-neon"] .nav.is-floating .nav-link {
   font-size: 12px;
-  padding: 5px 10px;
+  padding: 5px 9px;
   font-family: var(--mono);
   border-radius: 4px;
 }
 [data-theme="cyberpunk-neon"] .nav.is-floating .btn-cta {
-  padding: 7px 15px;
+  padding: 6px 14px;
   font-size: 12px;
   border-radius: 4px;
   font-family: var(--mono);
@@ -2031,17 +2048,20 @@
 
 /* Mobile Floating Refinements */
 @media (max-width: 768px) {
+  .nav::before {
+    height: 56px;
+  }
   .nav.is-floating {
-    padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    padding-top: calc(8px + env(safe-area-inset-top, 0px));
   }
   .nav.is-floating .container {
-    padding: 0 10px;
+    padding: 0 12px;
   }
   .nav.is-floating .nav-inner {
+    max-width: 310px;
     height: 46px;
     padding: 0 8px 0 10px;
     gap: 8px !important;
-    max-width: calc(100vw - 20px);
   }
   .nav.is-floating .nav-logo-box {
     width: 28px;
@@ -2055,8 +2075,8 @@
     padding: 5px 7px !important;
   }
   .nav.is-floating .mobile-nav-toggle {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -3386,17 +3406,33 @@ document.getElementById('theme-btn')?.addEventListener('click', () => {
 
 // ── Nav scroll & Dynamic Floating Island Morph ───────────────
 const navEl = document.getElementById('nav');
-function handleNavScroll() {
+let navIsFloating = false;
+let navScrollTicking = false;
+
+function updateNavMorph() {
   if (!navEl) return;
   const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-  const isFloating = scrollY > 30;
-  navEl.classList.toggle('scrolled', isFloating);
-  navEl.classList.toggle('is-floating', isFloating);
+  if (!navIsFloating && scrollY > 40) {
+    navIsFloating = true;
+    navEl.classList.add('scrolled', 'is-floating');
+  } else if (navIsFloating && scrollY < 15) {
+    navIsFloating = false;
+    navEl.classList.remove('scrolled', 'is-floating');
+  }
+  navScrollTicking = false;
 }
+
+function handleNavScroll() {
+  if (!navScrollTicking) {
+    window.requestAnimationFrame(updateNavMorph);
+    navScrollTicking = true;
+  }
+}
+
 window.addEventListener('scroll', handleNavScroll, { passive: true });
 document.addEventListener('scroll', handleNavScroll, { passive: true });
 window.addEventListener('touchmove', handleNavScroll, { passive: true });
-handleNavScroll();
+updateNavMorph();
 
 // ── Reveal on scroll ─────────────────────────────────────────
 const revealObs = new IntersectionObserver(entries => {
