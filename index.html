@@ -1611,7 +1611,8 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: 2;
+  z-index: 5;
+  pointer-events: none;
 }
 
 .linear-token-chip {
@@ -1621,7 +1622,7 @@
   gap: 8px;
   padding: 6px 14px;
   border-radius: 9999px;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(15, 23, 42, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1629,7 +1630,21 @@
   font-family: var(--mono);
   font-size: 11px;
   will-change: transform;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.linear-token-chip:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  background: rgba(30, 41, 59, 0.92);
+  box-shadow: 0 14px 36px rgba(99, 102, 241, 0.35), 0 0 15px rgba(99, 102, 241, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  z-index: 20;
+}
+
+.linear-token-chip:active {
+  transform: scale(0.96);
 }
 
 .ltc-dot {
@@ -5105,18 +5120,57 @@ document.querySelectorAll('.gsap-footer-col').forEach(col => {
   let scrollVelocity = 0;
   let smoothVelocity = 0;
 
+  // Robustly resolve token base top offset from inline style or offsetTop
+  function getTokenBaseY(el) {
+    if (el && el.style && el.style.top) {
+      const parsed = parseFloat(el.style.top);
+      if (!isNaN(parsed) && parsed > 0) return parsed;
+    }
+    return el ? (el.offsetTop || 0) : 0;
+  }
+
   // Cache token depths, base rotation and base top
   const tokenData = tokens.map(el => ({
     el,
     depth: parseFloat(el.getAttribute('data-depth') || '0.5'),
     rot: parseFloat(el.getAttribute('data-rotate') || '0'),
-    baseY: el.offsetTop || 0
+    baseY: getTokenBaseY(el)
   }));
 
-  // Hook into global theme changes
+  function updateTokenPositions() {
+    tokenData.forEach(item => {
+      item.baseY = getTokenBaseY(item.el);
+    });
+  }
+
+  // Interactive Click-to-Copy on Token Chips
+  tokens.forEach(chip => {
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const valEl = chip.querySelector('.ltc-val');
+      const textToCopy = valEl ? valEl.textContent.trim() : chip.textContent.trim();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy).catch(() => {});
+      }
+      const origText = valEl ? valEl.textContent : '';
+      if (valEl) {
+        valEl.textContent = 'Copied!';
+        chip.style.borderColor = '#10B981';
+        setTimeout(() => {
+          valEl.textContent = origText;
+          chip.style.borderColor = '';
+        }, 1200);
+      }
+    });
+  });
+
+  // Hook into global theme changes & window lifecycle
   window.addEventListener('themeChanged', (e) => {
     activeTheme = e.detail || document.documentElement.getAttribute('data-theme') || 'linear-dark';
+    updateTokenPositions();
   });
+  window.addEventListener('load', updateTokenPositions, { passive: true });
+  window.addEventListener('resize', updateTokenPositions, { passive: true });
 
   function onScroll() {
     targetScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
@@ -5138,8 +5192,9 @@ document.querySelectorAll('.gsap-footer-col').forEach(col => {
     if (activeTheme === 'dark' || activeTheme === 'linear-dark') {
       const vh = window.innerHeight;
       tokenData.forEach(item => {
-        const screenDist = item.baseY - currentScrollY;
-        if (screenDist > -500 && screenDist < vh + 500) {
+        const baseY = item.baseY || getTokenBaseY(item.el);
+        const screenDist = baseY - currentScrollY;
+        if (screenDist > -900 && screenDist < vh + 900) {
           const driftY = -(currentScrollY * item.depth * 0.22);
           const swayX = Math.sin(frame * 0.02 + item.depth * 8) * 8;
           const tiltZ = item.rot + Math.cos(frame * 0.015 + item.depth * 4) * 3;
@@ -5538,7 +5593,7 @@ requestAnimationFrame(renderFooterCanvas);
     cursor.classList.remove('is-clicking');
   });
 
-  const interactiveSelector = 'a, button, [role="button"], input, select, textarea, .theme-pill, .btn-primary, .btn-cta, .footer-cta-btn, .path-card, .tilt-card, .preset-dot, .color-role, .bento, .step-pill, .format-tab, .social-icon, .preset-card-item, .figma-selectable';
+  const interactiveSelector = 'a, button, [role="button"], input, select, textarea, .theme-pill, .btn-primary, .btn-cta, .footer-cta-btn, .path-card, .tilt-card, .preset-dot, .color-role, .bento, .step-pill, .format-tab, .social-icon, .preset-card-item, .figma-selectable, .linear-token-chip';
 
   document.addEventListener('mouseover', (e) => {
     const target = e.target;
