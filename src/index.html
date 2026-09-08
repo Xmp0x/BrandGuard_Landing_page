@@ -1480,7 +1480,7 @@
   width: 100%;
   pointer-events: none;
   padding-top: env(safe-area-inset-top, 0);
-  transition: padding-top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: padding-top 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Full-width docked background bar */
@@ -1497,13 +1497,13 @@
   -webkit-backdrop-filter: blur(20px);
   opacity: 1;
   pointer-events: none;
-  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 0;
 }
 
 .nav.is-floating::before {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateY(-10px);
 }
 
 .nav .container {
@@ -1515,7 +1515,7 @@
   align-items: center;
   position: relative;
   z-index: 1;
-  transition: padding 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: padding 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-inner {
@@ -1534,16 +1534,17 @@
   border: 1px solid transparent;
   box-shadow: none;
   transition: 
-    max-width 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    height 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-    border-radius 0.48s cubic-bezier(0.16, 1, 0.3, 1),
-    padding 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-    gap 0.42s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.38s ease,
-    border-color 0.38s ease,
-    box-shadow 0.48s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: max-width, height, transform, border-radius, box-shadow;
+    width 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    max-width 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    gap 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.55s ease,
+    border-color 0.55s ease,
+    box-shadow 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: width, max-width, height, transform, border-radius, box-shadow;
 }
 
 .nav-brand {
@@ -1567,7 +1568,7 @@
   color: var(--text-3);
   padding: 6px 12px;
   border-radius: 8px;
-  transition: all var(--transition);
+  transition: font-size 0.65s cubic-bezier(0.22, 1, 0.36, 1), padding 0.65s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease, background 0.2s ease;
   white-space: nowrap;
 }
 .nav-link:hover {
@@ -1580,6 +1581,7 @@
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+  transition: gap 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .theme-switcher-bar {
@@ -1591,6 +1593,7 @@
   border: var(--border-width, 1px) solid var(--border-md);
   gap: 2px;
   flex-shrink: 0;
+  transition: padding 0.65s cubic-bezier(0.22, 1, 0.36, 1), gap 0.65s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
 }
 
 .theme-pill {
@@ -1605,7 +1608,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: font-size 0.65s cubic-bezier(0.22, 1, 0.36, 1), padding 0.65s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, color 0.2s ease;
   font-family: var(--font);
   white-space: nowrap;
 }
@@ -1943,11 +1946,12 @@
 }
 
 .nav.is-floating .nav-inner {
-  width: max-content;
-  max-width: calc(100vw - 32px);
-  height: 50px;
+  width: min(1030px, calc(100vw - 32px));
+  max-width: 1030px;
+  height: 52px;
   padding: 0 8px 0 14px;
   gap: 1rem;
+  transform: translateY(12px);
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px);
 }
@@ -1964,6 +1968,13 @@
 
 .nav.is-floating .nav-actions {
   gap: 8px;
+}
+
+@media (max-width: 1080px) {
+  .nav.is-floating .nav-inner {
+    width: min(650px, calc(100vw - 32px));
+    max-width: 650px;
+  }
 }
 
 /* 1. Linear Obsidian Dock (Floating) */
@@ -2069,10 +2080,12 @@
     padding: 0 12px;
   }
   .nav.is-floating .nav-inner {
-    max-width: 310px;
+    width: min(300px, calc(100vw - 20px));
+    max-width: 300px;
     height: 46px;
     padding: 0 8px 0 10px;
     gap: 8px !important;
+    transform: translateY(8px);
   }
   .nav.is-floating .nav-logo-box {
     width: 28px;
@@ -3423,10 +3436,10 @@ let navScrollTicking = false;
 function updateNavMorph() {
   if (!navEl) return;
   const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
-  if (!navIsFloating && scrollY > 40) {
+  if (!navIsFloating && scrollY > 50) {
     navIsFloating = true;
     navEl.classList.add('scrolled', 'is-floating');
-  } else if (navIsFloating && scrollY < 15) {
+  } else if (navIsFloating && scrollY < 20) {
     navIsFloating = false;
     navEl.classList.remove('scrolled', 'is-floating');
   }
