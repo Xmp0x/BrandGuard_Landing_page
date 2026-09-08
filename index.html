@@ -255,10 +255,10 @@
       height: 40px; background: #0A0D14; border-bottom: 1px solid rgba(255,255,255,0.06);
       display: flex; align-items: center; gap: 8px; padding: 0 14px;
     }
-    .tl { width: 12px; height: 12px; border-radius: 50%; }
-    .tl-r { background: #FF5F57; }
-    .tl-y { background: #FEBC2E; }
-    .tl-g { background: #28C840; }
+    .plugin-titlebar .tl { width: 12px; height: 12px; border-radius: 50%; }
+    .plugin-titlebar .tl-r { background: #FF5F57; }
+    .plugin-titlebar .tl-y { background: #FEBC2E; }
+    .plugin-titlebar .tl-g { background: #28C840; }
     .plugin-brand {
       flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
     }
@@ -1366,27 +1366,114 @@
   letter-spacing: -0.01em;
 }
 
-/* Cursor drift animations */
+/* Cursor drift animations - calm, smooth, organic drift */
 @keyframes cursorDrift1 {
-  0%   { transform: translate(0px, 0px); }
-  35%  { transform: translate(30px, -20px); }
-  70%  { transform: translate(15px, 25px); }
-  100% { transform: translate(0px, 0px); }
+  0%   { transform: translate3d(0px, 0px, 0); }
+  35%  { transform: translate3d(16px, -12px, 0); }
+  70%  { transform: translate3d(8px, 14px, 0); }
+  100% { transform: translate3d(0px, 0px, 0); }
 }
 @keyframes cursorDrift2 {
-  0%   { transform: translate(0px, 0px); }
-  40%  { transform: translate(-25px, 25px); }
-  80%  { transform: translate(20px, -15px); }
-  100% { transform: translate(0px, 0px); }
+  0%   { transform: translate3d(0px, 0px, 0); }
+  40%  { transform: translate3d(-14px, 14px, 0); }
+  80%  { transform: translate3d(12px, -8px, 0); }
+  100% { transform: translate3d(0px, 0px, 0); }
 }
 @keyframes cursorDrift3 {
-  0%   { transform: translate(0px, 0px); }
-  50%  { transform: translate(20px, -30px); }
-  100% { transform: translate(0px, 0px); }
+  0%   { transform: translate3d(0px, 0px, 0); }
+  50%  { transform: translate3d(12px, -14px, 0); }
+  100% { transform: translate3d(0px, 0px, 0); }
 }
-.cursor-sarah { top: 20px; right: -10px; animation: cursorDrift1 12s ease-in-out infinite; }
-.cursor-alex  { top: 260px; left: -30px; animation: cursorDrift2 14s ease-in-out infinite; }
-.cursor-ken   { bottom: 20px; right: 180px; animation: cursorDrift3 10s ease-in-out infinite; }
+.cursor-sarah { top: 20px; right: -10px; animation: cursorDrift1 20s ease-in-out infinite; }
+.cursor-alex  { top: 260px; left: -30px; animation: cursorDrift2 24s ease-in-out infinite; }
+.cursor-ken   { bottom: 20px; right: 180px; animation: cursorDrift3 18s ease-in-out infinite; }
+
+.tag-label-cyber {
+  display: none;
+}
+
+/* ─── CYBERPUNK MODE FLOATING CURSORS ─────────────────────── */
+[data-theme="cyberpunk-neon"] .tag-label-default {
+  display: none !important;
+}
+[data-theme="cyberpunk-neon"] .tag-label-cyber {
+  display: inline !important;
+}
+
+[data-theme="cyberpunk-neon"] .figma-cursor-tag {
+  font-family: var(--mono) !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border-radius: 2px !important;
+  background: rgba(7, 10, 19, 0.94) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  padding: 4px 9px !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="cyberpunk-neon"] .figma-cursor-tag::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+  animation: cyberDotBlink 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes cyberDotBlink {
+  0%   { opacity: 0.35; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Sarah: Cyber Magenta */
+[data-theme="cyberpunk-neon"] .cursor-sarah .figma-cursor-tag {
+  border-color: #FF007F !important;
+  color: #FF007F !important;
+  box-shadow: 0 0 14px rgba(255, 0, 127, 0.5), inset 0 0 8px rgba(255, 0, 127, 0.2) !important;
+}
+[data-theme="cyberpunk-neon"] .cursor-sarah svg path {
+  fill: #FF007F !important;
+  stroke: #0A0D18 !important;
+  stroke-width: 1.5px !important;
+  filter: drop-shadow(0 0 6px #FF007F);
+}
+
+/* Alex: Cyber Cyan */
+[data-theme="cyberpunk-neon"] .cursor-alex .figma-cursor-tag {
+  border-color: #00F0FF !important;
+  color: #00F0FF !important;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.5), inset 0 0 8px rgba(0, 240, 255, 0.2) !important;
+}
+[data-theme="cyberpunk-neon"] .cursor-alex svg path {
+  fill: #00F0FF !important;
+  stroke: #0A0D18 !important;
+  stroke-width: 1.5px !important;
+  filter: drop-shadow(0 0 6px #00F0FF);
+}
+
+/* Ken: Cyber Amber */
+[data-theme="cyberpunk-neon"] .cursor-ken .figma-cursor-tag {
+  border-color: #FDE047 !important;
+  color: #FDE047 !important;
+  box-shadow: 0 0 14px rgba(253, 224, 71, 0.5), inset 0 0 8px rgba(253, 224, 71, 0.2) !important;
+}
+[data-theme="cyberpunk-neon"] .cursor-ken svg path {
+  fill: #FDE047 !important;
+  stroke: #0A0D18 !important;
+  stroke-width: 1.5px !important;
+  filter: drop-shadow(0 0 6px #FDE047);
+}
 
 /* Prismatic Mesh Gradient Lighting */
 .prismatic-mesh {
@@ -2538,52 +2625,58 @@
     display: block;
   }
   .cyber-reticle {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     position: absolute;
     top: 0;
     left: 0;
     transform: translate(-50%, -50%);
-    transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), border-color 0.2s ease, filter 0.2s ease;
-    filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.8));
+    transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), filter 0.2s ease;
+    filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.85));
+    pointer-events: none;
   }
   .cyber-bracket {
     position: absolute;
     width: 8px;
     height: 8px;
-    border-color: #00E5FF;
+    border-color: #00F0FF;
     border-style: solid;
-    transition: border-color 0.2s ease;
+    border-radius: 0 !important;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, width 0.2s ease, height 0.2s ease;
+    pointer-events: none;
   }
-  .cyber-bracket.tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
-  .cyber-bracket.tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
-  .cyber-bracket.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
-  .cyber-bracket.br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+  .cyber-bracket.cb-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+  .cyber-bracket.cb-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+  .cyber-bracket.cb-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+  .cyber-bracket.cb-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
   .cyber-cross {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 10px;
+    height: 10px;
     transform: translate(-50%, -50%);
     color: #FDE047;
-    font-size: 13px;
-    font-weight: 800;
-    line-height: 1;
-    font-family: var(--mono);
-    text-shadow: 0 0 5px #FDE047;
+    filter: drop-shadow(0 0 4px #FDE047);
+    transition: color 0.2s ease, filter 0.2s ease;
+    pointer-events: none;
   }
   .custom-cursor.is-hovering .cursor-cyber .cyber-reticle {
-    transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
-    filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.9));
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(255, 0, 127, 0.95));
   }
   .custom-cursor.is-hovering .cursor-cyber .cyber-bracket {
-    border-color: #FF00FF;
+    border-color: #FF007F;
+    width: 10px;
+    height: 10px;
   }
   .custom-cursor.is-hovering .cursor-cyber .cyber-cross {
-    color: #00E5FF;
-    text-shadow: 0 0 6px #00E5FF;
+    color: #00F0FF;
+    filter: drop-shadow(0 0 6px #00F0FF);
   }
   .custom-cursor.is-clicking .cursor-cyber .cyber-reticle {
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(0.85);
   }
 }
 </style>
@@ -2617,11 +2710,14 @@
   <!-- 4. Cyberpunk: Sci-Fi HUD Reticle -->
   <div class="cursor-theme cursor-cyber">
     <div class="cyber-reticle">
-      <span class="cyber-bracket tl"></span>
-      <span class="cyber-bracket tr"></span>
-      <span class="cyber-bracket bl"></span>
-      <span class="cyber-bracket br"></span>
-      <span class="cyber-cross">+</span>
+      <span class="cyber-bracket cb-tl"></span>
+      <span class="cyber-bracket cb-tr"></span>
+      <span class="cyber-bracket cb-bl"></span>
+      <span class="cyber-bracket cb-br"></span>
+      <svg class="cyber-cross" width="10" height="10" viewBox="0 0 10 10">
+        <line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+        <line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+      </svg>
     </div>
   </div>
 </div>
@@ -2899,15 +2995,6 @@
       <text id="f-caliper-text" x="28" y="4" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">160px</text>
     </g>
   </svg>
-  <!-- Multiplayer roaming drones -->
-  <div class="figma-canvas-drone drone-sarah" id="drone-sarah">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65 12.37H5.46L5.32 12.5L0.5 16.88V1.2L11.78 12.37H5.65Z" fill="#E056FD" stroke="white" stroke-width="1.5"/></svg>
-    <div class="figma-cursor-tag" style="background:#E056FD;">Sarah • Inspecting</div>
-  </div>
-  <div class="figma-canvas-drone drone-alex" id="drone-alex">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65 12.37H5.46L5.32 12.5L0.5 16.88V1.2L11.78 12.37H5.65Z" fill="#0D99FF" stroke="white" stroke-width="1.5"/></svg>
-    <div class="figma-cursor-tag" style="background:#0D99FF;">Alex • Reviewing</div>
-  </div>
 </div>
 
 <!-- 3. STRIPE PRISMATIC: Liquid Aurora Ocean -->
@@ -2937,17 +3024,26 @@
     <!-- Multiplayer Live Cursors inside Hero Container -->
     <div class="figma-cursor cursor-sarah" id="cursor-sarah" aria-hidden="true">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#E056FD" stroke="white" stroke-width="1.5"/></svg>
-      <div class="figma-cursor-tag" style="background:#E056FD;">Sarah • Design Lead</div>
+      <div class="figma-cursor-tag" style="background:#E056FD;">
+        <span class="tag-label-default">Sarah • Design Lead</span>
+        <span class="tag-label-cyber">[SARAH // DESIGN_LEAD]</span>
+      </div>
     </div>
 
     <div class="figma-cursor cursor-alex" id="cursor-alex" aria-hidden="true">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="white" stroke-width="1.5"/></svg>
-      <div class="figma-cursor-tag" style="background:#0D99FF;">Alex • 380 Tokens</div>
+      <div class="figma-cursor-tag" style="background:#0D99FF;">
+        <span class="tag-label-default">Alex • 380 Tokens</span>
+        <span class="tag-label-cyber">[ALEX // 380_TOKENS]</span>
+      </div>
     </div>
 
     <div class="figma-cursor cursor-ken" id="cursor-ken" aria-hidden="true">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F0932B" stroke="white" stroke-width="1.5"/></svg>
-      <div class="figma-cursor-tag" style="background:#F0932B;">Ken • Frontend</div>
+      <div class="figma-cursor-tag" style="background:#F0932B;">
+        <span class="tag-label-default">Ken • Frontend</span>
+        <span class="tag-label-cyber">[KEN // FRONTEND_DEV]</span>
+      </div>
     </div>
 
     <div class="hero-grid">
@@ -4900,8 +4996,6 @@ document.querySelectorAll('.gsap-footer-col').forEach(col => {
   const caliperCapB = document.getElementById('f-caliper-cap-b');
   const caliperBadge = document.getElementById('f-caliper-badge-g');
   const caliperText = document.getElementById('f-caliper-text');
-  const droneSarah = document.getElementById('drone-sarah');
-  const droneAlex = document.getElementById('drone-alex');
   const auroraBlobs = document.querySelectorAll('.aurora-blob');
   const cyberCanvas = document.getElementById('cyber-matrix-canvas');
   const cyberCtx = cyberCanvas ? cyberCanvas.getContext('2d', { alpha: true }) : null;
@@ -4996,22 +5090,10 @@ document.querySelectorAll('.gsap-footer-col').forEach(col => {
       });
     }
 
-    // 2. FIGMA CANVAS SYSTEM: Calipers & Multiplayer Flight
+    // 2. FIGMA CANVAS SYSTEM: Calipers & Measurement Guides
     else if (activeTheme === 'figma-canvas') {
       const vh = window.innerHeight;
       const vw = window.innerWidth;
-
-      // Roaming Multiplayer Cursors
-      if (droneSarah) {
-        const sx = 100 + Math.sin(currentScrollY * 0.003 + frame * 0.02) * 70;
-        const sy = 160 + ((currentScrollY * 0.14 + Math.cos(frame * 0.02) * 45) % Math.max(200, vh - 220));
-        droneSarah.style.transform = `translate3d(${sx.toFixed(1)}px, ${sy.toFixed(1)}px, 0)`;
-      }
-      if (droneAlex) {
-        const ax = Math.max(80, vw - 220 + Math.cos(currentScrollY * 0.0025 + frame * 0.018) * 65);
-        const ay = 250 + ((currentScrollY * 0.2 + Math.sin(frame * 0.022) * 50) % Math.max(200, vh - 220));
-        droneAlex.style.transform = `translate3d(${ax.toFixed(1)}px, ${ay.toFixed(1)}px, 0)`;
-      }
 
       // Dynamic Precision Laser Calipers
       if (caliperLine && caliperBadge && caliperText) {
