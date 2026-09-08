@@ -88,10 +88,10 @@
     }
 
     [data-theme="light"], [data-theme="stripe-prismatic"] {
-      --bg:         #F5F6FC;
+      --bg:         #FAFAFC;
       --bg-raised:  #FFFFFF;
-      --bg-card:    rgba(255, 255, 255, 0.76);
-      --bg-card-2:  rgba(245, 246, 252, 0.85);
+      --bg-card:    rgba(255, 255, 255, 0.88);
+      --bg-card-2:  #FFFFFF;
       --border:     rgba(192, 132, 252, 0.2);
       --border-md:  rgba(192, 132, 252, 0.32);
       --border-hl:  rgba(168, 85, 247, 0.65);
@@ -520,9 +520,9 @@
       background: #0D1117; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg);
       overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.5);
     }
-    [data-theme="light"], [data-theme="stripe-prismatic"] .editor-wrap { background: #1E1E2E; }
+    [data-theme="light"] .editor-wrap, [data-theme="stripe-prismatic"] .editor-wrap { background: #1E1E2E; }
     .editor-titlebar { height: 38px; background: #161B22; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; padding: 0 14px; gap: 6px; }
-    [data-theme="light"], [data-theme="stripe-prismatic"] .editor-titlebar { background: #1E2430; }
+    [data-theme="light"] .editor-titlebar, [data-theme="stripe-prismatic"] .editor-titlebar { background: #1E2430; }
     .editor-tl { width: 10px; height: 10px; border-radius: 50%; }
     .editor-body { padding: 20px; min-height: 240px; }
     .editor-code { font-family: var(--mono); font-size: 12px; line-height: 1.7; color: #A6ACCD; white-space: pre; }
@@ -936,8 +936,8 @@
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-[data-theme="light"], [data-theme="stripe-prismatic"] .main-wrapper {
-  box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+[data-theme="light"] .main-wrapper, [data-theme="stripe-prismatic"] .main-wrapper {
+  box-shadow: 0 40px 100px rgba(0,0,0,0.06);
 }
 
 
@@ -1013,13 +1013,13 @@
   --shadow-float: 0 8px 24px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
 }
 
-/* 3. Stripe Prismatic: Holographic Opal (Light) */
+/* 3. Stripe Prismatic: Solo White (Light) */
 [data-theme="light"], [data-theme="stripe-prismatic"] {
-  --canvas-dots: rgba(124, 58, 237, 0.07);
-  --bg: #F5F6FC;
+  --canvas-dots: rgba(0, 0, 0, 0.04);
+  --bg: #FAFAFC;
   --bg-raised: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.76);
-  --bg-card-2: rgba(245, 246, 252, 0.85);
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-card-2: #FFFFFF;
   --border: rgba(192, 132, 252, 0.2);
   --border-md: rgba(192, 132, 252, 0.32);
   --border-hl: rgba(168, 85, 247, 0.65);
@@ -1034,7 +1034,7 @@
   --accent: #EC4899;
   --accent-glow: rgba(236, 72, 153, 0.28);
   --selection-box: #7C3AED;
-  --hud-bg: rgba(255, 255, 255, 0.92);
+  --hud-bg: rgba(255, 255, 255, 0.94);
   
   /* Stripe Anatomy */
   --radius-sm:  12px;
@@ -1044,8 +1044,8 @@
   --radius-xl:  32px;
   --radius-pill: 999px;
   --border-width: 1px;
-  --shadow-card: 0 12px 32px rgba(124, 58, 237, 0.07), 0 2px 6px rgba(0,0,0,0.03);
-  --shadow-float: 0 24px 64px rgba(124, 58, 237, 0.12), 0 8px 24px rgba(0,0,0,0.05);
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0,0,0,0.02);
+  --shadow-float: 0 24px 64px rgba(0, 0, 0, 0.07), 0 8px 24px rgba(0,0,0,0.03);
 }
 
 /* 4. Cyberpunk Neon */
@@ -1143,33 +1143,19 @@
   position: relative;
 }
 
-/* --- 3. STRIPE PRISMATIC (Holographic Opal & Luminous Prism Glass) --- */
+/* --- 3. STRIPE PRISMATIC (Solo White Aesthetic) --- */
 [data-theme="light"] .main-wrapper,
 [data-theme="stripe-prismatic"] .main-wrapper {
-  background-color: #F5F6FC !important; /* Solid light opal to mask reveal footer */
+  background-color: #FAFAFC !important; /* Pristine Studio White to mask reveal footer */
 }
 [data-theme="light"] .main-wrapper::before,
 [data-theme="stripe-prismatic"] .main-wrapper::before {
-  content: ''; position: absolute; top: -10%; left: -10%; right: -10%; bottom: -10%;
-  z-index: -1;
-  background: linear-gradient(
-    130deg,
-    rgba(233, 213, 255, 0.50) 0%,   /* Soft Holo Lilac */
-    rgba(252, 231, 243, 0.55) 22%,  /* Cotton Candy Rose */
-    rgba(224, 242, 254, 0.55) 48%,  /* Aqua Mist */
-    rgba(254, 249, 195, 0.42) 72%,  /* Lemon Cream */
-    rgba(237, 233, 254, 0.50) 88%,  /* Opal Pearl */
-    rgba(252, 231, 243, 0.45) 100%
-  );
-  filter: blur(75px);
-  opacity: 0.85;
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 12%, #FFFFFF 0%, rgba(250, 250, 252, 0) 70%);
   pointer-events: none;
-  animation: stripePan 32s ease-in-out infinite alternate;
-}
-@keyframes stripePan {
-  0%   { transform: translate3d(0, 0, 0) scale(1.15); }
-  50%  { transform: translate3d(2%, -4%, 0) scale(1.22); }
-  100% { transform: translate3d(-2%, -8%, 0) scale(1.15); }
 }
 /* Frosted Holographic Glass Cards */
 [data-theme="light"] .path-card, [data-theme="stripe-prismatic"] .path-card,
@@ -1718,27 +1704,27 @@
 }
 
 .aurora-blob-1 {
-  width: 680px;
-  height: 680px;
+  width: 720px;
+  height: 720px;
   top: -120px;
   left: -80px;
-  background: radial-gradient(circle, rgba(192, 132, 252, 0.42) 0%, rgba(244, 114, 182, 0.22) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(250, 250, 252, 0.3) 45%, transparent 70%);
 }
 
 .aurora-blob-2 {
-  width: 780px;
-  height: 780px;
+  width: 820px;
+  height: 820px;
   top: 30%;
   right: -160px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.36) 0%, rgba(129, 140, 248, 0.22) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.80) 0%, rgba(250, 250, 252, 0.25) 45%, transparent 70%);
 }
 
 .aurora-blob-3 {
-  width: 720px;
-  height: 720px;
+  width: 760px;
+  height: 760px;
   bottom: -120px;
   left: 18%;
-  background: radial-gradient(circle, rgba(253, 224, 71, 0.30) 0%, rgba(244, 114, 182, 0.22) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.75) 0%, rgba(250, 250, 252, 0.2) 45%, transparent 70%);
 }
 
 /* Safe velocity tilt on Stripe cards */
@@ -1866,7 +1852,7 @@
   --nav-border: rgba(255, 255, 255, 0.1);
 }
 [data-theme="light"], [data-theme="stripe-prismatic"] {
-  --nav-bg: rgba(248, 250, 252, 0.92);
+  --nav-bg: rgba(250, 250, 252, 0.94);
   --nav-border: rgba(0, 0, 0, 0.08);
 }
 [data-theme="cyberpunk-neon"] {
@@ -5422,11 +5408,11 @@ fContainer.addEventListener('mouseleave', () => {
   fHovering = false;
 });
 
-// Stripe Orbs
+// Stripe Orbs (Soft White Highlights)
 const stripeOrbs = [
-  { x: 0, y: 0, color: '99,102,241', size: 300, speed: 0.05 },
-  { x: 0, y: 0, color: '14,165,233', size: 400, speed: 0.03 },
-  { x: 0, y: 0, color: '236,72,153', size: 250, speed: 0.02 },
+  { x: 0, y: 0, color: '255,255,255', size: 350, speed: 0.05 },
+  { x: 0, y: 0, color: '250,250,252', size: 400, speed: 0.03 },
+  { x: 0, y: 0, color: '255,255,255', size: 300, speed: 0.02 },
 ];
 
 let footerTime = 0;
