@@ -5264,37 +5264,93 @@ if (mainWrapper && masterFooter) {
   updateFooterCurtain();
 }
 
-// 2. Decrypt Text Effect
+// 2. Decrypt Text Effect (Cyberpunk Neon Only)
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
 const decryptHeading = document.getElementById('decrypt-heading');
-let decryptTriggered = false;
+let decryptInterval = null;
+let footerScrolledIntoView = false;
 
 if (decryptHeading) {
-  const originalText = decryptHeading.innerText;
-  
+  const originalText = decryptHeading.innerText || 'Compile your design system.';
+
+  function runCyberGlitchDecrypt() {
+    if (!decryptHeading) return;
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    
+    // Strictly restrict glitch / scramble decrypt effect to cyberpunk-neon only
+    if (currentTheme !== 'cyberpunk-neon') {
+      if (decryptInterval) {
+        clearInterval(decryptInterval);
+        decryptInterval = null;
+      }
+      decryptHeading.innerText = originalText;
+      return;
+    }
+
+    if (decryptInterval) clearInterval(decryptInterval);
+    let iteration = 0;
+    decryptInterval = setInterval(() => {
+      decryptHeading.innerText = originalText.split('').map((letter, index) => {
+        if (index < iteration) return originalText[index];
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+
+      if (iteration >= originalText.length) {
+        clearInterval(decryptInterval);
+        decryptInterval = null;
+        decryptHeading.innerText = originalText;
+      }
+      iteration += 1 / 3;
+    }, 30);
+  }
+
+  // Native IntersectionObserver for 100% reliable trigger
+  if (typeof IntersectionObserver !== 'undefined') {
+    new IntersectionObserver((entries) => {
+      if (entries[0] && entries[0].isIntersecting) {
+        footerScrolledIntoView = true;
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'cyberpunk-neon') {
+          runCyberGlitchDecrypt();
+        } else {
+          decryptHeading.innerText = originalText;
+        }
+      }
+    }, { threshold: 0.15 }).observe(decryptHeading);
+  }
+
   if (typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.create({
       trigger: '#main-wrapper',
       start: 'bottom 90%',
       onEnter: () => {
-        if (decryptTriggered) return;
-        decryptTriggered = true;
-        let iteration = 0;
-        let interval = setInterval(() => {
-          decryptHeading.innerText = originalText.split('').map((letter, index) => {
-            if (index < iteration) return originalText[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          }).join('');
-          
-          if (iteration >= originalText.length) {
-            clearInterval(interval);
-            decryptHeading.innerText = originalText;
-          }
-          iteration += 1 / 3;
-        }, 30);
+        footerScrolledIntoView = true;
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme === 'cyberpunk-neon') {
+          runCyberGlitchDecrypt();
+        } else {
+          // Keep pristine clean text in all other modes (Linear, Figma, Stripe)
+          decryptHeading.innerText = originalText;
+        }
       }
     });
   }
+
+  // React to theme switcher changes
+  window.addEventListener('themeChanged', (e) => {
+    const newTheme = e.detail;
+    if (newTheme === 'cyberpunk-neon') {
+      if (footerScrolledIntoView) {
+        runCyberGlitchDecrypt();
+      }
+    } else {
+      if (decryptInterval) {
+        clearInterval(decryptInterval);
+        decryptInterval = null;
+      }
+      decryptHeading.innerText = originalText;
+    }
+  });
 }
 
 // 3. Magnetic Icons
