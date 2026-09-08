@@ -542,17 +542,72 @@
     .format-tab.active { background: var(--primary-bg); color: var(--primary-h); border-color: var(--border-hl); }
 
     /* ─── PRESETS CAROUSEL ───────────────────────────────────── */
+    .presets-header-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      gap: 1.5rem;
+    }
+    .presets-header-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .presets-nav-btns {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+      padding-bottom: 4px;
+    }
+    .preset-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: var(--border-width, 1px) solid var(--border);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .preset-nav-btn:hover:not(:disabled) {
+      background: var(--bg-raised);
+      border-color: var(--border-hl);
+      color: var(--primary-h, var(--text));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+    .preset-nav-btn:active:not(:disabled) {
+      transform: translateY(0) scale(0.96);
+    }
+    .preset-nav-btn:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      pointer-events: none;
+      box-shadow: none;
+    }
+    @media (max-width: 768px) {
+      .presets-header-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
+    }
     .presets-scroll { 
       display: flex; gap: 1.5rem; overflow-x: auto; 
       padding: 1rem max(2rem, calc((100vw - 1136px) / 2)) 3rem; 
-      scroll-snap-type: x mandatory; 
-      scrollbar-color: var(--border) transparent;
-      scrollbar-width: thin;
+      scroll-snap-type: x proximity; 
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    .presets-scroll::-webkit-scrollbar { height: 6px; }
-    .presets-scroll::-webkit-scrollbar-track { background: transparent; }
-    .presets-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
-    .presets-scroll::-webkit-scrollbar-thumb:hover { background: var(--border-hl); }
+    .presets-scroll::-webkit-scrollbar { display: none; }
     .preset-card-item {
       flex: 0 0 320px; background: var(--bg-card); border: var(--border-width, 1px) solid var(--border);
       border-radius: var(--radius-xl); padding: 16px; scroll-snap-align: start;
@@ -3685,10 +3740,20 @@
 <!-- ─── PRESETS CAROUSEL ────────────────────────────────────── -->
 <section class="section" id="presets">
   <div class="container">
-    <div class="reveal" style="margin-bottom:2.5rem; display:flex; flex-direction:column; align-items:center; text-align:center;">
-      <div class="section-label">Fast Path</div>
-      <h2 class="section-title" style="margin-bottom:1rem;">Start with world-class presets</h2>
-      <p style="font-size:18px; color:var(--text-2); max-width:600px;">Instantly adopt production-ready design systems from Google, Apple, Microsoft, and more. Customize them with one click.</p>
+    <div class="presets-header-wrap reveal">
+      <div class="presets-header-text">
+        <div class="section-label">Fast Path</div>
+        <h2 class="section-title" style="margin-bottom:0.75rem;">Start with world-class presets</h2>
+        <p style="font-size:18px; color:var(--text-2); max-width:600px; margin:0;">Instantly adopt production-ready design systems from Google, Apple, Microsoft, and more. Customize them with one click.</p>
+      </div>
+      <div class="presets-nav-btns" aria-label="Presets carousel navigation">
+        <button id="presets-prev-btn" class="preset-nav-btn" aria-label="Previous preset" title="Previous preset" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="presets-next-btn" class="preset-nav-btn" aria-label="Next preset" title="Next preset">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
   </div>
   <div class="presets-scroll" id="presets-scroll" role="list">
@@ -4801,6 +4866,53 @@ presetsData.forEach((p,i) => {
 const spacer = document.createElement('div');
 spacer.style.cssText = 'width:2rem; flex-shrink:0;';
 scroll.appendChild(spacer);
+
+// ── Presets Wheel Horizontal Scroll & Nav Controls ───────────
+const presetsPrevBtn = document.getElementById('presets-prev-btn');
+const presetsNextBtn = document.getElementById('presets-next-btn');
+
+if (scroll) {
+  // Translate vertical mouse wheel into horizontal scroll with smart boundary pass-through
+  scroll.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+      const isAtStart = scroll.scrollLeft <= 4;
+      const isAtEnd = scroll.scrollLeft >= maxScroll - 4;
+
+      if (e.deltaY > 0 && !isAtEnd) {
+        e.preventDefault();
+        scroll.scrollLeft += e.deltaY * 1.2;
+      } else if (e.deltaY < 0 && !isAtStart) {
+        e.preventDefault();
+        scroll.scrollLeft += e.deltaY * 1.2;
+      }
+    }
+  }, { passive: false });
+
+  // Update navigation button disabled states
+  const updatePresetsNav = () => {
+    const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+    if (presetsPrevBtn) presetsPrevBtn.disabled = scroll.scrollLeft <= 6;
+    if (presetsNextBtn) presetsNextBtn.disabled = scroll.scrollLeft >= maxScroll - 6;
+  };
+
+  scroll.addEventListener('scroll', updatePresetsNav, { passive: true });
+  updatePresetsNav();
+  setTimeout(updatePresetsNav, 200);
+
+  // Previous & Next step buttons (320px card width + 24px gap = 344px)
+  const CARD_STEP = 344;
+  if (presetsPrevBtn) {
+    presetsPrevBtn.addEventListener('click', () => {
+      scroll.scrollBy({ left: -CARD_STEP, behavior: 'smooth' });
+    });
+  }
+  if (presetsNextBtn) {
+    presetsNextBtn.addEventListener('click', () => {
+      scroll.scrollBy({ left: CARD_STEP, behavior: 'smooth' });
+    });
+  }
+}
 
 </script>
 
