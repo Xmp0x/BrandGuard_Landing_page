@@ -1225,6 +1225,7 @@
   background-color: var(--bg);
   background-image: radial-gradient(var(--canvas-dots) 1.2px, transparent 1.2px);
   background-size: 24px 24px;
+  background-position: 0px var(--canvas-dots-y, 0px);
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -1423,13 +1424,13 @@
 }
 
 
-/* Floating Figma Canvas Coordinates Overlay */
+/* Floating Figma Canvas Coordinates Overlay (Scoped to Figma Canvas Theme) */
 .figma-canvas-badge {
   position: fixed;
   bottom: 20px;
   left: 20px;
   z-index: 90;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
@@ -1446,8 +1447,291 @@
   pointer-events: none;
   transition: all 0.3s ease;
 }
+[data-theme="figma-canvas"] .figma-canvas-badge {
+  display: flex;
+}
 @media (max-width: 640px) {
-  .figma-canvas-badge { display: none; }
+  .figma-canvas-badge { display: none !important; }
+}
+
+/* ─── THEMATIC SCROLL SYSTEM (MODE-SPECIFIC SCROLL IDENTITY) ─── */
+
+/* 1. Base Rail Container (Right screen edge) */
+.thematic-scroll-container {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99;
+  pointer-events: none;
+  user-select: none;
+}
+
+.theme-scroll-rail {
+  display: none;
+}
+
+[data-theme="linear-dark"] .scroll-linear,
+[data-theme="dark"] .scroll-linear {
+  display: block;
+}
+
+[data-theme="figma-canvas"] .scroll-figma {
+  display: block;
+}
+
+[data-theme="stripe-prismatic"] .scroll-stripe,
+[data-theme="light"] .scroll-stripe {
+  display: block;
+}
+
+[data-theme="cyberpunk-neon"] .scroll-cyber {
+  display: block;
+}
+
+/* 2. Linear Obsidian Laser Track */
+.linear-laser-track {
+  position: relative;
+  width: 2px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.linear-laser-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(to bottom, #6366F1, #818CF8, #A855F7);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.7);
+  border-radius: 2px;
+}
+
+.linear-laser-dot {
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  width: 7px;
+  height: 7px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #818CF8, 0 0 20px rgba(99, 102, 241, 0.9);
+  transition: transform 0.15s ease-out;
+}
+
+/* 3. Figma Canvas Ruler & Scrub Indicator */
+.figma-scrub-track {
+  position: relative;
+  width: 28px;
+  height: 180px;
+  background: rgba(30, 30, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.figma-scrub-ruler {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 7px,
+    rgba(255, 255, 255, 0.15) 7px,
+    rgba(255, 255, 255, 0.15) 8px,
+    transparent 8px,
+    transparent 15px,
+    rgba(255, 255, 255, 0.3) 15px,
+    rgba(255, 255, 255, 0.3) 16px
+  );
+  opacity: 0.6;
+}
+
+.figma-scrub-thumb {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 0;
+  height: 18px;
+  background: #0D99FF;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.figma-scrub-pct {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+/* 4. Stripe Prismatic Elastic Liquid Capsule */
+.stripe-liquid-track {
+  position: relative;
+  width: 6px;
+  height: 160px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+}
+
+.stripe-liquid-thumb {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 8px;
+  height: 28px;
+  margin-left: -4px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #EC4899, #8B5CF6, #3B82F6, #10B981);
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.45), 0 2px 6px rgba(99, 102, 241, 0.3);
+  transform-origin: center center;
+  transform: translateY(0) scale(1, 1);
+  will-change: transform;
+}
+
+/* 5. Cyberpunk Tactical Energy Rail */
+.cyber-energy-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 5px 4px;
+  background: rgba(9, 8, 20, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.15), inset 0 0 6px rgba(0, 229, 255, 0.1);
+}
+
+.cyber-pip {
+  width: 14px;
+  height: 8px;
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.cyber-pip.active {
+  background: #00E5FF;
+  border-color: #00E5FF;
+  box-shadow: 0 0 8px #00E5FF, inset 0 0 2px #FFFFFF;
+}
+
+.cyber-pip.pip-overload.active {
+  background: #FF0055;
+  border-color: #FF0055;
+  box-shadow: 0 0 10px #FF0055, inset 0 0 2px #FFE4EC;
+}
+
+/* 6. Cyberpunk Tactical Telemetry Terminal (Bottom-Left) */
+.cyber-telemetry-hud {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 90;
+  background: rgba(8, 9, 18, 0.94);
+  border: 1px solid #00E5FF;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-family: var(--mono);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.25), inset 0 0 8px rgba(0, 229, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+  user-select: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="cyberpunk-neon"] .cyber-telemetry-hud {
+  display: block;
+}
+
+.cyber-tele-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed rgba(0, 229, 255, 0.25);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.cyber-tele-glitch {
+  color: #00E5FF;
+  font-weight: 700;
+}
+
+.cyber-tele-status {
+  color: #FDE047;
+  font-size: 8.5px;
+}
+
+.cyber-tele-grid {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cyber-tele-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cyber-tele-lbl {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.cyber-tele-val {
+  font-size: 11px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.6);
+}
+
+/* Fast Scroll Chromatic Glitch FX for Cyberpunk */
+[data-theme="cyberpunk-neon"].is-scrolling-fast .cyber-telemetry-hud {
+  border-color: #FF0055;
+  box-shadow: 0 0 25px rgba(255, 0, 85, 0.5), inset 0 0 10px rgba(255, 0, 85, 0.2);
+  transform: scale(1.02);
+}
+
+[data-theme="cyberpunk-neon"].is-scrolling-fast .cyber-tele-val {
+  color: #FF0055;
+  text-shadow: -1px 0 #00E5FF, 1px 0 #FF0055;
+}
+
+@media (max-width: 640px) {
+  .thematic-scroll-container {
+    right: 8px;
+    transform: translateY(-50%) scale(0.85);
+  }
+  .cyber-telemetry-hud {
+    bottom: 12px;
+    left: 12px;
+    padding: 6px 9px;
+    transform-origin: bottom left;
+    transform: scale(0.88);
+  }
 }
 
 
@@ -2595,6 +2879,74 @@
   <span id="canvas-coords">X: 1420 Y: 890</span>
 </div>
 
+<!-- Cyberpunk Tactical Telemetry Terminal (Bottom-Left) -->
+<div class="cyber-telemetry-hud" id="cyber-telemetry-hud" aria-hidden="true">
+  <div class="cyber-tele-header">
+    <span class="cyber-tele-glitch">[SYS_STREAM]</span>
+    <span class="cyber-tele-status">LIVE_SYNC</span>
+  </div>
+  <div class="cyber-tele-grid">
+    <div class="cyber-tele-cell">
+      <span class="cyber-tele-lbl">SPD</span>
+      <span class="cyber-tele-val" id="cyber-val-speed">000 KM/H</span>
+    </div>
+    <div class="cyber-tele-cell">
+      <span class="cyber-tele-lbl">ALT</span>
+      <span class="cyber-tele-val" id="cyber-val-alt">0000 M</span>
+    </div>
+    <div class="cyber-tele-cell">
+      <span class="cyber-tele-lbl">SECT</span>
+      <span class="cyber-tele-val" id="cyber-val-sector">01/04</span>
+    </div>
+  </div>
+</div>
+
+<!-- Thematic Scroll Rail & Progress Indicators (Right Edge) -->
+<div class="thematic-scroll-container" id="thematic-scroll-container" aria-hidden="true">
+  <!-- Linear Obsidian Laser Track -->
+  <div class="theme-scroll-rail scroll-linear">
+    <div class="linear-laser-track">
+      <div class="linear-laser-fill" id="linear-laser-fill"></div>
+      <div class="linear-laser-dot" id="linear-laser-dot"></div>
+    </div>
+  </div>
+
+  <!-- Figma Canvas Ruler & Scrub Indicator -->
+  <div class="theme-scroll-rail scroll-figma">
+    <div class="figma-scrub-track">
+      <div class="figma-scrub-ruler"></div>
+      <div class="figma-scrub-thumb" id="figma-scrub-thumb">
+        <span class="figma-scrub-pct" id="figma-scrub-pct">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stripe Prismatic Elastic Liquid Capsule -->
+  <div class="theme-scroll-rail scroll-stripe">
+    <div class="stripe-liquid-track">
+      <div class="stripe-liquid-thumb" id="stripe-liquid-thumb"></div>
+    </div>
+  </div>
+
+  <!-- Cyberpunk Neon Tactical Energy Rail -->
+  <div class="theme-scroll-rail scroll-cyber">
+    <div class="cyber-energy-rail">
+      <div class="cyber-pip" data-pip="1"></div>
+      <div class="cyber-pip" data-pip="2"></div>
+      <div class="cyber-pip" data-pip="3"></div>
+      <div class="cyber-pip" data-pip="4"></div>
+      <div class="cyber-pip" data-pip="5"></div>
+      <div class="cyber-pip" data-pip="6"></div>
+      <div class="cyber-pip" data-pip="7"></div>
+      <div class="cyber-pip" data-pip="8"></div>
+      <div class="cyber-pip" data-pip="9"></div>
+      <div class="cyber-pip" data-pip="10"></div>
+      <div class="cyber-pip" data-pip="11"></div>
+      <div class="cyber-pip" data-pip="12"></div>
+    </div>
+  </div>
+</div>
+
 <!-- ❖ HERO ❖ -->
 <!-- ❖ HERO ❖ -->
 <section class="hero" id="hero">
@@ -3456,13 +3808,168 @@ function updateNavMorph() {
     navIsFloating = false;
     navEl.classList.remove('scrolled', 'is-floating');
   }
-  navScrollTicking = false;
+}
+
+// ── Thematic Mode-Specific Scroll Engine ─────────────────────
+let lastScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+let lastScrollTime = performance.now();
+let smoothVelocity = 0;
+let fastScrollTimeout = null;
+let decayRaf = null;
+
+// Thematic scroll DOM references
+const linearLaserFill = document.getElementById('linear-laser-fill');
+const linearLaserDot = document.getElementById('linear-laser-dot');
+const figmaScrubThumb = document.getElementById('figma-scrub-thumb');
+const figmaScrubPct = document.getElementById('figma-scrub-pct');
+const stripeLiquidThumb = document.getElementById('stripe-liquid-thumb');
+const cyberPips = document.querySelectorAll('.cyber-pip');
+const cyberValSpeed = document.getElementById('cyber-val-speed');
+const cyberValAlt = document.getElementById('cyber-val-alt');
+const cyberValSector = document.getElementById('cyber-val-sector');
+let figmaCanvasMouseX = 1420;
+let figmaCanvasMouseY = 890;
+
+function updateThematicScroll() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || 0;
+  const now = performance.now();
+  const dt = Math.max(16, now - lastScrollTime);
+  const deltaY = Math.abs(scrollY - lastScrollY);
+  const instantaneousVelocity = deltaY / (dt / 1000); // px/sec
+  smoothVelocity += (instantaneousVelocity - smoothVelocity) * 0.25;
+
+  lastScrollY = scrollY;
+  lastScrollTime = now;
+
+  const docHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.body.clientHeight,
+    document.documentElement.clientHeight
+  );
+  const winHeight = window.innerHeight || 800;
+  const maxScroll = Math.max(1, docHeight - winHeight);
+  const scrollPct = Math.min(1, Math.max(0, scrollY / maxScroll));
+  const scrollPct100 = Math.round(scrollPct * 100);
+
+  const curTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+
+  // 1. Linear Obsidian Laser Track
+  if (curTheme === 'linear-dark' || curTheme === 'dark') {
+    if (linearLaserFill && linearLaserDot) {
+      linearLaserFill.style.height = (scrollPct * 100) + '%';
+      linearLaserDot.style.top = (scrollPct * 100) + '%';
+    }
+  }
+
+  // 2. Figma Canvas Ruler & Scrub Indicator + Dot Matrix Parallax
+  else if (curTheme === 'figma-canvas') {
+    if (figmaScrubThumb) {
+      const thumbY = scrollPct * 162; // 180px track - 18px thumb
+      figmaScrubThumb.style.transform = `translateY(${thumbY}px)`;
+      if (figmaScrubPct) figmaScrubPct.textContent = `${scrollPct100}%`;
+    }
+    const dotOffset = (-(scrollY * 0.35) % 24);
+    document.documentElement.style.setProperty('--canvas-dots-y', `${dotOffset}px`);
+    const cEl = document.getElementById('canvas-coords');
+    if (cEl) {
+      cEl.textContent = `X: ${figmaCanvasMouseX} Y: ${Math.round(figmaCanvasMouseY + scrollY * 1.2)}`;
+    }
+  }
+
+  // 3. Stripe Prismatic Elastic Liquid Capsule
+  else if (curTheme === 'stripe-prismatic' || curTheme === 'light') {
+    if (stripeLiquidThumb) {
+      const thumbY = scrollPct * 132; // 160px track - 28px thumb
+      const stretch = Math.min(smoothVelocity * 0.00045, 0.85);
+      const scaleY = 1 + stretch;
+      const scaleX = 1 / Math.sqrt(scaleY);
+      stripeLiquidThumb.style.transform = `translateY(${thumbY}px) scale(${scaleX}, ${scaleY})`;
+    }
+  }
+
+  // 4. Cyberpunk Neon Energy Rail & Telemetry HUD
+  else if (curTheme === 'cyberpunk-neon') {
+    const activeCount = Math.round(scrollPct * 12);
+    cyberPips.forEach((pip, idx) => {
+      pip.classList.toggle('active', idx < activeCount);
+    });
+
+    const speedKmh = Math.round(smoothVelocity * 0.28);
+    if (cyberValSpeed) cyberValSpeed.textContent = `${String(speedKmh).padStart(3, '0')} KM/H`;
+
+    const altM = Math.round(scrollY * 0.75);
+    if (cyberValAlt) cyberValAlt.textContent = `${String(altM).padStart(4, '0')} M`;
+
+    const sector = Math.min(4, Math.floor(scrollPct * 4) + 1);
+    if (cyberValSector) cyberValSector.textContent = `0${sector}/04`;
+
+    if (instantaneousVelocity > 800) {
+      document.documentElement.classList.add('is-scrolling-fast');
+      clearTimeout(fastScrollTimeout);
+      fastScrollTimeout = setTimeout(() => {
+        document.documentElement.classList.remove('is-scrolling-fast');
+      }, 180);
+    }
+  }
+}
+
+function runVelocityDecay() {
+  if (smoothVelocity > 0.5) {
+    smoothVelocity *= 0.84;
+    const curTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+    if (curTheme === 'stripe-prismatic' || curTheme === 'light') {
+      if (stripeLiquidThumb) {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const winHeight = window.innerHeight || 800;
+        const maxScroll = Math.max(1, docHeight - winHeight);
+        const scrollPct = Math.min(1, Math.max(0, scrollY / maxScroll));
+        const thumbY = scrollPct * 132;
+        const stretch = Math.min(smoothVelocity * 0.00045, 0.85);
+        const scaleY = 1 + stretch;
+        const scaleX = 1 / Math.sqrt(scaleY);
+        stripeLiquidThumb.style.transform = `translateY(${thumbY}px) scale(${scaleX}, ${scaleY})`;
+      }
+    } else if (curTheme === 'cyberpunk-neon') {
+      const speedKmh = Math.round(smoothVelocity * 0.28);
+      if (cyberValSpeed) cyberValSpeed.textContent = `${String(speedKmh).padStart(3, '0')} KM/H`;
+    }
+    decayRaf = requestAnimationFrame(runVelocityDecay);
+  } else {
+    smoothVelocity = 0;
+    const curTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+    if (curTheme === 'stripe-prismatic' || curTheme === 'light') {
+      if (stripeLiquidThumb) {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const docHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        const winHeight = window.innerHeight || 800;
+        const maxScroll = Math.max(1, docHeight - winHeight);
+        const scrollPct = Math.min(1, Math.max(0, scrollY / maxScroll));
+        const thumbY = scrollPct * 132;
+        stripeLiquidThumb.style.transform = `translateY(${thumbY}px) scale(1, 1)`;
+      }
+    } else if (curTheme === 'cyberpunk-neon') {
+      if (cyberValSpeed) cyberValSpeed.textContent = '000 KM/H';
+      document.documentElement.classList.remove('is-scrolling-fast');
+    }
+    decayRaf = null;
+  }
 }
 
 function handleNavScroll() {
   if (!navScrollTicking) {
-    window.requestAnimationFrame(updateNavMorph);
+    window.requestAnimationFrame(() => {
+      updateNavMorph();
+      updateThematicScroll();
+      navScrollTicking = false;
+    });
     navScrollTicking = true;
+  }
+  if (!decayRaf) {
+    decayRaf = requestAnimationFrame(runVelocityDecay);
   }
 }
 
@@ -3470,6 +3977,7 @@ window.addEventListener('scroll', handleNavScroll, { passive: true });
 document.addEventListener('scroll', handleNavScroll, { passive: true });
 window.addEventListener('touchmove', handleNavScroll, { passive: true });
 updateNavMorph();
+updateThematicScroll();
 
 // ── Reveal on scroll ─────────────────────────────────────────
 const revealObs = new IntersectionObserver(entries => {
@@ -4577,6 +5085,9 @@ function setThemeEngine(themeVal) {
   document.documentElement.setAttribute('data-theme', themeVal);
   try { localStorage.setItem('bg-theme', themeVal); } catch(e){}
   themePills.forEach(p => p.classList.toggle('active', p.getAttribute('data-theme-val') === themeVal));
+  if (typeof updateThematicScroll === 'function') {
+    updateThematicScroll();
+  }
 }
 
 themePills.forEach(pill => {
@@ -4598,7 +5109,13 @@ try {
 const coordsEl = document.getElementById('canvas-coords');
 if (coordsEl) {
   window.addEventListener('mousemove', (e) => {
-    coordsEl.textContent = `X: ${e.clientX} Y: ${e.clientY}`;
+    figmaCanvasMouseX = e.clientX;
+    figmaCanvasMouseY = e.clientY;
+    const curTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+    if (curTheme === 'figma-canvas') {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      coordsEl.textContent = `X: ${figmaCanvasMouseX} Y: ${Math.round(figmaCanvasMouseY + scrollY * 1.2)}`;
+    }
   }, { passive: true });
 }
 
