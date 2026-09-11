@@ -204,8 +204,10 @@
       letter-spacing: -0.04em; margin-bottom: 1.5rem; color: var(--text);
     }
     .hero-h1 .gradient {
-      background: linear-gradient(135deg, var(--primary-h) 0%, var(--sky) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      color: var(--primary);
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: currentColor;
     }
     .hero-sub { font-size: 17px; color: var(--text-2); line-height: 1.6; margin-bottom: 2.5rem; max-width: 480px; }
     .hero-btns { display: flex; align-items: center; gap: 12px; margin-bottom: 3rem; }
@@ -293,7 +295,7 @@
       box-shadow: 0 0 12px rgba(99,102,241,0.3);
     }
     .sp-logo-icon svg { width: 22px; height: 22px; color: white; }
-    .sp-logo-text { font-weight: 800; font-size: 13px; background: linear-gradient(135deg, #fff, rgba(255,255,255,0.6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sp-logo-text { font-weight: 800; font-size: 13px; color: #FFFFFF; background: none; -webkit-background-clip: unset; -webkit-text-fill-color: currentColor; }
     .sp-logo-sub { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 500; margin-top: 1px; }
     .sp-status-pill {
       display: flex; align-items: center; gap: 5px; padding: 4px 10px;
@@ -510,7 +512,7 @@
 
     /* ─── TOKEN RAIN ─────────────────────────────────────────── */
     .tokens-section { background: var(--bg-raised); border-radius: var(--radius-xl); padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden; }
-    .tokens-counter { font-size: clamp(80px, 10vw, 120px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; background: linear-gradient(135deg, white 40%, rgba(99,102,241,0.6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tokens-counter { font-size: clamp(80px, 10vw, 120px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; color: var(--text); background: none; -webkit-background-clip: unset; -webkit-text-fill-color: currentColor; }
     .tokens-label { font-size: 22px; font-weight: 700; color: var(--text-2); margin-bottom: 2rem; letter-spacing: -0.02em; }
     .token-rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
     .token-string { position: absolute; font-size: 11px; font-family: var(--mono); font-weight: 500; white-space: nowrap; opacity: 0; }
@@ -957,9 +959,10 @@
   line-height: 1.15;
 }
 .footer-cta .decrypt-text {
-  background: linear-gradient(to right, var(--text), var(--text-3));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text);
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: currentColor;
   display: inline-block;
   position: relative;
 }
@@ -1490,31 +1493,15 @@ html:not([data-theme]) .hero-linear-laser-line {
   100% { left: calc(100% - 36px); opacity: 0.4; }
 }
 
-/* Linear Hero Specular Laser Wipe */
+/* Linear Hero Luminous Solo Accent */
 [data-theme="linear-dark"] .hero-h1 .gradient,
 [data-theme="dark"] .hero-h1 .gradient,
 html:not([data-theme]) .hero-h1 .gradient {
-  background: linear-gradient(
-    110deg,
-    #94A3B8 0%,
-    #E2E8F0 25%,
-    #FFFFFF 45%,
-    #60A5FA 50%,
-    #C084FC 55%,
-    #FFFFFF 65%,
-    #E2E8F0 80%,
-    #94A3B8 100%
-  ) !important;
-  background-size: 250% 100% !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: linearLaserShimmerLoop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
-  filter: drop-shadow(0 2px 14px rgba(96, 165, 250, 0.25));
-}
-@keyframes linearLaserShimmerLoop {
-  0% { background-position: 125% 0; }
-  100% { background-position: -125% 0; }
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #818CF8 !important;
+  color: #818CF8 !important;
+  filter: drop-shadow(0 2px 14px rgba(129, 140, 248, 0.35));
 }
 
 /* 2. Cyber Hero Telemetry & Continuous Neon Motion */
@@ -1549,11 +1536,11 @@ html:not([data-theme]) .hero-h1 .gradient {
   text-shadow: 0 0 14px rgba(6, 182, 212, 0.8), 0 0 28px rgba(6, 182, 212, 0.4);
 }
 [data-theme="cyberpunk-neon"] .hero-h1 .gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FB7185 35%, #F43F5E 70%, #06B6D4 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  text-shadow: 0 0 16px rgba(244, 63, 94, 0.85), 0 0 32px rgba(6, 182, 212, 0.6);
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #F43F5E !important;
+  color: #F43F5E !important;
+  text-shadow: 0 0 16px rgba(244, 63, 94, 0.85), 0 0 32px rgba(244, 63, 94, 0.5);
 }
 [data-theme="cyberpunk-neon"] .hero-h1 {
   animation: cyberNeonContinuousHum 2.8s ease-in-out infinite alternate !important;
@@ -1674,52 +1661,29 @@ html:not([data-theme]) .hero-h1 .gradient {
   font-family: var(--font);
 }
 [data-theme="figma-canvas"] .hero-h1 .gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 50%, #0D99FF 90%, #A259FF 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: figmaTextGlowPulse 3.6s ease-in-out infinite alternate;
-}
-@keyframes figmaTextGlowPulse {
-  0% { filter: drop-shadow(0 0 6px rgba(13, 153, 255, 0.25)); }
-  100% { filter: drop-shadow(0 0 14px rgba(13, 153, 255, 0.45)); }
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #0D99FF !important;
+  color: #0D99FF !important;
+  filter: drop-shadow(0 0 10px rgba(13, 153, 255, 0.35));
 }
 
 /* 4. Stripe Hero Prismatic Liquid Flow & 3D Levitation */
 [data-theme="stripe-prismatic"] .hero-line-top,
 [data-theme="light"] .hero-line-top {
-  background: linear-gradient(110deg, #0F172A 0%, #0F172A 35%, #7C3AED 50%, #EC4899 55%, #0F172A 65%, #0F172A 100%);
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: stripeSheenSweep 4s ease-in-out infinite;
-}
-@keyframes stripeSheenSweep {
-  0% { background-position: 125% 0; }
-  100% { background-position: -125% 0; }
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #0F172A;
+  color: #0F172A;
 }
 
 [data-theme="stripe-prismatic"] .hero-h1 .gradient,
 [data-theme="light"] .hero-h1 .gradient {
-  background: linear-gradient(
-    90deg,
-    #7C3AED 0%,
-    #EC4899 20%,
-    #F59E0B 40%,
-    #10B981 60%,
-    #06B6D4 80%,
-    #7C3AED 100%
-  ) !important;
-  background-size: 200% auto !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: stripeRainbowFlow 3.2s linear infinite !important;
-  filter: drop-shadow(0 4px 18px rgba(124, 58, 237, 0.22));
-}
-@keyframes stripeRainbowFlow {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #7C3AED !important;
+  color: #7C3AED !important;
+  filter: drop-shadow(0 4px 14px rgba(124, 58, 237, 0.2));
 }
 
 [data-theme="stripe-prismatic"] .hero-h1,
@@ -1810,22 +1774,11 @@ html:not([data-theme]) .linear-laser-sweep {
 [data-theme="linear-dark"] .footer-cta .decrypt-text,
 [data-theme="dark"] .footer-cta .decrypt-text,
 html:not([data-theme]) .footer-cta .decrypt-text {
-  background: linear-gradient(
-    110deg,
-    #94A3B8 0%,
-    #F1F5F9 25%,
-    #FFFFFF 45%,
-    #38BDF8 50%,
-    #818CF8 55%,
-    #FFFFFF 65%,
-    #F1F5F9 80%,
-    #94A3B8 100%
-  ) !important;
-  background-size: 250% 100% !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  animation: linearLaserShimmerLoop 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
-  filter: drop-shadow(0 2px 16px rgba(56, 189, 248, 0.25));
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 16px rgba(56, 189, 248, 0.25);
 }
 
 /* 2. Figma Footer Pill & Master Component Box */
@@ -1957,20 +1910,11 @@ html:not([data-theme]) .footer-cta .decrypt-text {
 
 [data-theme="stripe-prismatic"] .footer-cta .decrypt-text,
 [data-theme="light"] .footer-cta .decrypt-text {
-  background: linear-gradient(
-    90deg,
-    #7C3AED 0%,
-    #EC4899 20%,
-    #F59E0B 40%,
-    #10B981 60%,
-    #06B6D4 80%,
-    #7C3AED 100%
-  ) !important;
-  background-size: 200% auto !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  animation: stripeRainbowFlow 3.2s linear infinite !important;
-  filter: drop-shadow(0 6px 24px rgba(124, 58, 237, 0.22));
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #7C3AED !important;
+  color: #7C3AED !important;
+  filter: drop-shadow(0 4px 18px rgba(124, 58, 237, 0.2));
 }
 
 /* 4. Cyberpunk Footer Pill & Matrix Scrambler */
