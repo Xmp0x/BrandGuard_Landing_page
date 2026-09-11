@@ -1571,6 +1571,85 @@ html:not([data-theme]) .hero-h1 .gradient {
 }
 
 /* 3. Figma Hero Canvas Bounding Box & Interactive Collaborative Cursor */
+.figma-ghost-text {
+  display: none;
+}
+.figma-typing-caret {
+  display: none;
+}
+.figma-draw-hud {
+  display: none;
+}
+
+[data-theme="figma-canvas"] .figma-type-stage {
+  position: relative;
+  display: inline-block;
+}
+[data-theme="figma-canvas"] .figma-ghost-text {
+  display: inline;
+  visibility: hidden;
+  user-select: none;
+  pointer-events: none;
+}
+[data-theme="figma-canvas"] .figma-text-display {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+}
+
+/* Caret styling */
+[data-theme="figma-canvas"] .figma-typing-caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.95em;
+  background: #0D99FF;
+  vertical-align: -0.05em;
+  margin-left: 2px;
+  border-radius: 1px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+[data-theme="figma-canvas"] .footer-figma-caret {
+  background: #7B61FF;
+}
+[data-theme="figma-canvas"] .figma-typing-caret.active {
+  opacity: 1;
+  animation: figmaCaretPulse 0.75s steps(1) infinite;
+}
+@keyframes figmaCaretPulse {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Real-time Dimension HUD Tooltip */
+[data-theme="figma-canvas"] .figma-draw-hud {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(30, 30, 30, 0.95);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  opacity: 0;
+  transform: translate(18px, 18px);
+  transition: opacity 0.2s ease;
+}
+[data-theme="figma-canvas"] .figma-draw-hud.active {
+  opacity: 1;
+}
+
 .figma-hero-box {
   display: none;
   position: absolute;
@@ -1579,15 +1658,20 @@ html:not([data-theme]) .hero-h1 .gradient {
   border-radius: 2px;
   pointer-events: none;
   z-index: 5;
+  transition: box-shadow 0.3s ease;
 }
 [data-theme="figma-canvas"] .figma-hero-box {
   display: block;
-  animation: figmaBoxSubtleBreathe 3.6s ease-in-out infinite alternate;
 }
-@keyframes figmaBoxSubtleBreathe {
-  0% { box-shadow: 0 0 0 0.5px rgba(13, 153, 255, 0.25); }
-  100% { box-shadow: 0 0 8px 1px rgba(13, 153, 255, 0.45); }
+.figma-hero-box.auto-layout-flash {
+  animation: figmaAutoLayoutFlash 0.7s ease-out;
 }
+@keyframes figmaAutoLayoutFlash {
+  0% { box-shadow: 0 0 0 0 rgba(13, 153, 255, 0.6); }
+  50% { box-shadow: 0 0 16px 3px rgba(13, 153, 255, 0.5); }
+  100% { box-shadow: 0 0 4px 0.5px rgba(13, 153, 255, 0.2); }
+}
+
 .figma-handle {
   position: absolute;
   width: 6px; height: 6px;
@@ -1595,6 +1679,14 @@ html:not([data-theme]) .hero-h1 .gradient {
   border: 1.5px solid #0D99FF;
   border-radius: 0.5px;
   box-shadow: 0 0 0 1px rgba(13, 153, 255, 0.2), 0 1px 3px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.figma-hero-box.active-handles .figma-handle,
+.figma-footer-box.active-handles .figma-handle {
+  opacity: 1;
+  transform: scale(1);
 }
 .handle-tl { top: -4px; left: -4px; }
 .handle-tr { top: -4px; right: -4px; }
@@ -1603,7 +1695,7 @@ html:not([data-theme]) .hero-h1 .gradient {
 
 .figma-hero-tag {
   position: absolute;
-  bottom: -22px; left: 0;
+  bottom: -24px; left: 0;
   background: #0D99FF;
   color: #FFFFFF;
   font-size: 10px;
@@ -1616,41 +1708,45 @@ html:not([data-theme]) .hero-h1 .gradient {
   gap: 4px;
   box-shadow: 0 2px 8px rgba(13, 153, 255, 0.35);
   white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.figma-hero-box.active-handles .figma-hero-tag {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .figma-hero-cursor {
   position: absolute;
-  bottom: -32px; right: -28px;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 4px;
   pointer-events: none;
-  animation: figmaSarahWorkflow 5.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  z-index: 15;
+  transition: transform 0.08s linear;
 }
-@keyframes figmaSarahWorkflow {
-  0% { transform: translate(16px, 12px); opacity: 0.9; }
-  28% { transform: translate(0px, 0px); }
-  35% { transform: translate(-3px, -2px) scale(0.92); }
-  50% { transform: translate(3px, 2px) scale(1); }
-  70% { transform: translate(20px, 8px); }
-  100% { transform: translate(16px, 12px); }
+[data-theme="figma-canvas"] .figma-hero-cursor {
+  display: inline-flex;
 }
+
 .figma-click-ring {
   position: absolute;
-  bottom: 2px; right: 2px;
+  top: -4px; left: -4px;
   width: 16px; height: 16px;
   border-radius: 50%;
   border: 1.5px solid #0D99FF;
   pointer-events: none;
   opacity: 0;
-  animation: figmaClickPulse 5.5s infinite;
 }
-@keyframes figmaClickPulse {
-  0%, 28% { transform: scale(0.3); opacity: 0; }
-  33% { transform: scale(1); opacity: 1; }
-  44% { transform: scale(2.2); opacity: 0; }
-  100% { opacity: 0; }
+.figma-click-ring.ping {
+  animation: figmaClickPing 0.5s ease-out forwards;
 }
+@keyframes figmaClickPing {
+  0% { transform: scale(0.4); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
 .figma-cursor-label {
   background: #0D99FF;
   color: #FFFFFF;
@@ -1659,6 +1755,7 @@ html:not([data-theme]) .hero-h1 .gradient {
   padding: 1px 5px;
   border-radius: 3px;
   font-family: var(--font);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 [data-theme="figma-canvas"] .hero-h1 .gradient {
   background: none !important;
@@ -1815,18 +1912,27 @@ html:not([data-theme]) .footer-cta .decrypt-text {
   border-radius: 2px;
   pointer-events: none;
   z-index: 5;
+  transition: box-shadow 0.3s ease;
 }
 [data-theme="figma-canvas"] .figma-footer-box {
   display: block;
-  box-shadow: 0 0 12px rgba(123, 97, 255, 0.35);
-  animation: figmaBoxSubtleBreathe 4s ease-in-out infinite alternate;
+}
+.figma-footer-box.auto-layout-flash {
+  animation: figmaAutoLayoutFlashPurple 0.7s ease-out;
+}
+@keyframes figmaAutoLayoutFlashPurple {
+  0% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0.6); }
+  50% { box-shadow: 0 0 16px 3px rgba(123, 97, 255, 0.5); }
+  100% { box-shadow: 0 0 4px 0.5px rgba(123, 97, 255, 0.2); }
 }
 .figma-footer-box .figma-handle {
   border-color: #7B61FF;
+  box-shadow: 0 0 0 1px rgba(123, 97, 255, 0.2), 0 1px 3px rgba(0,0,0,0.3);
 }
+
 .figma-footer-tag {
   position: absolute;
-  top: -20px; left: 0;
+  top: -24px; left: 0;
   background: #7B61FF;
   color: #FFFFFF;
   font-size: 10px;
@@ -1835,23 +1941,33 @@ html:not([data-theme]) .footer-cta .decrypt-text {
   border-radius: 2px;
   font-family: var(--mono);
   box-shadow: 0 2px 8px rgba(123, 97, 255, 0.4);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
+.figma-footer-box.active-handles .figma-footer-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .figma-footer-cursor {
   position: absolute;
-  top: -16px; right: -14px;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 4px;
   pointer-events: none;
-  animation: figmaAlexWorkflow 5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  z-index: 15;
+  transition: transform 0.08s linear;
 }
-@keyframes figmaAlexWorkflow {
-  0% { transform: translate(14px, -8px); opacity: 0.9; }
-  30% { transform: translate(0px, 0px); }
-  40% { transform: translate(-2px, 2px) scale(0.92); }
-  55% { transform: translate(2px, -2px) scale(1); }
-  75% { transform: translate(16px, -6px); }
-  100% { transform: translate(14px, -8px); }
+[data-theme="figma-canvas"] .figma-footer-cursor {
+  display: inline-flex;
+}
+.figma-footer-cursor .figma-click-ring {
+  border-color: #7B61FF;
+}
+.figma-footer-cursor .figma-cursor-label {
+  background: #7B61FF;
 }
 [data-theme="figma-canvas"] .footer-cta .decrypt-text {
   background: none !important;
@@ -3898,7 +4014,11 @@ html:not([data-theme]) .footer-cta .decrypt-text {
           <h1 class="hero-h1">
             <span class="hero-title-line hero-line-top">Design Systems.</span>
             <span class="hero-title-line hero-line-bottom">
-              <span class="gradient hero-gradient-text">Built in Minutes.</span>
+              <span class="gradient hero-gradient-text figma-type-stage">
+                <span class="figma-ghost-text" aria-hidden="true">Built in Minutes.</span>
+                <span class="figma-text-display hero-figma-display">Built in Minutes.</span>
+                <span class="figma-typing-caret hero-figma-caret" aria-hidden="true"></span>
+              </span>
               <!-- Figma Canvas Select Box & Nodes -->
               <span class="figma-hero-box" aria-hidden="true">
                 <span class="figma-handle handle-tl"></span>
@@ -3907,8 +4027,9 @@ html:not([data-theme]) .footer-cta .decrypt-text {
                 <span class="figma-handle handle-br"></span>
                 <span class="figma-hero-tag">
                   <svg width="8" height="8" viewBox="0 0 24 24" fill="#0D99FF"><path d="M12 2L2 22h20L12 2z"/></svg>
-                  480 × 72 · Text
+                  <span class="figma-hero-tag-text">480 × 72 · Text</span>
                 </span>
+                <span class="figma-draw-hud figma-hero-hud">0 × 0</span>
                 <span class="figma-hero-cursor">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="#0D99FF"><path d="M5.5 3.2L18.7 13.4L12.3 14.5L14.7 19.5L12.3 20.7L9.9 15.6L5.5 19.5V3.2Z"/></svg>
                   <span class="figma-cursor-label">Sarah</span>
@@ -4611,15 +4732,23 @@ html:not([data-theme]) .footer-cta .decrypt-text {
             <span class="figma-handle handle-tr"></span>
             <span class="figma-handle handle-bl"></span>
             <span class="figma-handle handle-br"></span>
-            <span class="figma-footer-tag">❖ Component.Master · 560 × 64</span>
+            <span class="figma-footer-tag">
+              <span class="figma-footer-tag-text">❖ Component.Master · 560 × 64</span>
+            </span>
+            <span class="figma-draw-hud figma-footer-hud">0 × 0</span>
             <span class="figma-footer-cursor">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="#7B61FF"><path d="M5.5 3.2L18.7 13.4L12.3 14.5L14.7 19.5L12.3 20.7L9.9 15.6L5.5 19.5V3.2Z"/></svg>
               <span class="figma-cursor-label" style="background:#7B61FF;">Alex</span>
+              <span class="figma-click-ring"></span>
             </span>
           </span>
 
           <h2 id="decrypt-heading" class="decrypt-text">
-            <span class="footer-text-inner">Compile your design system.</span><span class="cyber-cursor" aria-hidden="true">█</span>
+            <span class="footer-text-inner figma-type-stage">
+              <span class="figma-ghost-text" aria-hidden="true">Compile your design system.</span>
+              <span class="figma-text-display footer-figma-display">Compile your design system.</span>
+              <span class="figma-typing-caret footer-figma-caret" aria-hidden="true"></span>
+            </span><span class="cyber-cursor" aria-hidden="true">█</span>
           </h2>
           <!-- Linear laser scan line sweep -->
           <div class="linear-laser-sweep" aria-hidden="true"></div>
@@ -5930,18 +6059,21 @@ if (mainWrapper && masterFooter) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()<>[]{}_+=~';
   const originalFooterText = 'Compile your design system.';
   const decryptHeading = document.getElementById('decrypt-heading');
-  const footerTextInner = document.querySelector('.footer-text-inner');
   let decryptInterval = null;
   let microGlitchTimer = null;
   let footerScrolledIntoView = false;
 
+  function getFooterTextDisplay() {
+    return document.querySelector('.footer-figma-display') || document.querySelector('.footer-text-inner') || decryptHeading;
+  }
+
   function runCyberGlitchDecrypt() {
-    const target = footerTextInner || decryptHeading;
+    const target = getFooterTextDisplay();
     if (!target) return;
     const currentTheme = document.documentElement.getAttribute('data-theme');
     if (currentTheme !== 'cyberpunk-neon') {
       if (decryptInterval) { clearInterval(decryptInterval); decryptInterval = null; }
-      target.innerText = originalFooterText;
+      target.textContent = originalFooterText;
       return;
     }
 
@@ -5949,7 +6081,7 @@ if (mainWrapper && masterFooter) {
     let iteration = 0;
     const len = originalFooterText.length;
     decryptInterval = setInterval(() => {
-      target.innerText = originalFooterText.split('').map((letter, index) => {
+      target.textContent = originalFooterText.split('').map((letter, index) => {
         if (letter === ' ') return ' ';
         if (index < iteration) return originalFooterText[index];
         return chars[Math.floor(Math.random() * chars.length)];
@@ -5958,7 +6090,7 @@ if (mainWrapper && masterFooter) {
       if (iteration >= len) {
         clearInterval(decryptInterval);
         decryptInterval = null;
-        target.innerText = originalFooterText;
+        target.textContent = originalFooterText;
       }
       iteration += 1 / 3;
     }, 25);
@@ -5970,7 +6102,7 @@ if (mainWrapper && masterFooter) {
     microGlitchTimer = setInterval(() => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       if (currentTheme !== 'cyberpunk-neon' || decryptInterval) return;
-      const target = footerTextInner || decryptHeading;
+      const target = getFooterTextDisplay();
       if (!target) return;
 
       // Scramble 3 random indices for 180ms
@@ -5985,12 +6117,12 @@ if (mainWrapper && masterFooter) {
       indicesToScramble.forEach(i => {
         textArr[i] = chars[Math.floor(Math.random() * chars.length)];
       });
-      target.innerText = textArr.join('');
+      target.textContent = textArr.join('');
 
       setTimeout(() => {
         const checkTheme = document.documentElement.getAttribute('data-theme');
         if (checkTheme === 'cyberpunk-neon' && !decryptInterval) {
-          target.innerText = originalFooterText;
+          target.textContent = originalFooterText;
         }
       }, 180);
     }, 5500);
@@ -6003,24 +6135,260 @@ if (mainWrapper && masterFooter) {
     }
   }
 
-  function triggerFooterMotions(theme) {
-    const target = footerTextInner || decryptHeading;
-    if (!target) return;
+  // ─── FIGMA CANVAS FRAME DRAW & TYPING ENGINE ──────────────────
+  function createFigmaDrawEngine(config) {
+    const container = document.querySelector(config.containerSelector);
+    const box = document.querySelector(config.boxSelector);
+    const cursor = document.querySelector(config.cursorSelector);
+    const hud = document.querySelector(config.hudSelector);
+    const tagText = document.querySelector(config.tagTextSelector);
+    const display = document.querySelector(config.displaySelector);
+    const caret = document.querySelector(config.caretSelector);
+    const clickRing = document.querySelector(config.clickRingSelector);
 
+    if (!container || !box || !cursor || !display || !caret) {
+      return { start: () => {}, reset: () => {} };
+    }
+
+    let isRunning = false;
+    let animRaf = null;
+    let typingTimer = null;
+    let loopTimer = null;
+
+    function reset() {
+      isRunning = false;
+      if (animRaf) cancelAnimationFrame(animRaf);
+      if (typingTimer) clearTimeout(typingTimer);
+      if (loopTimer) clearTimeout(loopTimer);
+
+      display.textContent = config.fullText;
+      caret.classList.remove('active');
+      box.classList.remove('active-handles', 'auto-layout-flash');
+      box.style.clipPath = '';
+      cursor.style.transition = '';
+      cursor.style.left = '';
+      cursor.style.top = '';
+      if (hud) {
+        hud.classList.remove('active');
+        hud.style.left = '';
+        hud.style.top = '';
+      }
+      if (tagText) tagText.innerHTML = config.defaultTag;
+    }
+
+    function start() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme !== 'figma-canvas') {
+        reset();
+        return;
+      }
+
+      if (animRaf) cancelAnimationFrame(animRaf);
+      if (typingTimer) clearTimeout(typingTimer);
+      if (loopTimer) clearTimeout(loopTimer);
+      isRunning = true;
+
+      // 1. Initial State
+      display.textContent = '';
+      caret.classList.remove('active');
+      box.classList.remove('active-handles', 'auto-layout-flash');
+      box.style.clipPath = 'inset(0 100% 100% 0)';
+      if (tagText) tagText.innerHTML = config.defaultTag;
+
+      if (hud) {
+        hud.textContent = '0 × 0';
+        hud.classList.add('active');
+        hud.style.left = '-12px';
+        hud.style.top = '-6px';
+      }
+
+      cursor.style.transition = '';
+      cursor.style.left = '-12px';
+      cursor.style.top = '-6px';
+
+      // 2. Diagonal Draw Phase (1100ms)
+      const drawDuration = 1100;
+      const startTime = performance.now();
+
+      function drawStep(now) {
+        if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') {
+          reset();
+          return;
+        }
+
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / drawDuration);
+        const ease = progress < 0.5 
+          ? 4 * progress * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        const currentW = Math.round(config.maxW * ease);
+        const currentH = Math.round(config.maxH * ease);
+
+        if (hud) hud.textContent = `${currentW} × ${currentH}`;
+
+        const clipRight = ((1 - ease) * 100).toFixed(2);
+        const clipBottom = ((1 - ease) * 100).toFixed(2);
+        box.style.clipPath = `inset(0 ${clipRight}% ${clipBottom}% 0)`;
+
+        cursor.style.left = `calc(${ (ease * 100).toFixed(2) }% + ${ (ease * 24 - 12).toFixed(1) }px)`;
+        cursor.style.top = `calc(${ (ease * 100).toFixed(2) }% + ${ (ease * 12 - 6).toFixed(1) }px)`;
+        if (hud) {
+          hud.style.left = cursor.style.left;
+          hud.style.top = cursor.style.top;
+        }
+
+        if (progress < 1) {
+          animRaf = requestAnimationFrame(drawStep);
+        } else {
+          onDrawComplete();
+        }
+      }
+
+      animRaf = requestAnimationFrame(drawStep);
+
+      // 3. Draw Completed: Pop Handles and Badge
+      function onDrawComplete() {
+        box.style.clipPath = 'inset(0 0 0 0)';
+        if (hud) hud.classList.remove('active');
+        box.classList.add('active-handles');
+
+        if (clickRing) {
+          clickRing.classList.remove('ping');
+          void clickRing.offsetWidth;
+          clickRing.classList.add('ping');
+        }
+
+        // 4. Cursor moves to text insertion position
+        loopTimer = setTimeout(() => {
+          if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') return;
+
+          cursor.style.transition = 'left 0.35s cubic-bezier(0.25, 1, 0.5, 1), top 0.35s cubic-bezier(0.25, 1, 0.5, 1)';
+          cursor.style.left = '4px';
+          cursor.style.top = '10px';
+
+          loopTimer = setTimeout(() => {
+            if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') return;
+
+            cursor.style.transition = '';
+            if (clickRing) {
+              clickRing.classList.remove('ping');
+              void clickRing.offsetWidth;
+              clickRing.classList.add('ping');
+            }
+
+            // 5. Activate Caret and Begin Typing
+            caret.classList.add('active');
+            startTyping();
+          }, 360);
+        }, 280);
+      }
+
+      // 6. Character-by-Character Typing
+      function startTyping() {
+        let charIndex = 0;
+        const totalChars = config.fullText.length;
+        const charDelay = config.charDelay || 60;
+
+        function typeNext() {
+          if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') return;
+
+          if (charIndex < totalChars) {
+            display.textContent = config.fullText.slice(0, charIndex + 1);
+            charIndex++;
+            typingTimer = setTimeout(typeNext, charDelay);
+          } else {
+            onTypingComplete();
+          }
+        }
+
+        typingTimer = setTimeout(typeNext, 70);
+      }
+
+      // 7. Auto-Layout Snap & Hold
+      function onTypingComplete() {
+        loopTimer = setTimeout(() => {
+          if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') return;
+
+          caret.classList.remove('active');
+          if (tagText) tagText.innerHTML = config.hugTag;
+          box.classList.add('auto-layout-flash');
+
+          cursor.style.transition = 'left 0.7s cubic-bezier(0.25, 1, 0.5, 1), top 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+          cursor.style.left = 'calc(100% + 8px)';
+          cursor.style.top = 'calc(100% + 4px)';
+
+          // Hold for 5.0s then loop smoothly
+          loopTimer = setTimeout(() => {
+            if (!isRunning || document.documentElement.getAttribute('data-theme') !== 'figma-canvas') return;
+            start();
+          }, 5000);
+        }, 400);
+      }
+    }
+
+    return { start, reset };
+  }
+
+  const heroFigmaEngine = createFigmaDrawEngine({
+    containerSelector: '.hero-line-bottom',
+    boxSelector: '.figma-hero-box',
+    cursorSelector: '.figma-hero-cursor',
+    hudSelector: '.figma-hero-hud',
+    tagTextSelector: '.figma-hero-tag-text',
+    displaySelector: '.hero-figma-display',
+    caretSelector: '.hero-figma-caret',
+    clickRingSelector: '.figma-hero-cursor .figma-click-ring',
+    fullText: 'Built in Minutes.',
+    defaultTag: '<svg width="8" height="8" viewBox="0 0 24 24" fill="#0D99FF"><path d="M12 2L2 22h20L12 2z"/></svg> 480 × 72 · Text',
+    hugTag: '<svg width="9" height="9" viewBox="0 0 24 24" fill="#0D99FF"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#0D99FF" stroke-width="2" fill="none"/></svg> ❖ Built in Minutes · Hug',
+    maxW: 480,
+    maxH: 72,
+    charDelay: 65
+  });
+
+  const footerFigmaEngine = createFigmaDrawEngine({
+    containerSelector: '.footer-heading-box',
+    boxSelector: '.figma-footer-box',
+    cursorSelector: '.figma-footer-cursor',
+    hudSelector: '.figma-footer-hud',
+    tagTextSelector: '.figma-footer-tag-text',
+    displaySelector: '.footer-figma-display',
+    caretSelector: '.footer-figma-caret',
+    clickRingSelector: '.figma-footer-cursor .figma-click-ring',
+    fullText: 'Compile your design system.',
+    defaultTag: '❖ Component.Master · 560 × 64',
+    hugTag: '❖ Component.Master · Hug',
+    maxW: 560,
+    maxH: 64,
+    charDelay: 50
+  });
+
+  function triggerFooterMotions(theme) {
     if (theme === 'cyberpunk-neon') {
+      footerFigmaEngine.reset();
       runCyberGlitchDecrypt();
       startCyberMicroGlitch();
+    } else if (theme === 'figma-canvas') {
+      stopCyberMicroGlitch();
+      if (decryptInterval) {
+        clearInterval(decryptInterval);
+        decryptInterval = null;
+      }
+      footerFigmaEngine.start();
     } else {
       if (decryptInterval) {
         clearInterval(decryptInterval);
         decryptInterval = null;
       }
       stopCyberMicroGlitch();
-      target.innerText = originalFooterText;
+      footerFigmaEngine.reset();
+      const target = getFooterTextDisplay();
+      if (target) target.textContent = originalFooterText;
     }
   }
 
-  // Interactive trigger on hover / click
+  // Interactive triggers on hover / click
   if (decryptHeading) {
     decryptHeading.addEventListener('mouseenter', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -6032,22 +6400,19 @@ if (mainWrapper && masterFooter) {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       if (currentTheme === 'cyberpunk-neon') {
         runCyberGlitchDecrypt();
+      } else if (currentTheme === 'figma-canvas') {
+        footerFigmaEngine.start();
       }
     });
   }
 
-  // Dynamic Figma dimension tag toggle (Hero)
-  const figmaDimTag = document.querySelector('.figma-hero-tag');
-  if (figmaDimTag) {
-    let figmaDimState = false;
-    setInterval(() => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'figma-canvas') {
-        figmaDimState = !figmaDimState;
-        const iconSvg = '<svg width="8" height="8" viewBox="0 0 24 24" fill="#0D99FF"><path d="M12 2L2 22h20L12 2z"/></svg>';
-        figmaDimTag.innerHTML = `${iconSvg} ${figmaDimState ? '484 × 74' : '480 × 72'} · Text`;
+  const heroFigmaWrap = document.querySelector('.hero-line-bottom');
+  if (heroFigmaWrap) {
+    heroFigmaWrap.addEventListener('click', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'figma-canvas') {
+        heroFigmaEngine.start();
       }
-    }, 2750);
+    });
   }
 
   // IntersectionObserver for Footer
@@ -6077,7 +6442,13 @@ if (mainWrapper && masterFooter) {
   // React to Theme Engine changes
   window.addEventListener('themeChanged', (e) => {
     const newTheme = e.detail;
-    const target = footerTextInner || decryptHeading;
+    if (newTheme === 'figma-canvas') {
+      heroFigmaEngine.start();
+    } else {
+      heroFigmaEngine.reset();
+    }
+
+    const target = getFooterTextDisplay();
     if (footerScrolledIntoView) {
       triggerFooterMotions(newTheme);
     } else {
@@ -6086,7 +6457,8 @@ if (mainWrapper && masterFooter) {
         decryptInterval = null;
       }
       stopCyberMicroGlitch();
-      if (target) target.innerText = originalFooterText;
+      footerFigmaEngine.reset();
+      if (target) target.textContent = originalFooterText;
     }
   });
 
@@ -6094,6 +6466,8 @@ if (mainWrapper && masterFooter) {
   const initialTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
   if (initialTheme === 'cyberpunk-neon') {
     startCyberMicroGlitch();
+  } else if (initialTheme === 'figma-canvas') {
+    setTimeout(() => { heroFigmaEngine.start(); }, 350);
   }
 })();
 
