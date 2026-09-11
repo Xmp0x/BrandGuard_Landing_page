@@ -23,7 +23,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800;900&family=Oxanium:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ─── Reset ─────────────────────────────────────────────── */
@@ -37,7 +37,8 @@
 
     /* ─── Design Tokens ──────────────────────────────────────── */
     :root {
-      --font: 'Inter', -apple-system, sans-serif;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --mono: 'JetBrains Mono', monospace;
 
       /* Dark mode palette (default) */
@@ -117,6 +118,10 @@
       color: var(--text);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6, .hero-h1, .footer-cta h2, #decrypt-heading {
+      font-family: var(--font-heading, var(--font));
     }
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
@@ -939,21 +944,24 @@
 /* Grand Finale CTA */
 .footer-cta {
   text-align: center;
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
+  position: relative;
 }
 .footer-cta h2 {
-  font-size: 3rem;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.03em;
-  margin-bottom: 2rem;
-  font-family: var(--font);
+  margin-bottom: 0;
   color: var(--text);
+  line-height: 1.15;
 }
 .footer-cta .decrypt-text {
   background: linear-gradient(to right, var(--text), var(--text-3));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
 }
 .footer-cta-btn {
   display: inline-flex;
@@ -1125,6 +1133,8 @@
 
 /* 1. Linear Obsidian (Default / dark) */
 :root, [data-theme="dark"], [data-theme="linear-dark"] {
+  --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --canvas-dots: rgba(255, 255, 255, 0.08);
   --bg: #0A0D14;
   --bg-raised: #0F1520;
@@ -1160,6 +1170,8 @@
 
 /* 2. Figma Native Canvas */
 [data-theme="figma-canvas"] {
+  --font: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --canvas-dots: rgba(255, 255, 255, 0.12);
   --bg: #1E1E1E;
   --bg-raised: #2C2C2C;
@@ -1195,6 +1207,8 @@
 
 /* 3. Stripe Prismatic: Solo White (Light) */
 [data-theme="light"], [data-theme="stripe-prismatic"] {
+  --font: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --canvas-dots: rgba(0, 0, 0, 0.04);
   --bg: #FAFAFC;
   --bg-raised: #FFFFFF;
@@ -1230,6 +1244,8 @@
 
 /* 4. Cyberpunk Neon */
 [data-theme="cyberpunk-neon"] {
+  --font: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Oxanium', 'Space Grotesk', sans-serif;
   --canvas-dots: rgba(6, 182, 212, 0.15);
   --bg: #090814;
   --bg-raised: #110E26;
@@ -1382,13 +1398,451 @@
   transform: translateY(-2px);
 }
 
-/* Hero Gradient Text in Stripe Mode */
-[data-theme="stripe-prismatic"] .hero-h1 .gradient,
-[data-theme="light"] .hero-h1 .gradient {
-  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #0284C7 100%) !important;
+/* ==========================================================================
+   MASTERPIECE MOTIONS: HERO & FOOTER TITLES (THEME-SPECIFIC)
+   ========================================================================== */
+
+/* ─── Hero Title Architecture ──────────────────────────────── */
+.hero-title-stage {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.hero-title-line {
+  display: block;
+}
+.hero-line-top {
+  position: relative;
+  margin-bottom: 0.65rem;
+  transition: all 0.3s ease;
+}
+.hero-line-bottom {
+  position: relative;
+  display: inline-block;
+}
+
+/* 1. Hero Mode Telemetry & Badges */
+.hero-mode-telemetry {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.85rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  user-select: none;
+}
+/* Linear Hero Telemetry */
+[data-theme="linear-dark"] .hero-telemetry-linear,
+[data-theme="dark"] .hero-telemetry-linear {
+  display: inline-flex;
+  color: #818CF8;
+  font-family: var(--mono);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.telemetry-laser-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 8px #38BDF8;
+  animation: laserDotPulse 2s infinite ease-in-out;
+}
+@keyframes laserDotPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); box-shadow: 0 0 6px #38BDF8; }
+  50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 12px #38BDF8; }
+}
+
+/* Cyber Hero Telemetry */
+[data-theme="cyberpunk-neon"] .hero-telemetry-cyber {
+  display: inline-flex;
+  color: #06B6D4;
+  font-family: var(--mono);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  padding: 4px 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);
+}
+.cyber-blink-dot {
+  width: 6px; height: 6px;
+  background: #F43F5E;
+  margin: 0 6px;
+  box-shadow: 0 0 8px #F43F5E;
+  animation: cyberDotBlink 1s infinite steps(1);
+}
+@keyframes cyberDotBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cyber-bracket {
+  color: #F43F5E;
+  font-weight: 800;
+}
+
+/* 2. Figma Hero Canvas Bounding Box */
+.figma-hero-box {
+  display: none;
+  position: absolute;
+  inset: -6px -12px;
+  border: 1.5px solid #0D99FF;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 5;
+  animation: figmaBoxPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="figma-canvas"] .figma-hero-box {
+  display: block;
+}
+@keyframes figmaBoxPop {
+  0% { transform: scale(0.97); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.figma-handle {
+  position: absolute;
+  width: 6px; height: 6px;
+  background: #FFFFFF;
+  border: 1.5px solid #0D99FF;
+  border-radius: 0.5px;
+}
+.handle-tl { top: -4px; left: -4px; }
+.handle-tr { top: -4px; right: -4px; }
+.handle-bl { bottom: -4px; left: -4px; }
+.handle-br { bottom: -4px; right: -4px; }
+
+.figma-hero-tag {
+  position: absolute;
+  bottom: -22px; left: 0;
+  background: #0D99FF;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(13, 153, 255, 0.35);
+  white-space: nowrap;
+}
+
+.figma-hero-cursor {
+  position: absolute;
+  bottom: -28px; right: -24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  animation: figmaCursorFloat 4s ease-in-out infinite alternate;
+}
+@keyframes figmaCursorFloat {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-8px, -4px); }
+  100% { transform: translate(4px, 2px); }
+}
+.figma-cursor-label {
+  background: #0D99FF;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: var(--font);
+}
+
+/* 3. Hero Gradients per Mode */
+/* Linear Mode Hero Gradient */
+[data-theme="linear-dark"] .hero-h1 .gradient,
+[data-theme="dark"] .hero-h1 .gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #C7D2FE 40%, #818CF8 75%, #38BDF8 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
+}
+
+/* Figma Mode Hero Gradient */
+[data-theme="figma-canvas"] .hero-h1 .gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #0D99FF 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Stripe Mode Hero Gradient */
+[data-theme="stripe-prismatic"] .hero-h1 .gradient,
+[data-theme="light"] .hero-h1 .gradient {
+  background: linear-gradient(120deg, #7C3AED 0%, #EC4899 22%, #F59E0B 48%, #06B6D4 72%, #7C3AED 100%) !important;
+  background-size: 300% 300% !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: stripeGradientFlow 8s ease infinite alternate;
+  filter: drop-shadow(0 4px 16px rgba(124, 58, 237, 0.18));
+}
+@keyframes stripeGradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Cyberpunk Mode Hero Gradient */
+[data-theme="cyberpunk-neon"] .hero-h1 .gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FB7185 30%, #F43F5E 70%, #06B6D4 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 0 0 15px rgba(244, 63, 94, 0.8), 0 0 30px rgba(6, 182, 212, 0.6);
+}
+[data-theme="cyberpunk-neon"] .hero-h1 {
+  animation: cyberNeonIgnite 1.2s ease-out forwards;
+}
+@keyframes cyberNeonIgnite {
+  0% { opacity: 0.3; filter: brightness(0.5); text-shadow: none; }
+  12% { opacity: 0.9; filter: brightness(1.4); text-shadow: 0 0 10px #F43F5E, 0 0 20px #06B6D4; }
+  22% { opacity: 0.4; }
+  35% { opacity: 1; filter: brightness(1.2); }
+  45% { opacity: 0.7; }
+  55% { opacity: 1; }
+  100% {
+    opacity: 1;
+    filter: brightness(1);
+    text-shadow: 2px 0 #F43F5E, -2px 0 #06B6D4, 0 0 24px rgba(244, 63, 94, 0.4);
+  }
+}
+
+/* ─── Footer Masterpiece Architecture ──────────────────────── */
+.footer-title-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+.footer-heading-box {
+  position: relative;
+  display: inline-block;
+  padding: 4px 12px;
+}
+
+/* Footer Mode Pills (Theme Specific) */
+.footer-mode-pill {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+/* 1. Linear Footer Pill & Laser Scan */
+[data-theme="linear-dark"] .footer-pill-linear,
+[data-theme="dark"] .footer-pill-linear {
+  display: inline-flex;
+  background: rgba(15, 21, 32, 0.85);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #C7D2FE;
+  font-family: var(--mono);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.5);
+  animation: linearPillReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes linearPillReveal {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.footer-pulse-beam {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 8px #38BDF8;
+  animation: laserDotPulse 1.8s infinite;
+}
+
+.linear-laser-sweep {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(99, 102, 241, 0.8) 30%, #38BDF8 50%, rgba(99, 102, 241, 0.8) 70%, transparent 100%);
+  box-shadow: 0 0 16px #38BDF8, 0 0 32px #818CF8;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) scaleX(0);
+  transform-origin: left center;
+}
+[data-theme="linear-dark"] .linear-laser-sweep.laser-active,
+[data-theme="dark"] .linear-laser-sweep.laser-active {
+  display: block;
+  animation: laserSweepRun 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes laserSweepRun {
+  0% { transform: translateY(-50%) scaleX(0); opacity: 0; left: -10%; }
+  30% { opacity: 1; transform: translateY(-50%) scaleX(0.7); }
+  70% { opacity: 1; transform: translateY(-50%) scaleX(1); }
+  100% { transform: translateY(-50%) scaleX(0.2); opacity: 0; left: 110%; }
+}
+
+[data-theme="linear-dark"] .footer-cta .decrypt-text,
+[data-theme="dark"] .footer-cta .decrypt-text {
+  background: linear-gradient(90deg, #FFFFFF 0%, #F1F5F9 50%, #94A3B8 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* 2. Figma Footer Pill & Bounding Box */
+[data-theme="figma-canvas"] .footer-pill-figma {
+  display: inline-flex;
+  background: #2C2C2C;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  font-family: var(--font);
+  font-size: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  animation: figmaToastSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes figmaToastSlide {
+  0% { opacity: 0; transform: translateY(12px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.figma-check-badge {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #0ACF83;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.figma-footer-box {
+  display: none;
+  position: absolute;
+  inset: -4px -10px;
+  border: 1.5px solid #0D99FF;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 5;
+  animation: figmaBoxPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-theme="figma-canvas"] .figma-footer-box {
+  display: block;
+}
+.figma-footer-tag {
+  position: absolute;
+  top: -20px; left: 0;
+  background: #0D99FF;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--mono);
+}
+[data-theme="figma-canvas"] .footer-cta .decrypt-text {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+/* 3. Stripe Footer Pill & Aurora Motion */
+[data-theme="stripe-prismatic"] .footer-pill-stripe,
+[data-theme="light"] .footer-pill-stripe {
+  display: inline-flex;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  color: #7C3AED;
+  font-family: var(--font);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: stripePillFloat 4s ease-in-out infinite alternate;
+}
+@keyframes stripePillFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+.stripe-sparkle-icon {
+  color: #EC4899;
+  font-size: 13px;
+  display: inline-block;
+  animation: spinSparkle 6s linear infinite;
+}
+@keyframes spinSparkle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes stripeAuroraWave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+[data-theme="stripe-prismatic"] .footer-cta .decrypt-text,
+[data-theme="light"] .footer-cta .decrypt-text {
+  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 30%, #3B82F6 65%, #10B981 90%, #7C3AED 100%) !important;
+  background-size: 250% 250% !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: stripeAuroraWave 7s ease infinite alternate;
+  filter: drop-shadow(0 6px 20px rgba(124, 58, 237, 0.16));
+}
+
+/* 4. Cyberpunk Footer Pill & Scrambler Motion */
+[data-theme="cyberpunk-neon"] .footer-pill-cyber {
+  display: inline-flex;
+  background: #110E26;
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  color: #06B6D4;
+  font-family: var(--mono);
+  border-radius: 2px;
+  box-shadow: 0 0 14px rgba(6, 182, 212, 0.25);
+}
+.cyber-term-arrow {
+  color: #F43F5E;
+  font-weight: 900;
+  margin-right: 4px;
+}
+.cyber-term-cmd {
+  color: #E2E8F0;
+  margin-right: 6px;
+}
+.cyber-term-status {
+  color: #10B981;
+  font-weight: 700;
+}
+.cyber-cursor {
+  display: none;
+  color: #06B6D4;
+  margin-left: 3px;
+  text-shadow: 0 0 10px #06B6D4;
+  animation: cyberCursorBlink 0.8s infinite steps(1);
+}
+[data-theme="cyberpunk-neon"] .cyber-cursor {
+  display: inline-block;
+}
+@keyframes cyberCursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+[data-theme="cyberpunk-neon"] .footer-cta .decrypt-text {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #06B6D4 !important;
+  color: #06B6D4 !important;
+  text-shadow: 0 0 12px rgba(6, 182, 212, 0.7), 0 0 24px rgba(244, 63, 94, 0.5), 2px 0 #F43F5E;
+}
+
+@media (max-width: 640px) {
+  .figma-hero-cursor { display: none !important; }
+  .figma-hero-box, .figma-footer-box { inset: -3px -6px; }
+  .footer-cta h2 { font-size: 2rem; }
 }
 
 /* ─── BUTTON HOVER FX (THEME SPECIFIC) ────────────────────── */
@@ -3300,10 +3754,38 @@
           <span class="badge-dot"></span>
           Figma Plugin · Free · 380 Variables
         </div>
-        <h1 class="hero-h1">
-          Design Systems.<br>
-          <span class="gradient">Built in Minutes.</span>
-        </h1>
+        <div class="hero-title-stage">
+          <!-- Mode Telemetry / Tags above Hero Title -->
+          <div class="hero-mode-telemetry hero-telemetry-linear" aria-hidden="true">
+            <span class="telemetry-laser-dot"></span>
+            <span class="telemetry-code">SYS.01 // SYSTEM READY · COMPILED</span>
+          </div>
+          <div class="hero-mode-telemetry hero-telemetry-cyber" aria-hidden="true">
+            <span class="cyber-bracket">[</span><span class="cyber-blink-dot"></span>SYS_ID // 0x8F92 :: OVERDRIVE ACTIVE<span class="cyber-bracket">]</span>
+          </div>
+
+          <h1 class="hero-h1">
+            <span class="hero-title-line hero-line-top">Design Systems.</span>
+            <span class="hero-title-line hero-line-bottom">
+              <span class="gradient hero-gradient-text">Built in Minutes.</span>
+              <!-- Figma Canvas Select Box & Nodes -->
+              <span class="figma-hero-box" aria-hidden="true">
+                <span class="figma-handle handle-tl"></span>
+                <span class="figma-handle handle-tr"></span>
+                <span class="figma-handle handle-bl"></span>
+                <span class="figma-handle handle-br"></span>
+                <span class="figma-hero-tag">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="#0D99FF"><path d="M12 2L2 22h20L12 2z"/></svg>
+                  480 × 72 · Text
+                </span>
+                <span class="figma-hero-cursor">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#0D99FF"><path d="M5.5 3.2L18.7 13.4L12.3 14.5L14.7 19.5L12.3 20.7L9.9 15.6L5.5 19.5V3.2Z"/></svg>
+                  <span class="figma-cursor-label">Sarah</span>
+                </span>
+              </span>
+            </span>
+          </h1>
+        </div>
         <p class="hero-sub">Generate 380 native Figma variables — colors, typography, spacing, shadows — in three distinct workflows. Fast, guided, or imported.</p>
         <div class="hero-btns">
           <div class="btn-fx-wrap">
@@ -3965,7 +4447,46 @@
   <div class="container footer-content">
     
     <div class="footer-cta">
-      <h2 id="decrypt-heading" class="decrypt-text">Compile your design system.</h2>
+      <div class="footer-title-stage">
+        <!-- Mode Status Indicators above Footer Title -->
+        <div class="footer-mode-pill footer-pill-linear" aria-hidden="true">
+          <span class="footer-pulse-beam"></span>
+          <span class="footer-pill-mono">COMPILING TOKENS: 380/380 · 100% COMPLETE</span>
+        </div>
+
+        <div class="footer-mode-pill footer-pill-figma" aria-hidden="true">
+          <span class="figma-check-badge">✓</span>
+          <span>Published 380 Variables to Team Library</span>
+        </div>
+
+        <div class="footer-mode-pill footer-pill-stripe" aria-hidden="true">
+          <span class="stripe-sparkle-icon">✦</span>
+          <span>Production-Ready Token Architecture</span>
+        </div>
+
+        <div class="footer-mode-pill footer-pill-cyber" aria-hidden="true">
+          <span class="cyber-term-arrow">&gt;</span>
+          <span class="cyber-term-cmd">EXEC_COMPILE_SYSTEM.EXE</span>
+          <span class="cyber-term-status">[SUCCESS 0x00]</span>
+        </div>
+
+        <div class="footer-heading-box">
+          <!-- Figma selection box for footer -->
+          <span class="figma-footer-box" aria-hidden="true">
+            <span class="figma-handle handle-tl"></span>
+            <span class="figma-handle handle-tr"></span>
+            <span class="figma-handle handle-bl"></span>
+            <span class="figma-handle handle-br"></span>
+            <span class="figma-footer-tag">560 × 64 · Component.Master</span>
+          </span>
+
+          <h2 id="decrypt-heading" class="decrypt-text">
+            <span class="footer-text-inner">Compile your design system.</span><span class="cyber-cursor" aria-hidden="true">█</span>
+          </h2>
+          <!-- Linear laser scan line sweep -->
+          <div class="linear-laser-sweep" aria-hidden="true"></div>
+        </div>
+      </div>
       <div class="btn-fx-wrap">
         <a href="https://www.figma.com/community/plugin/1676042768624226622/brandguard?q_id=febfa461-4f12-49e0-8960-6ff2fc1c9796" target="_blank" rel="noopener" class="footer-cta-btn magnetic-btn">
           <span class="btn-content">
@@ -5264,94 +5785,149 @@ if (mainWrapper && masterFooter) {
   updateFooterCurtain();
 }
 
-// 2. Decrypt Text Effect (Cyberpunk Neon Only)
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
-const decryptHeading = document.getElementById('decrypt-heading');
-let decryptInterval = null;
-let footerScrolledIntoView = false;
-
-if (decryptHeading) {
-  const originalText = decryptHeading.innerText || 'Compile your design system.';
+// 2. Masterpiece Title Motion Controller (Hero & Footer Across All Themes)
+(function() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()<>[]{}_+=~';
+  const originalFooterText = 'Compile your design system.';
+  const decryptHeading = document.getElementById('decrypt-heading');
+  const footerTextInner = document.querySelector('.footer-text-inner');
+  const heroH1 = document.querySelector('.hero-h1');
+  const figmaHeroBox = document.querySelector('.figma-hero-box');
+  const figmaFooterBox = document.querySelector('.figma-footer-box');
+  const laserSweep = document.querySelector('.linear-laser-sweep');
+  let decryptInterval = null;
+  let footerScrolledIntoView = false;
+  let heroScrolledIntoView = false;
 
   function runCyberGlitchDecrypt() {
-    if (!decryptHeading) return;
+    const target = footerTextInner || decryptHeading;
+    if (!target) return;
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    
-    // Strictly restrict glitch / scramble decrypt effect to cyberpunk-neon only
     if (currentTheme !== 'cyberpunk-neon') {
-      if (decryptInterval) {
-        clearInterval(decryptInterval);
-        decryptInterval = null;
-      }
-      decryptHeading.innerText = originalText;
+      if (decryptInterval) { clearInterval(decryptInterval); decryptInterval = null; }
+      target.innerText = originalFooterText;
       return;
     }
 
     if (decryptInterval) clearInterval(decryptInterval);
     let iteration = 0;
+    const len = originalFooterText.length;
     decryptInterval = setInterval(() => {
-      decryptHeading.innerText = originalText.split('').map((letter, index) => {
-        if (index < iteration) return originalText[index];
+      target.innerText = originalFooterText.split('').map((letter, index) => {
+        if (letter === ' ') return ' ';
+        if (index < iteration) return originalFooterText[index];
         return chars[Math.floor(Math.random() * chars.length)];
       }).join('');
 
-      if (iteration >= originalText.length) {
+      if (iteration >= len) {
         clearInterval(decryptInterval);
         decryptInterval = null;
-        decryptHeading.innerText = originalText;
+        target.innerText = originalFooterText;
       }
       iteration += 1 / 3;
-    }, 30);
+    }, 28);
   }
 
-  // Native IntersectionObserver for 100% reliable trigger
-  if (typeof IntersectionObserver !== 'undefined') {
+  function triggerFooterMotions(theme) {
+    const target = footerTextInner || decryptHeading;
+    if (!target) return;
+
+    if (theme === 'cyberpunk-neon') {
+      runCyberGlitchDecrypt();
+    } else {
+      if (decryptInterval) {
+        clearInterval(decryptInterval);
+        decryptInterval = null;
+      }
+      target.innerText = originalFooterText;
+    }
+
+    if (theme === 'linear-dark' || theme === 'dark' || !theme) {
+      if (laserSweep) {
+        laserSweep.classList.remove('laser-active');
+        void laserSweep.offsetWidth;
+        laserSweep.classList.add('laser-active');
+      }
+    } else if (theme === 'figma-canvas') {
+      if (figmaFooterBox) {
+        figmaFooterBox.style.animation = 'none';
+        void figmaFooterBox.offsetWidth;
+        figmaFooterBox.style.animation = '';
+      }
+    }
+  }
+
+  function triggerHeroMotions(theme) {
+    if (theme === 'cyberpunk-neon') {
+      if (heroH1) {
+        heroH1.style.animation = 'none';
+        void heroH1.offsetWidth;
+        heroH1.style.animation = '';
+      }
+    } else if (theme === 'figma-canvas') {
+      if (figmaHeroBox) {
+        figmaHeroBox.style.animation = 'none';
+        void figmaHeroBox.offsetWidth;
+        figmaHeroBox.style.animation = '';
+      }
+    }
+  }
+
+  // IntersectionObserver for Footer
+  if (decryptHeading && typeof IntersectionObserver !== 'undefined') {
     new IntersectionObserver((entries) => {
       if (entries[0] && entries[0].isIntersecting) {
         footerScrolledIntoView = true;
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'cyberpunk-neon') {
-          runCyberGlitchDecrypt();
-        } else {
-          decryptHeading.innerText = originalText;
-        }
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+        triggerFooterMotions(currentTheme);
       }
     }, { threshold: 0.15 }).observe(decryptHeading);
   }
 
+  // IntersectionObserver for Hero
+  if (heroH1 && typeof IntersectionObserver !== 'undefined') {
+    new IntersectionObserver((entries) => {
+      if (entries[0] && entries[0].isIntersecting) {
+        heroScrolledIntoView = true;
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+        triggerHeroMotions(currentTheme);
+      }
+    }, { threshold: 0.1 }).observe(heroH1);
+  }
+
+  // ScrollTrigger fallback
   if (typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.create({
       trigger: '#main-wrapper',
       start: 'bottom 90%',
       onEnter: () => {
         footerScrolledIntoView = true;
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'cyberpunk-neon') {
-          runCyberGlitchDecrypt();
-        } else {
-          // Keep pristine clean text in all other modes (Linear, Figma, Stripe)
-          decryptHeading.innerText = originalText;
-        }
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+        triggerFooterMotions(currentTheme);
       }
     });
   }
 
-  // React to theme switcher changes
+  // React to Theme Engine changes
   window.addEventListener('themeChanged', (e) => {
     const newTheme = e.detail;
-    if (newTheme === 'cyberpunk-neon') {
-      if (footerScrolledIntoView) {
-        runCyberGlitchDecrypt();
-      }
+    triggerHeroMotions(newTheme);
+    const target = footerTextInner || decryptHeading;
+    if (footerScrolledIntoView) {
+      triggerFooterMotions(newTheme);
     } else {
       if (decryptInterval) {
         clearInterval(decryptInterval);
         decryptInterval = null;
       }
-      decryptHeading.innerText = originalText;
+      if (target) target.innerText = originalFooterText;
     }
   });
-}
+
+  // Initial trigger on load
+  const initialTheme = document.documentElement.getAttribute('data-theme') || 'linear-dark';
+  triggerHeroMotions(initialTheme);
+})();
 
 // 3. Magnetic Icons
 const magneticIcons = document.querySelectorAll('.social-icon');
